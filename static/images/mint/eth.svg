@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>D59AB0F1-8967-4F55-992B-D08D88B568C1</title>
+    <g id="iOS-App" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="ap09-Home" transform="translate(-32.000000, -1042.000000)" fill-rule="nonzero">
+            <g id="Crypto-Wallets" transform="translate(16.000000, 834.000000)">
+                <g id="Transactions-/-currency-Copy" transform="translate(0.000000, 192.000000)">
+                    <g id="eth" transform="translate(16.000000, 16.000000)">
+                        <circle id="Oval" fill="#627EEA" cx="16" cy="16" r="16"></circle>
+                        <g id="Group" transform="translate(9.000000, 4.000000)" fill="#FFFFFF">
+                            <polygon id="Path" fill-opacity="0.602" points="7.498 0 7.498 8.87 14.995 12.22"></polygon>
+                            <polygon id="Path" points="7.498 0 0 12.22 7.498 8.87"></polygon>
+                            <polygon id="Path" fill-opacity="0.602" points="7.498 17.968 7.498 23.995 15 13.616"></polygon>
+                            <polygon id="Path" points="7.498 23.995 7.498 17.967 0 13.616"></polygon>
+                            <polygon id="Path" fill-opacity="0.2" points="7.498 16.573 14.995 12.22 7.498 8.872"></polygon>
+                            <polygon id="Path" fill-opacity="0.602" points="0 12.22 7.498 16.573 7.498 8.872"></polygon>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
