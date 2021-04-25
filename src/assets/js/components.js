@@ -163,6 +163,7 @@ export async function getBassets () {
   return newlist;
 }
 
+
 //查看一揽子货币 占总共的百分比
 export async function getBassets_p (){
   var getBassetsList = await getBassets();
