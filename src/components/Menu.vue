@@ -1,6 +1,6 @@
 <template>
   <el-menu :default-active="activeIndex" mode="horizontal" text-color="#161616" active-text-color="#1F2BFF" :router="true" @select="handleSelect">
-    <el-menu-item index="0" route="/">Mint2</el-menu-item>
+    <el-menu-item index="0" route="/">Mint</el-menu-item>
     <el-menu-item index="1" route="/Save">Save</el-menu-item>
     <el-menu-item index="2" route="/Stake">Stake</el-menu-item>
     <el-menu-item index="3" route="/Governance">Governance</el-menu-item>
