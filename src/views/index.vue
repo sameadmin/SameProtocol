@@ -15,9 +15,10 @@
                             </div>
                         </div>
                         <div v-if="curr == 0" class="infoBox font-14">
-                            <FromItem :showSelect_="true" :fromInfo="fromInfo" :currCoin="currCoin" :selectCoinList="selectCoinList"
+                            <!--:fromInfo="currCoin" -->
+                            <FromItem :showSelect_="true" :currCoin="currCoin" :selectCoinList="selectCoinList"
                                       :isDisabled="isLoading"
-                                      @handlerSelect="handlerSelect" @handlerSelectCoin="handlerSelectCoin"></FromItem>
+                                      @handlerSelect="handlerSelect()" @handlerSelectCoin="handlerSelectCoin"></FromItem>
                             <img class="toIcon mt-10" src="../../static/images/mint/to.png"/>
                             <div class="toInfoBox mt-10">
                                 <div class="toInfo flex border-b">
@@ -67,7 +68,7 @@
                                     :showSelect_="false"
                                     :fromInfo="item" :currCoin="item" :selectCoinList="selectCoinList"
                                     :isDisabled="isLoading2"
-                                    @handlerSelect="handlerSelect(index)"></FromItem>
+                                    @handlerSelect="handlerSelects(index)"></FromItem>
                             <!--<FromItem :fromInfo="fromInfo3" :currCoin="currCoin3" :selectCoinList="selectCoinList" :isDisabled="isLoading2"
                                       @handlerSelect="handlerSelect3" @handlerSelectCoin="handlerSelectCoin3"></FromItem>-->
                             <img class="toIcon" src="../../static/images/mint/to.png"/>
@@ -168,9 +169,12 @@
 				},
 				currCoin: {
 					url: require('../../static/images/mint/busd.png'),
-					coin: 'BUSD'
+					coin: 'BUSD',
+					fromNum: '',
+					showSelect: false,
+					balance: 19921849.12387
 				},
-				currCoin2: {
+				/*currCoin2: {
 					url: 'https://mstable.app/static/media/USDC.fcebf28c.svg',
 					coin: 'USDC'
 				},
@@ -181,7 +185,7 @@
 				currCoin4: {
 					url: 'https://mstable.app/static/media/USDT.aaa204b0.svg',
 					coin: 'USDT'
-				},
+				},*/
 				selectCoinList: [
 					{
 						url: require('../../static/images/mint/busd.png'),
@@ -268,7 +272,7 @@
 			stateFormat_(num) {
 				return stateFormat(num)
 			},
-			handlerSelect(index) {
+			handlerSelects(index) {
 				for (let i in this.selectCoinList) {
 					if (i == index) {
 						this.selectCoinList[i].showSelect = !this.selectCoinList[i].showSelect;
@@ -276,7 +280,10 @@
 				}
 				this.fromInfo.showSelect = !this.fromInfo.showSelect
 			},
-			/*handlerSelect0 (){
+			handlerSelect (){
+				this.currCoin.showSelect = !this.currCoin.showSelect
+			},
+			/*handlerSelect (){
               this.fromInfo.showSelect = !this.fromInfo.showSelect
             },
             handlerSelect1 (){
@@ -289,23 +296,22 @@
               this.fromInfo3.showSelect = !this.fromInfo3.showSelect
             },*/
 
-			handlerSelectCoin(index) {
+			/*handlerSelectCoin(index) {
 				//this.currCoin = item
 				for (let i in this.selectCoinList) {
 					if (i == index) {
 						this.selectCoinList[i].showSelect = !this.selectCoinList[i].showSelect;
 					}
 				}
+			},*/
+			handlerSelectCoin(item) {
+				this.currCoin = item
 			},
-			handlerSelectCoin2(item) {
-				this.currCoin2 = item
-			},
-			handlerSelectCoin3(item) {
+			/*handlerSelectCoin3(item) {
 				this.currCoin3 = item
-			},
+			},*/
 			handleShowReward() {
 				this.showNews = false;
-				this.showReward = true;
 			},
 			handleHideReward() {
 				this.showNews = true;

@@ -4,7 +4,7 @@
       <div class="fromInfo-l flex-1 flex flex-align-items-center flex-justify-content-between">
         <div class="flex-1 ml-20 text-left mr-12">
           <div class="fromDesc font-family-regular font-weight-4 color2">From</div>
-          <el-input v-model="fromInfo.fromNum" :disabled="isDisabled" placeholder="0.00"></el-input>
+          <el-input v-model="currCoin.fromNum" :disabled="isDisabled" placeholder="0.00"></el-input>
         </div>
         <div class="max color2 font-family-bold mr-12">MAX</div>
       </div>
@@ -15,9 +15,9 @@
             <img class="currCoinIcon" :src="currCoin.url" />
             <div class="currCoin font-14 color3 font-family-bold font-weight-b ml-12">{{ currCoin.coin }}</div>
           </div>
-          <img class="arrow-up-icon mr-20" v-if="showSelect_" :class="{'select-caret': fromInfo.showSelect,'select-reverse': !fromInfo.showSelect}" src="../../static/images/mint/down.png" />
+          <img class="arrow-up-icon mr-20" v-if="showSelect_" :class="{'select-caret': currCoin.showSelect,'select-reverse': !currCoin.showSelect}" src="../../static/images/mint/down.png" />
         </div>
-        <div class="selectCoinList bg1" v-show="fromInfo.showSelect" v-if="showSelect_">
+        <div class="selectCoinList bg1" v-show="currCoin.showSelect" v-if="showSelect_">
           <div class="selectCoinItem flex flex-align-items-center" v-for="(item,index) in selectCoinList" :key="index"
                :class="{'activeCoinItem': currCoin.coin == item.coin }" @click="handlerSelectCoin(item)">
             <img class="currCoinIcon ml-18" :src="item.url" />
@@ -27,7 +27,7 @@
         </div>
       </div>
     </div>
-    <div class="balance font-family-regular font-weight-4 text-left">Balance：{{ stateFormat_(fromInfo.balance) }}</div>
+    <div class="balance font-family-regular font-weight-4 text-left">Balance：{{ stateFormat_(currCoin.balance) }}</div>
   </div>
 </template>
 
@@ -41,7 +41,7 @@
       }
     },
     props: {
-      fromInfo: Object,
+      /*fromInfo: Object,*/
       currCoin: Object,
       selectCoinList: Array,
       isDisabled: Boolean,
