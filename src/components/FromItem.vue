@@ -15,9 +15,9 @@
             <img class="currCoinIcon" :src="currCoin.url" />
             <div class="currCoin font-14 color3 font-family-bold font-weight-b ml-12">{{ currCoin.coin }}</div>
           </div>
-          <img class="arrow-up-icon mr-20" :class="{'select-caret': fromInfo.showSelect,'select-reverse': !fromInfo.showSelect}" src="../../static/images/mint/down.png" />
+          <img class="arrow-up-icon mr-20" v-if="showSelect_" :class="{'select-caret': fromInfo.showSelect,'select-reverse': !fromInfo.showSelect}" src="../../static/images/mint/down.png" />
         </div>
-        <div class="selectCoinList bg1" v-show="fromInfo.showSelect">
+        <div class="selectCoinList bg1" v-show="fromInfo.showSelect" v-if="showSelect_">
           <div class="selectCoinItem flex flex-align-items-center" v-for="(item,index) in selectCoinList" :key="index"
                :class="{'activeCoinItem': currCoin.coin == item.coin }" @click="handlerSelectCoin(item)">
             <img class="currCoinIcon ml-18" :src="item.url" />
@@ -44,7 +44,8 @@
       fromInfo: Object,
       currCoin: Object,
       selectCoinList: Array,
-      isDisabled: Boolean
+      isDisabled: Boolean,
+      showSelect_:Boolean,
     },
     components: {
 

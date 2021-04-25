@@ -15,7 +15,7 @@
                             </div>
                         </div>
                         <div v-if="curr == 0" class="infoBox font-14">
-                            <FromItem :fromInfo="fromInfo" :currCoin="currCoin" :selectCoinList="selectCoinList"
+                            <FromItem :showSelect_="true" :fromInfo="fromInfo" :currCoin="currCoin" :selectCoinList="selectCoinList"
                                       :isDisabled="isLoading"
                                       @handlerSelect="handlerSelect" @handlerSelectCoin="handlerSelectCoin"></FromItem>
                             <img class="toIcon mt-10" src="../../static/images/mint/to.png"/>
@@ -64,6 +64,7 @@
                         <div v-else class="infoBox font-14">
                             <FromItem
                                     v-for="(item , index) in selectCoinList"
+                                    :showSelect_="false"
                                     :fromInfo="item" :currCoin="item" :selectCoinList="selectCoinList"
                                     :isDisabled="isLoading2"
                                     @handlerSelect="handlerSelect(index)"></FromItem>
