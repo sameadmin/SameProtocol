@@ -18,7 +18,8 @@
                             <!--:fromInfo="currCoin" -->
                             <FromItem :showSelect_="true" :currCoin="currCoin" :selectCoinList="selectCoinList"
                                       :isDisabled="isLoading"
-                                      @handlerSelect="handlerSelect()" @handlerSelectCoin="handlerSelectCoin"></FromItem>
+                                      @handlerSelect="handlerSelect()"
+                                      @handlerSelectCoin="handlerSelectCoin"></FromItem>
                             <img class="toIcon mt-10" src="../../static/images/mint/to.png"/>
                             <div class="toInfoBox mt-10">
                                 <div class="toInfo flex border-b">
@@ -128,6 +129,7 @@
 
 <script>
 	import solidityConfig from '../../src/assets/solidityConfig'
+	import {balanceOf} from '../../src/assets/js/components'
 	import Header from '@/components/Header'
 	import Footer from '@/components/Footer'
 	import MintNews from '@/components/MintNews'
@@ -155,24 +157,24 @@
 				fromInfo: {
 					fromNum: '',
 					showSelect: false,
-					balance: 19921849.12387
+					balance: NaN
 				},
 				fromInfo2: {
 					fromNum: '',
 					showSelect: false,
-					balance: 19921849.12388
+					balance: NaN
 				},
 				fromInfo3: {
 					fromNum: '',
 					showSelect: false,
-					balance: 19921849.12389
+					balance: NaN
 				},
 				currCoin: {
 					url: require('../../static/images/mint/busd.png'),
 					coin: 'BUSD',
 					fromNum: '',
 					showSelect: false,
-					balance: 19921849.12387
+					balance: NaN
 				},
 				/*currCoin2: {
 					url: 'https://mstable.app/static/media/USDC.fcebf28c.svg',
@@ -238,14 +240,15 @@
 				}
 			}
 		},
+		async created () {
+			this.currCoin = (await this.updataBalance())[0];
+		},
 		mounted() {
-			/*this.intervalId = setInterval(async () => {
+			this.intervalId = setInterval(async () => {
 
-				this.updataBalance().then(d => {
+				this.updataBalance();
 
-				})
-
-			}, 1000)*/
+			}, 1000)
 		},
 		components: {
 			Header,
@@ -280,7 +283,7 @@
 				}
 				this.fromInfo.showSelect = !this.fromInfo.showSelect
 			},
-			handlerSelect (){
+			handlerSelect() {
 				this.currCoin.showSelect = !this.currCoin.showSelect
 			},
 			/*handlerSelect (){
@@ -312,6 +315,7 @@
 			},*/
 			handleShowReward() {
 				this.showNews = false;
+				this.showReward = true;
 			},
 			handleHideReward() {
 				this.showNews = true;
@@ -345,19 +349,16 @@
 					}
 				}
 			},
-			async updataBalance(name) {
-				/*for(var i in this.balances){
-                      var balance_ =  await balanceOf(this.balances[i].name);
-                      this.balances[i].balance = !balance_ ? 0 :balance_;
-                      if(name == solidityConfig.usdList[i]){
-
-                      }
-                    }*/
+			async updataBalance() {
+				for (var i in this.selectCoinList) {
+					var balance_ = await balanceOf(this.selectCoinList[i].coin.toLowerCase());
+					this.selectCoinList[i].balance = balance_;
+				}
+				return this.selectCoinList;
 
 			},
 		}
 	}
-
 
 
 </script>

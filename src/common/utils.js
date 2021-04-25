@@ -8,5 +8,7 @@ export function stateFormat(cellValue) {
       })
       .replace(/\.$/, "");*/
     return cellValue.toString().replace(/(\d)(?=(?:\d{3})+$)/g,'$1,')
+  }else {
+    return 0;
   }
 }
