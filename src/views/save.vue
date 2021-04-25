@@ -171,8 +171,8 @@
             coin: 'BTC'
           },
           {
-            url: require('../../static/images/mint/eth.svg'),
-            coin: 'ETH'
+            url: require('../../static/images/mint/same.svg'),
+            coin: 'SAME'
           }
         ],
         detailTab: ["Stake/Approve","Claim/Withdraw"],

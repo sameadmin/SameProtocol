@@ -1,5 +1,5 @@
 <template>
-  <div class="pageContainer flex flex-direction-column">
+  <div class="pageContainer flex flex-direction-column" @click="hideClickWrapper">
     <Header :activeIndex="activeIndex"></Header>
     <el-main class="bg2">
       <div class="container flex flex-justify-content-center">
@@ -157,8 +157,8 @@
             coin: 'BTC'
           },
           {
-            url: require('../../static/images/mint/eth.svg'),
-            coin: 'ETH'
+            url: require('../../static/images/mint/same.svg'),
+            coin: 'SAME'
           }
         ],
         showNews: true,
@@ -242,7 +242,26 @@
       },
       handleApprove(){
         this.successedTips.isShow = true;
-      }
+      },
+      hideClickWrapper() {
+        if (document.querySelector('.selectCoinList')) {
+          if(this.fromInfo.showSelect){
+            this.$nextTick(() => {
+              this.fromInfo.showSelect = false
+            })
+          }
+          if(this.fromInfo2.showSelect){
+            this.$nextTick(() => {
+              this.fromInfo2.showSelect = false
+            })
+          }
+          if(this.fromInfo3.showSelect){
+            this.$nextTick(() => {
+              this.fromInfo3.showSelect = false
+            })
+          }
+        }
+      },
     }
   }
 </script>
