@@ -28,28 +28,28 @@
         sameUsdTotal:null,
         poolList: [
           {
-            url: 'https://mstable.app/static/media/DAI.97b90baa.svg',
-            coin: 'DAI',
-            liquidity: 41.32,
-            staked: '1'
+            url: require('../../static/images/mint/busd.png'),
+            coin: 'BUSD',
+            liquidity: NaN,
+            staked: NaN
           },
           {
             url: 'https://mstable.app/static/media/USDC.fcebf28c.svg',
             coin: 'USDC',
-            liquidity: 41.32,
-            staked: '2'
+            liquidity: NaN,
+            staked: NaN
           },
           {
             url: require('../../static/images/mint/tusd.svg'),
             coin: 'TUSD',
-            liquidity: 41.32,
-            staked: '3'
+            liquidity: NaN,
+            staked: NaN
           },
           {
             url: 'https://mstable.app/static/media/USDT.aaa204b0.svg',
             coin: 'USDT',
-            liquidity: 41.32,
-            staked: '3'
+            liquidity: NaN,
+            staked: NaN
           }
         ]
       }

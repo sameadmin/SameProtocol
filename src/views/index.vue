@@ -46,10 +46,12 @@
               </div>
             </div>
             <div v-else class="infoBox font-14">
-              <FromItem :fromInfo="fromInfo2" :currCoin="currCoin2" :selectCoinList="selectCoinList" :isDisabled="isLoading2"
-                        @handlerSelect="handlerSelect2" @handlerSelectCoin="handlerSelectCoin2"></FromItem>
-              <FromItem :fromInfo="fromInfo3" :currCoin="currCoin3" :selectCoinList="selectCoinList" :isDisabled="isLoading2"
-                        @handlerSelect="handlerSelect3" @handlerSelectCoin="handlerSelectCoin3"></FromItem>
+              <FromItem
+                      v-for="(item , index) in selectCoinList"
+                      :fromInfo="item" :currCoin="item" :selectCoinList="selectCoinList" :isDisabled="isLoading2"
+                        @handlerSelect="handlerSelect(index)" ></FromItem>
+              <!--<FromItem :fromInfo="fromInfo3" :currCoin="currCoin3" :selectCoinList="selectCoinList" :isDisabled="isLoading2"
+                        @handlerSelect="handlerSelect3" @handlerSelectCoin="handlerSelectCoin3"></FromItem>-->
               <img class="toIcon" src="../../static/images/mint/to.png" />
               <div class="toInfoBox mt-10">
                 <div class="toInfo flex border-b">
@@ -97,7 +99,7 @@
 </template>
 
 <script>
-
+  import solidityConfig from '../../src/assets/solidityConfig'
   import Header from '@/components/Header'
   import Footer from '@/components/Footer'
   import MintNews from '@/components/MintNews'
@@ -137,29 +139,49 @@
           balance: 19921849.12389
         },
         currCoin: {
-          url: require('../../static/images/mint/eth.svg'),
-          coin: 'ETH'
+          url: require('../../static/images/mint/busd.png'),
+          coin: 'BUSD'
         },
         currCoin2: {
-          url: require('../../static/images/mint/eth.svg'),
-          coin: 'ETH'
+          url: 'https://mstable.app/static/media/USDC.fcebf28c.svg',
+          coin: 'USDC'
         },
         currCoin3: {
-          url: require('../../static/images/mint/eth.svg'),
-          coin: 'ETH'
+          url: require('../../static/images/mint/tusd.svg'),
+          coin: 'TUSD'
+        },
+        currCoin4: {
+          url: 'https://mstable.app/static/media/USDT.aaa204b0.svg',
+          coin: 'USDT'
         },
         selectCoinList: [
           {
-            url: require('../../static/images/mint/eth.svg'),
-            coin: 'ETH'
+            url: require('../../static/images/mint/busd.png'),
+            coin: 'BUSD',
+            fromNum: '',
+            showSelect: false,
+            balance: 19921849.12387
           },
           {
-            url: require('../../static/images/mint/btc.svg'),
-            coin: 'BTC'
+            url: 'https://mstable.app/static/media/USDC.fcebf28c.svg',
+            coin: 'USDC',
+            fromNum: '',
+            showSelect: false,
+            balance: 19921849.12387
           },
           {
-            url: require('../../static/images/mint/same.svg'),
-            coin: 'SAME'
+            url: require('../../static/images/mint/tusd.svg'),
+            coin: 'TUSD',
+            fromNum: '',
+            showSelect: false,
+            balance: 19921849.12387
+          },
+          {
+            url: 'https://mstable.app/static/media/USDT.aaa204b0.svg',
+            coin: 'USDT',
+            fromNum: '',
+            showSelect: false,
+            balance: 19921849.12387
           }
         ],
         showNews: true,
@@ -212,7 +234,18 @@
       stateFormat_(num){
         return stateFormat(num)
       },
-      handlerSelect (){
+      handlerSelect (index){
+        for(let i in this.selectCoinList){
+          if(i == index){
+            this.selectCoinList[i].showSelect = !this.selectCoinList[i].showSelect;
+          }
+        }
+        this.fromInfo.showSelect = !this.fromInfo.showSelect
+      },
+      /*handlerSelect0 (){
+        this.fromInfo.showSelect = !this.fromInfo.showSelect
+      },
+      handlerSelect1 (){
         this.fromInfo.showSelect = !this.fromInfo.showSelect
       },
       handlerSelect2 (){
@@ -220,9 +253,15 @@
       },
       handlerSelect3 (){
         this.fromInfo3.showSelect = !this.fromInfo3.showSelect
-      },
-      handlerSelectCoin (item){
-        this.currCoin = item
+      },*/
+
+      handlerSelectCoin (index){
+        //this.currCoin = item
+        for(let i in this.selectCoinList){
+          if(i == index){
+            this.selectCoinList[i].showSelect = !this.selectCoinList[i].showSelect;
+          }
+        }
       },
       handlerSelectCoin2 (item){
         this.currCoin2 = item
@@ -231,12 +270,12 @@
         this.currCoin3 = item
       },
       handleShowReward (){
-        this.showNews = false
-        this.showReward = true
+        this.showNews = false;
+        this.showReward = true;
       },
       handleHideReward (){
-        this.showNews = true
-        this.showReward = false
+        this.showNews = true;
+        this.showReward = false;
       },
       handleMint (){
         this.isLoading = true;
@@ -267,6 +306,29 @@
         }
       },
     }
+      },
+      async updataBalance(name){
+        /*for(var i in this.balances){
+          var balance_ =  await balanceOf(this.balances[i].name);
+          this.balances[i].balance = !balance_ ? 0 :balance_;
+          if(name == solidityConfig.usdList[i]){
+
+          }
+        }*/
+      },
+
+    },
+    async mounted() {
+
+      this.intervalId = setInterval( async ()=>{
+
+        this.updataBalance().then(d=>{
+
+        })
+
+      },1000)
+    },
+
   }
 </script>
 
