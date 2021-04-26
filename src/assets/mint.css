@@ -74,11 +74,11 @@
   height: 40px;
 }
 .operationBtn {
-  width: 120px;
-  height: 40px;
-  /*line-height: 60px;
+  width: 250px;
+  height: 60px;
+  /* line-height: 60px; */
   border-radius: 30px!important;
-  border: 1px solid rgba(0, 0, 0, 0.16);*/
+  /*border: 1px solid rgba(0, 0, 0, 0.16);*/
 }
 .operationBtn_approve{
   border: 1px solid #1F2BFF!important;
@@ -139,12 +139,12 @@
     height: 72px;
     line-height: 72px;
   }
-  /*.operationBtn {
+  .operationBtn {
     width: 200px;
     height: 48px;
-    line-height: 48px;
+    /* line-height: 48px; */
     border-radius: 24px!important;
-  }*/
+  }
   .fromInfo,.toInfo{
     height: 52px;
   }
@@ -158,12 +158,12 @@
     height: 60px;
     line-height: 60px;
   }
-  /*.operationBtn {
+  .operationBtn {
     width: 160px;
     height: 40px;
-    line-height: 40px;
+    /* line-height: 40px; */
     border-radius: 20px!important;
-  }*/
+  }
   .fromInfo,.toInfo{
     height: 50px;
     padding: 8px 0;
@@ -178,12 +178,12 @@
     height: 48px;
     line-height: 48px;
   }
-  /*.operationBtn {
+  .operationBtn {
     width: 120px;
     height: 38px;
-    line-height: 38px;
+/*    line-height: 38px; */
     border-radius: 18px!important;
-  }*/
+  }
   .fromInfo,.toInfo{
     height: 50px;
     padding: 8px 0;

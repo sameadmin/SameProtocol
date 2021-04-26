@@ -9,7 +9,7 @@
         <div class="max color2 font-family-bold mr-12">MAX</div>
       </div>
       <div class="fromInfo-r flex flex-align-items-center"
-           @click.stop="handlerSelect">
+           @click="handlerSelect">
         <div class="currCoinInfo flex flex-justify-content-between">
           <div class="flex ml-18">
             <img class="currCoinIcon" :src="currCoin.url" />
@@ -19,7 +19,7 @@
         </div>
         <div class="selectCoinList bg1" v-show="currCoin.showSelect" v-if="showSelect_">
           <div class="selectCoinItem flex flex-align-items-center" v-for="(item,index) in selectCoinList" :key="index"
-               :class="{'activeCoinItem': currCoin.coin == item.coin }" @click="handlerSelectCoin(item)">
+               :class="{'activeCoinItem': currCoin.coin == item.coin }" @click.stop="handlerSelectCoin(item)">
             <img class="currCoinIcon ml-18" :src="item.url" />
             <div class="currCoin font-14 color3 font-family-bold font-weight-b ml-12"
                  :class="{'activeCoin': currCoin.coin == item.coin }">{{ item.coin }}</div>
