@@ -40,9 +40,13 @@
                   </div>
                 </div>
               </div>
-              <div class="operation flex flex-justify-content-between mt-24">
-                <el-button round class="operationBtn color2 font-16 font-family-bold font-weight-b" @click="handleApprove">Approve</el-button>
-                <el-button round :loading="isLoading" class="operationBtn color2 font-16 font-family-bold font-weight-b" @click="handleMint">Mint</el-button>
+              <div class="operation flex flex-justify-content-end mt-24">
+                <el-button class="operationBtn operationBtn_approve border-radius-8 color6 font-14 font-family-bold font-weight-b"
+                           @click="handleApprove">Approve
+                </el-button>
+                <el-button class="operationBtn operationBtn_mint ml-20 border-radius-8 color7 font-14 font-family-bold font-weight-b"
+                           :loading="isLoading" @click="handleMint">Mint
+                </el-button>
               </div>
             </div>
             <div v-else class="infoBox font-14">
@@ -78,7 +82,9 @@
                 </div>
               </div>
               <div class="operation flex flex-justify-content-end mt-24">
-                <el-button round :loading="isLoading2" class="operationBtn color2 font-16 font-family-bold font-weight-b" @click="handleMint2">Mint</el-button>
+                <el-button class="operationBtn operationBtn_mint border-radius-8 color7 font-14 font-family-bold font-weight-b"
+                           :loading="isLoading2" @click="handleMint2">Mint
+                </el-button>
               </div>
             </div>
           </div>
