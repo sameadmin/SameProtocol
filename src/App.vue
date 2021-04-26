@@ -97,7 +97,10 @@
     color: #FFFFFF;
   }
   .color6{
-    color: #1F2BFF;
+    color: #1F2BFF!important;
+  }
+  .color7{
+    color: #8D31EC!important;
   }
   .font-12{
     font-size: 12px;
