@@ -142,7 +142,7 @@
             stack: 'Samecoin-SameUSD',
             apy: '+ 1742.31%',
             yidld: '1.578 SAME / Day',
-            liquidity: 3663991,
+            liquidity: 3663991.090633,
             liquidity_: 52278,
             stacked: '100.5',
             stacked_: '10',

@@ -1,14 +1,14 @@
 <template>
   <div v-show="showNews" class="newsContainer bg1 border-radius-8 font-18">
-    <div class="celebrate flex flex-align-items-center flex-justify-content-between border-b"
-    @click="handleShowReward">
+    <div class="celebrate flex flex-align-items-center flex-justify-content-between border-b">
       <div class="flex flex-align-items-center">
         <img class="celebrateIcon" src="../../static/images/mint/celebrate.png"/>
         <div class="ml-18 color2 fontWeight-6 font-family-semiBold">Mint Reward</div>
       </div>
-      <img class="rightIcon" src="../../static/images/mint/right.png"/>
+      <img class="rightIcon" src="../../static/images/mint/right.png" @click="handleShowReward"/>
     </div>
-    <div class="claimBtn mt-24 color5 fontWeight-b font-family-bold border-radius-8">Claim Now</div>
+    <div class="claimBtn mt-24 color5 fontWeight-b font-family-bold border-radius-8"
+         @click="handleShowReward">Claim Now</div>
   </div>
 </template>
 
@@ -57,8 +57,12 @@
     line-height: 48px;
     background: #129BFF;
   }
+  .rightIcon:hover,
   .claimBtn:hover{
     cursor: pointer;
+  }
+  .claimBtn:hover{
+    opacity: 0.6;
   }
   @media only screen and (max-width: 1280px) {
     .celebrate{

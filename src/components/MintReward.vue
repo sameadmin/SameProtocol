@@ -12,7 +12,8 @@
       <div class="ml-10 color2 fontWeight-6 font-family-semiBold">Mint Reward</div>
     </div>
     <div class="RewardBalance mt-10 flex flex-justify-content-center color2 fontWeight-6 font-family-semiBold">101.2857</div>
-    <div class="claimBtn mt-20 color5 fontWeight-b font-family-bold border-radius-8">Claim</div>
+    <div class="claimBtn mt-20 color5 fontWeight-b font-family-bold border-radius-8"
+         @click="handleHideReward">Claim</div>
     <div class="percentItem" v-for="(item,index) in percentList" :key="index">
       <div class="mt-20 flex flex-justify-content-between font-14">
         <div class="color2 fontWeight-4 font-family-regular">{{ item.desc }}</div>
@@ -79,7 +80,7 @@
   .rewardContainer{
     position: absolute;
     right: 0;
-    bottom: 44px;
+    top: 58px;
     width: 366px;
     /*height: 680px;*/
     box-shadow: 0px 0px 64px 0px rgba(0, 0, 0, 0.08), 0px 0px 32px 0px rgba(0, 0, 0, 0.08);
@@ -126,8 +127,12 @@
     background: #000000;
     border-radius: 15px;
   }
-  .rewardsBtn:hover{
+  .rightIcon:hover,
+  .claimBtn:hover{
     cursor: pointer;
+  }
+  .claimBtn:hover{
+    opacity: 0.6;
   }
   @media only screen and (max-width: 1400px) {
     .rewardContainer{
