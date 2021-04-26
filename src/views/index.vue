@@ -42,7 +42,6 @@
                                             <div class="toDesc font-family-regular font-weight-4 color2">
                                                 Rewards(estimate)
                                             </div>
-                                            <!--toNum-->
                                             <el-input v-model="toNum" :disabled="isLoading"
                                                       placeholder="0.00"></el-input>
                                         </div>
@@ -58,9 +57,8 @@
                                 <el-button round class="operationBtn color2 font-16 font-family-bold font-weight-b"
                                            @click="handleApprove(currCoin.coin)">Approve({{currCoin.approve?'already':'notready'}})
                                 </el-button>
-                                <el-button round :loading="isLoading"
-                                           class="operationBtn color2 font-16 font-family-bold font-weight-b"
-                                           @click="handleMint">Mint
+                                <el-button class="operationBtn operationBtn_mint ml-20 border-radius-8 color7 font-14 font-family-bold font-weight-b"
+                                           :loading="isLoading" @click="handleMint">Mint
                                 </el-button>
                             </div>
                         </div>
@@ -107,9 +105,8 @@
                                 </div>
                             </div>
                             <div class="operation flex flex-justify-content-end mt-24">
-                                <el-button round :loading="isLoading2"
-                                           class="operationBtn color2 font-16 font-family-bold font-weight-b"
-                                           @click="handleMint2">Mint
+                                <el-button class="operationBtn operationBtn_mint border-radius-8 color7 font-14 font-family-bold font-weight-b"
+                                           :loading="isLoading2" @click="handleMint2">Mint
                                 </el-button>
                             </div>
                         </div>

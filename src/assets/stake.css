@@ -72,8 +72,18 @@
   .approveBtn,.stakeBtn{
     height: 40px;
     line-height: 40px;
-    border-radius: 20px;
+   /* border-radius: 20px;*/
     padding: 0 30px;
+  }
+  .approveBtn:hover,
+  .approveBtn:focus{
+    color: #FFFFFF!important;
+    background-color: #1F2BFF!important;
+  }
+  .stakeBtn:hover,
+  .stakeBtn:focus{
+    color: #FFFFFF!important;
+    background-color: #8D31EC!important;
   }
   .approveBtn:hover,
   .stakeBtn:hover{

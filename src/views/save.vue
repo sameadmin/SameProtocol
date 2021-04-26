@@ -95,14 +95,14 @@
           </div>
         </div>
       </div>
-      <span slot="footer" class="dialog-footer text-center">
+      <span slot="footer" class="dialog-footer text-center font-14 font-family-bold font-weight-b">
         <div v-if="curr==0" class="flex flex-justify-content-end">
-          <div class="approveBtn" @click="showDetail = false">Approve</div>
-          <div class="stakeBtn ml-20" @click="showDetail = false">Stake</div>
+          <div class="approveBtn border-radius-8 color6" @click="showDetail = false">Approve</div>
+          <div class="stakeBtn border-radius-8 ml-20 color7" @click="showDetail = false">Stake</div>
         </div>
         <div v-else class="flex flex-justify-content-end">
-          <div class="approveBtn" @click="showDetail = false">Claim All Rewards</div>
-          <div class="stakeBtn ml-20" @click="showDetail = false">Withdraw All Above</div>
+          <div class="approveBtn border-radius-8 color6" @click="showDetail = false">Claim All Rewards</div>
+          <div class="stakeBtn border-radius-8 ml-20 color7" @click="showDetail = false">Withdraw All Above</div>
         </div>
       </span>
     </el-dialog>
