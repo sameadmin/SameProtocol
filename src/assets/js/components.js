@@ -1,4 +1,5 @@
 //import Web3 from 'web3';
+import {FormatNoE} from '../../common/utils';
 
 //去0
 export function remove0 (val) {
@@ -84,6 +85,38 @@ export async function CheckMetaMask() {
   }
 }
 
+//检查是否解锁
+export async function checkApprove(name,fromAddr) {
+  try {
+    let myAddr = await toAccount();
+    let allowanceVal = await bcView(name,'allowance',[fromAddr,myAddr]);
+    if(allowanceVal < Math.pow(10,27)){
+      return false;
+    }else {
+      return true;
+    }
+  }catch (e) {
+    console.log(e.message);
+    return false;
+  }
+}
+
+//执行限制消费
+export async function goApprove(coinName,val) {
+  try {
+    console.log(coinName,val);
+    var solidityConfig = require(`../solidityConfig`)
+    var decimals = (await bcView(coinName, 'decimals')).info;
+    var amt = numberToHex (val, decimals);
+    var approveInfo = await bcWrite(coinName ,`approve`,[solidityConfig.ContractMsg.MassetProxy.address,FormatNoE(amt)]);
+    return { success: true, info: approveInfo }
+  }catch (e) {
+    console.log(e.message);
+    return { success: false, info: e.message }
+  }
+  
+}
+
 //查询当前使用钱包地址
 export async function toAccount (checkSignin=true) {
   try {
@@ -110,6 +143,8 @@ export function hexToNumber (val, decimals) {
 export function numberToHex (val, decimals) {
   return (val * Math.pow(10, decimals)).toString();
 }
+
+
 
 //查看某币余额 (币名称) 如balanceOf('usdt')
 export async function balanceOf (name) {
