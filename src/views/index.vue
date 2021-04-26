@@ -310,6 +310,7 @@
 			handlerSelectCoin(item) {
 				this.currCoin = item
 			},
+
 			/*handlerSelectCoin3(item) {
 				this.currCoin3 = item
 			},*/
