@@ -65,9 +65,9 @@
   height: 40px;
   line-height: 40px;
   padding-left: 18px;
-  border-left: 1px solid rgba(0, 0, 0, 0.08);
+  /* border-left: 1px solid rgba(0, 0, 0, 0.08);
   border-right: 1px solid rgba(0, 0, 0, 0.08);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08); */
 }
 .toIcon{
   width: 40px;

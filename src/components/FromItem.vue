@@ -6,8 +6,8 @@
                     <div class="fromDesc font-family-regular font-weight-4 color2">From</div>
                     <el-input v-model="currCoin.fromNum" :disabled="isDisabled" placeholder="0.00"></el-input>
                 </div>
-                <div class="max color2 font-family-bold mr-12" @click="max()">MAX</div>
-                <el-button class="max color2 font-family-bold mr-12" v-if="!showSelect_" @click="handleApprove(currCoin.coin)" :disabled="currCoin.approve" :loading="isLoadingApproves" >Approve</el-button>
+                <div class="max border-radius-8 color2 font-family-bold mr-12" @click="max()">MAX</div>
+                <el-button class="approveBtn border-radius-8 color2 font-family-bold" v-if="!showSelect_" @click="handleApprove(currCoin.coin)" :disabled="currCoin.approve" :loading="isLoadingApproves" >Approve</el-button>
             </div>
             <div class="fromInfo-r flex flex-align-items-center"
                  @click.stop="handlerSelect">
@@ -123,13 +123,17 @@
     }
 
     .max {
-        height: 30px;
-        line-height: 30px;
+		height: 30px;
+		line-height: 30px;
         padding-left: 8px;
         padding-right: 10px;
-        border-radius: 8px;
         border: 1px solid rgba(0, 0, 0, 0.08);
     }
+	
+	.approveBtn{
+		height: 32px;
+		margin-right: 6px;
+	}
 
     .balance {
         height: 40px;
@@ -172,4 +176,9 @@
     .container {
         position: relative;
     }
+	
+	/deep/ .el-button{
+		border-radius: 8px;
+		padding: 0 12px;
+	}
 </style>
