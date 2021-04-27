@@ -238,6 +238,11 @@
     font-weight: bold;
     color: #000000;
   }
+  .el-button:focus, .el-button:hover{
+  	  background: transparent;
+  	  color: #000000;
+  	  border-color: transparent;
+  }
 </style>
 <style>
   .el-popover--plain {
