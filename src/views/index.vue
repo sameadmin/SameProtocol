@@ -35,7 +35,7 @@
 										</div>
 									</div>
                                 </div>
-								<div class="balance font-family-regular font-weight-4 text-left border-b">Balance：{{ stateFormat_(currCoin.balance) }}</div>
+								<div class="balance font-family-regular font-weight-4 text-left border-b">Balance：{{ stateFormat_(sameusdBalance) }}</div>
                                 <div class="toInfo flex">
                                     <div class="toInfo-l flex-1 flex flex-align-items-center flex-justify-content-between">
                                         <div class="flex-1 ml-20 text-left mr-12">
@@ -52,7 +52,7 @@
                                         </div>
                                     </div>
                                 </div>
-								<div class="balance font-family-regular font-weight-4 text-left border-t">Balance：{{ stateFormat_(currCoin.balance) }}</div>
+								<div class="balance font-family-regular font-weight-4 text-left border-t">Balance：{{ stateFormat_(samecoinBalance) }}</div>
                             </div>
                             <div class="operation flex flex-justify-content-between mt-24">
                                 <el-button class="operationBtn operationBtn_approve color6 font-16 font-family-bold font-weight-b"
@@ -81,11 +81,12 @@
                                         </div>
                                     </div>
                                     <div class="toInfo-r flex flex-align-items-center">
-                                        <img class="currCoinIcon ml-18" src="../../static/images/mint/same.svg"/>
-                                        <div class="currCoin font-14 color4 font-family-bold font-weight-b ml-12">Same
+                                        <img class="currCoinIcon ml-18" :src="require(`../../static/images/mint/samecoin.png`)"/>
+                                        <div class="currCoin font-14 color4 font-family-bold font-weight-b ml-12">SameUSD
                                         </div>
                                     </div>
                                 </div>
+                                <div class="balance font-family-regular font-weight-4 text-left border-b">Balance：{{ stateFormat_(sameusdBalance) }}</div>
                                 <div class="toInfo flex">
                                     <div class="toInfo-l flex-1 flex flex-align-items-center flex-justify-content-between">
                                         <div class="flex-1 ml-20 text-left mr-12">
@@ -97,11 +98,12 @@
                                         </div>
                                     </div>
                                     <div class="toInfo-r flex flex-align-items-center">
-                                        <img class="currCoinIcon ml-18" src="../../static/images/mint/same.svg"/>
-                                        <div class="currCoin font-14 color4 font-family-bold font-weight-b ml-12">Same
+                                        <img class="currCoinIcon ml-18" :src="require(`../../static/images/mint/sameusd.png`)"/>
+                                        <div class="currCoin font-14 color4 font-family-bold font-weight-b ml-12">Samecoin
                                         </div>
                                     </div>
                                 </div>
+                                <div class="balance font-family-regular font-weight-4 text-left border-t">Balance：{{ stateFormat_(samecoinBalance) }}</div>
                             </div>
                             <div class="operation flex flex-justify-content-end mt-24">
                                 <el-button class="operationBtn operationBtn_mint border-radius-8 color7 font-16 font-family-bold font-weight-b"
@@ -288,7 +290,7 @@
 			},
 			async goApprove(coinName){
 				this.isLoadingApprove = true;
-				let info = await goApprove(coinName.toLowerCase(),10000000000);
+				let info = await goApprove(coinName.toLowerCase(),100000000000);
 				this.isLoadingApprove = false;
 				if(info.success){
 					this.successedTips.isShow = true;

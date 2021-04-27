@@ -87,10 +87,16 @@ export async function CheckMetaMask() {
 
 //检查是否解锁
 export async function checkApprove(coinName,fromAddr) {
+  coinName = coinName.toLowerCase()
+  var val = Math.pow(10,9);
   try {
     let myAddr = await toAccount();
-    let allowanceVal = (await bcView(coinName.toLowerCase(),'allowance',[myAddr,fromAddr])).info;
-    if(allowanceVal < Math.pow(10,27)){
+    let allowanceVal = (await bcView(coinName,'allowance',[myAddr,fromAddr])).info;
+    //console.log(coinName,allowanceVal,Math.pow(10,27));
+    
+    var decimals = (await bcView(coinName, 'decimals')).info;
+    var amt = Number(numberToHex (val, decimals));
+    if(allowanceVal < amt){
       return false;
     }else {
       return true;
@@ -187,7 +193,7 @@ export async function bcWrite (ContractName, functionName, parameter, options = 
 
 //查看一揽子货币的某个币有多少 (dai usdc tusd usdt)
 export async function getBassets () {
-  var decimalsList = [18,6,18,6];
+  var decimalsList = [18,6,6];
   var getBassetsInfo = await bcView ('BasketManagerProxy', 'getBassets');
   //console.log(getBassetsInfo)
   var newlist = [];

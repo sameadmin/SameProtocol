@@ -7,6 +7,7 @@
                     <el-input v-model="currCoin.fromNum" :disabled="isDisabled" placeholder="0.00"></el-input>
                 </div>
                 <div class="max color2 font-family-bold mr-12" @click="max()">MAX</div>
+                <el-button class="max color2 font-family-bold mr-12" v-if="!showSelect_" @click="handleApprove(currCoin.coin)" :disabled="currCoin.approve" :loading="isLoadingApproves" >Approve</el-button>
             </div>
             <div class="fromInfo-r flex flex-align-items-center"
                  @click.stop="handlerSelect">
@@ -40,12 +41,14 @@
 
 <script>
 	import {stateFormat} from '@/common/utils'
-	import {remove0} from '../../src/assets/js/components'
+	import {remove0,goApprove} from '../../src/assets/js/components'
 
 	export default {
 		name: 'FromItem',
 		data() {
-			return {}
+			return {
+				isLoadingApproves:false,
+            }
 		},
 		watch: {
 			'currCoin.fromNum'() {
@@ -73,6 +76,19 @@
 			max() {
 				this.currCoin.fromNum = this.stateFormat_(this.currCoin.balance);
 				return this.currCoin.fromNum;
+			},
+			async handleApprove(coinName) {
+				await this.goApprove(coinName);
+			},
+			async goApprove(coinName){
+				this.isLoadingApproves = true;
+				let info = await goApprove(coinName.toLowerCase(),10000000000);
+				this.isLoadingApproves = false;
+				/*if(info.success){
+					this.successedTips.isShow = true;
+				}else {
+					this.failedTips.isShow = true;
+				}*/
 			},
 		}
 	}
