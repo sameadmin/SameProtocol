@@ -217,6 +217,7 @@
 					status: 'Waiting...',
 					bg: '#129BFF'
 				},
+				tipsTimer: null,
 				timer: null,
 				time: 8
 			}
@@ -242,7 +243,13 @@
 			this.countDown(256)
 		},
 		beforeDestroy() {
-			clearInterval(this.timer)
+			if(this.timer){
+				clearInterval(this.timer)
+			}
+			
+			if(this.tipsTimer){
+				clearTimeout(this.tipsTimer)
+			}
 		},
 		components: {
 			Header,
@@ -257,20 +264,16 @@
 		watch: {
 			'successedTips.isShow'(newVal, oldVal) {
 				if (newVal) {
-					this.timer = setTimeout(() => {
+					this.tipsTimer = setTimeout(() => {
 						this.successedTips.isShow = false;
 					}, 2500)
-				} else {
-					clearTimeout(this.timer)
 				}
 			},
 			'failedTips.isShow'(newVal, oldVal) {
 				if (newVal) {
-					this.timer = setTimeout(() => {
+					this.tipsTimer = setTimeout(() => {
 						this.failedTips.isShow = false;
 					}, 2500)
-				} else {
-					clearTimeout(this.timer)
 				}
 			},
 		},
