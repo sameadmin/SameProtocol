@@ -1,5 +1,5 @@
 let ContractConfig = {
-  usdList:['busd','usdc','tusd','usdt','sameUsd'],
+  usdList:['busd','usdc','usdt','sameUsd'],
   
   ContractMsg: {
     Nexus: {

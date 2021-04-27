@@ -86,10 +86,10 @@ export async function CheckMetaMask() {
 }
 
 //检查是否解锁
-export async function checkApprove(name,fromAddr) {
+export async function checkApprove(coinName,fromAddr) {
   try {
     let myAddr = await toAccount();
-    let allowanceVal = await bcView(name,'allowance',[fromAddr,myAddr]);
+    let allowanceVal = (await bcView(coinName.toLowerCase(),'allowance',[myAddr,fromAddr])).info;
     if(allowanceVal < Math.pow(10,27)){
       return false;
     }else {
@@ -104,15 +104,14 @@ export async function checkApprove(name,fromAddr) {
 //执行限制消费
 export async function goApprove(coinName,val) {
   try {
-    console.log(coinName,val);
     var solidityConfig = require(`../solidityConfig`)
     var decimals = (await bcView(coinName, 'decimals')).info;
     var amt = numberToHex (val, decimals);
     var approveInfo = await bcWrite(coinName ,`approve`,[solidityConfig.ContractMsg.MassetProxy.address,FormatNoE(amt)]);
-    return { success: true, info: approveInfo }
+    return approveInfo;
   }catch (e) {
     console.log(e.message);
-    return { success: false, info: e.message }
+    return approveInfo;
   }
   
 }
@@ -257,7 +256,7 @@ export async function mints (nameList,amtList){
 
 //交易
 export async function swap (inputName,outputName,amt){
-  console.log(inputName, outputName, amt)
+  //console.log(inputName, outputName, amt)
   try {
     var solidityConfig = require(`../solidityConfig`);
     var accAddress = await toAccount();
@@ -265,7 +264,7 @@ export async function swap (inputName,outputName,amt){
     var inputAmt = numberToHex (amt, inputdecimals);
     var outputdecimals = (await bcView(outputName, 'decimals')).info;
     var outputAmt = numberToHex (amt, outputdecimals);
-    console.log('okookko')
+    //console.log('okookko')
     var approveInfo = await bcWrite(inputName ,`approve`,[solidityConfig.ContractMsg.MassetProxy.address,inputAmt]);
     if(!approveInfo.success){return  { success: false, info: 'approve err' }};
     var info = await bcWrite(`MassetProxy` ,`swap`,[solidityConfig.ContractMsg[inputName].address,solidityConfig.ContractMsg[outputName].address,inputAmt,accAddress]);

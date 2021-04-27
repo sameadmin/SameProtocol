@@ -1,5 +1,5 @@
 <template>
-    <div class="pageContainer flex flex-direction-column" ><!--@click="hideClickWrapper"-->
+    <div class="pageContainer flex flex-direction-column" @click="hideClickWrapper" ><!--@click="hideClickWrapper"-->
         <Header :activeIndex="activeIndex"></Header>
         <el-main class="bg2">
             <div class="container flex flex-justify-content-center">
@@ -55,7 +55,7 @@
                             </div>
                             <div class="operation flex flex-justify-content-between mt-24">
                                 <el-button class="operationBtn operationBtn_approve color6 font-16 font-family-bold font-weight-b"
-                                           @click="handleApprove(currCoin.coin)">Approve({{currCoin.approve?'already':'notready'}})
+                                           @click="handleApprove(currCoin.coin)" :disabled="currCoin.approve">Approve({{currCoin.approve?'already':'notready'}})
                                 </el-button>
                                 <el-button class="operationBtn operationBtn_mint ml-20 border-radius-8 color7 font-16 font-family-bold font-weight-b"
                                            :loading="isLoading" @click="handleMint">Mint
@@ -119,6 +119,8 @@
                 <MintNews :showNews="showNews" @handleShowReward="handleShowReward"></MintNews>
                 <MintReward :showReward="showReward" @handleHideReward="handleHideReward"></MintReward>
                 <Tips :showTips="successedTips"></Tips>
+                <Tips :showTips="failedTips"></Tips>
+                <Tips :showTips="waitingTips"></Tips>
             </div>
         </el-main>
         <Footer></Footer>
@@ -152,21 +154,6 @@
 				activeIndex: '0',
 				curr: 0,
 				toNum: '',
-				/*fromInfo: {
-					fromNum: '',
-					showSelect: false,
-					balance: NaN
-				},
-				fromInfo2: {
-					fromNum: '',
-					showSelect: false,
-					balance: NaN
-				},
-				fromInfo3: {
-					fromNum: '',
-					showSelect: false,
-					balance: NaN
-				},*/
 				currCoin: {
 					url: require('../../static/images/mint/busd.png'),
 					coin: 'BUSD',
@@ -187,14 +174,6 @@
 					{
 						url: 'https://mstable.app/static/media/USDC.fcebf28c.svg',
 						coin: 'USDC',
-						fromNum: '',
-						approve: false,
-						showSelect: false,
-						balance: NaN
-					},
-					{
-						url: require('../../static/images/mint/tusd.svg'),
-						coin: 'TUSD',
 						fromNum: '',
 						approve: false,
 						showSelect: false,
@@ -233,6 +212,8 @@
 		},
 		async created () {
 			this.currCoin = (await this.updataBalance())[0];
+			this.updataApprove();
+
 		},
 		mounted() {
 			this.intervalId = setInterval(async () => {
@@ -240,16 +221,14 @@
 				//this.updataBalance();
 				//this.checkApprove(this.currCoin,solidityConfig.ContractMsg.MassetProxy.address);
 				this.updataApprove();
-
 				for(let i in this.selectCoinList){
+					//this.checkApprove(this.selectCoinList[i].coin,solidityConfig.ContractMsg.MassetProxy.address);
 					if(this.currCoin.coin == this.selectCoinList[i].coin){
 						this.currCoin.approve = this.selectCoinList[i].approve;
 					}
 				}
 
 			}, 1000)
-
-
 		},
 		components: {
 			Header,
@@ -274,16 +253,25 @@
 			},
 		},
 		methods: {
+			async mintBtn(){
+				await mint(nameList[0],amtList[0]);
+			},
 			async goApprove(coinName){
-				await goApprove(coinName.toLowerCase(),10000000000);
+				let info = await goApprove(coinName.toLowerCase(),10000000000);
+				console.log(info);
+				if(info.success){
+					this.successedTips.isShow = true;
+				}else {
+					this.failedTips.isShow = true;
+                }
             },
 			async updataApprove(){
 				for(let i in this.selectCoinList){
 					this.selectCoinList[i].approve = await this.checkApprove(this.selectCoinList[i].coin,solidityConfig.ContractMsg.MassetProxy.address);
 				}
             },
-			checkApprove(name,fromAddr){
-				return checkApprove(name,fromAddr);
+			async checkApprove(name,fromAddr){
+				return await checkApprove(name,fromAddr);
             },
 
 			stateFormat_(num) {
@@ -302,7 +290,6 @@
 			},
 			handlerSelectCoin(item) {
 				this.currCoin = item
-				console.log('this.currCoin.showSelect',this.currCoin.showSelect);
 				if(!this.currCoin.showSelect){
 					this.currCoin.showSelect = true
 				}
@@ -327,21 +314,7 @@
 			},
 			hideClickWrapper() {
 				if (document.querySelector('.selectCoinList')) {
-					if (this.fromInfo.showSelect) {
-						this.$nextTick(() => {
-							this.fromInfo.showSelect = false
-						})
-					}
-					if (this.fromInfo2.showSelect) {
-						this.$nextTick(() => {
-							this.fromInfo2.showSelect = false
-						})
-					}
-					if (this.fromInfo3.showSelect) {
-						this.$nextTick(() => {
-							this.fromInfo3.showSelect = false
-						})
-					}
+					this.currCoin.showSelect = false
 				}
 			},
 			async updataBalance() {

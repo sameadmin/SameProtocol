@@ -40,12 +40,6 @@
             staked: NaN
           },
           {
-            url: require('../../static/images/mint/tusd.svg'),
-            coin: 'TUSD',
-            liquidity: NaN,
-            staked: NaN
-          },
-          {
             url: 'https://mstable.app/static/media/USDT.aaa204b0.svg',
             coin: 'USDT',
             liquidity: NaN,
