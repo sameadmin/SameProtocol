@@ -37,8 +37,8 @@
           <div class="recordItem-r rewardsBtn color5 fontWeight-b font-family-bold">1.5 SAME</div>
         </div>
         <div class="recordItem flex flex-justify-content-between flex-align-items-center font-14 color1">
-          <div class="recordItem-l fontWeight-4 font-family-regular">Countdown:</div>
-          <div class="recordItem-r fontWeight-b font-family-bold">14:45</div>
+          <div class="recordItem-l fontWeight-4 font-family-regular">Countdown(Blocks):</div>
+          <div class="recordItem-r fontWeight-b font-family-bold">14</div>
         </div>
       </div>
     </div>
@@ -54,7 +54,7 @@
         percentList: [
           {
             desc: 'Release Period:',
-            val: '15 min',
+            val: '15 Blocks',
             percent: 30
           },
           {

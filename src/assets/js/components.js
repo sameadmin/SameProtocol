@@ -220,11 +220,12 @@ export function checkBalance (nowBalance , cutAmt){
 //单个种类造币
 export async function mint (name,val){
   try {
+    val = Number(val);
     var solidityConfig = require(`../solidityConfig`)
     var decimals = (await bcView(name, 'decimals')).info;
     var amt = numberToHex (val, decimals);
-    var approveInfo = await bcWrite(name ,`approve`,[solidityConfig.ContractMsg.MassetProxy.address,amt]);
-    if(!approveInfo.success){return  { success: false, info: 'approve err' }};
+    /*var approveInfo = await bcWrite(name ,`approve`,[solidityConfig.ContractMsg.MassetProxy.address,amt]);
+    if(!approveInfo.success){return  { success: false, info: 'approve err' }};*/
     var info = await bcWrite(`MassetProxy` ,`mint`,[solidityConfig.ContractMsg[name].address,amt]);
     return { success: info.success, info: info.info };
   }catch (e) {

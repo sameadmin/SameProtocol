@@ -54,10 +54,10 @@
                             </div>
                             <div class="operation flex flex-justify-content-between mt-24">
                                 <el-button class="operationBtn operationBtn_approve color6 font-16 font-family-bold font-weight-b"
-                                           @click="handleApprove(currCoin.coin)" :disabled="currCoin.approve">Approve({{currCoin.approve?'already':'notready'}})
+                                           :loading="isLoadingApprove" @click="handleApprove(currCoin.coin)" :disabled="currCoin.approve">Approve({{currCoin.approve?'already':'notready'}})
                                 </el-button>
                                 <el-button class="operationBtn operationBtn_mint ml-20 border-radius-8 color7 font-16 font-family-bold font-weight-b"
-                                           :loading="isLoading" @click="handleMint">Mint
+                                           :loading="isLoadingMint" @click="handleMint()" :disabled="!currCoin.approve">Mint
                                 </el-button>
                             </div>
                         </div>
@@ -126,7 +126,7 @@
 
 <script>
 	import solidityConfig from '../../src/assets/solidityConfig'
-	import {balanceOf,checkApprove,goApprove} from '../../src/assets/js/components'
+	import {balanceOf,checkApprove,goApprove,mint,mints} from '../../src/assets/js/components'
 	import Header from '@/components/Header'
 	import Footer from '@/components/Footer'
 	import MintNews from '@/components/MintNews'
@@ -146,6 +146,10 @@
 					title: 'Mint',
 					desc: 'Convert SameUSD by Stablecoins'
 				},
+				samecoinBalance:NaN,
+				sameusdBalance:NaN,
+				isLoadingApprove: false,
+				isLoadingMint: false,
 				isLoading: false,
 				isLoading2: false,
 				activeIndex: '0',
@@ -258,12 +262,10 @@
 			},
 		},
 		methods: {
-			async mintBtn(){
-				await mint(nameList[0],amtList[0]);
-			},
 			async goApprove(coinName){
+				this.isLoadingApprove = true;
 				let info = await goApprove(coinName.toLowerCase(),10000000000);
-				console.log(info);
+				this.isLoadingApprove = false;
 				if(info.success){
 					this.successedTips.isShow = true;
 				}else {
@@ -307,14 +309,20 @@
 				this.showNews = true;
 				this.showReward = false;
 			},
-			handleMint() {
-				this.isLoading = true;
+			async handleMint() {
+				this.isLoadingMint = true;
+				var info = await mint(this.currCoin.coin.toLowerCase(),this.currCoin.fromNum);
+				this.isLoadingMint = false;
+				if(info.success){
+					this.successedTips.isShow = true;
+				}else {
+					this.failedTips.isShow = true;
+				}
 			},
 			handleMint2() {
 				this.isLoading2 = true;
 			},
 			async handleApprove(coinName) {
-				//this.successedTips.isShow = true;
 				await this.goApprove(coinName);
 			},
 			hideClickWrapper() {
@@ -323,6 +331,8 @@
 				}
 			},
 			async updataBalance() {
+				this.sameusdBalance = await balanceOf('sameUsd');
+				this.samecoinBalance = await balanceOf('sameCoin');
 				for (var i in this.selectCoinList) {
 					var balance_ = await balanceOf(this.selectCoinList[i].coin.toLowerCase());
 					this.selectCoinList[i].balance = balance_;
