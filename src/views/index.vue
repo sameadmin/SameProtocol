@@ -15,7 +15,6 @@
                             </div>
                         </div>
                         <div v-if="curr == 0" class="infoBox font-14">
-                            <!--:fromInfo="currCoin" -->
                             <FromItem :showSelect_="true" :currCoin="currCoin" :selectCoinList="selectCoinList"
                                       :isDisabled="isLoading"
                                       @handlerSelect="handlerSelect()"
@@ -69,8 +68,6 @@
                                     :fromInfo="item" :currCoin="item" :selectCoinList="selectCoinList"
                                     :isDisabled="isLoading2"
                                     @handlerSelect="handlerSelects(index)"></FromItem>
-                            <!--<FromItem :fromInfo="fromInfo3" :currCoin="currCoin3" :selectCoinList="selectCoinList" :isDisabled="isLoading2"
-                                      @handlerSelect="handlerSelect3" @handlerSelectCoin="handlerSelectCoin3"></FromItem>-->
                             <img class="toIcon" src="../../static/images/mint/to.png"/>
                             <div class="toInfoBox mt-10">
                                 <div class="toInfo flex border-b">
@@ -241,11 +238,19 @@
 			FromItem
 		},
 		watch: {
-
 			'successedTips.isShow'(newVal, oldVal) {
 				if (newVal) {
 					this.timer = setTimeout(() => {
 						this.successedTips.isShow = false;
+					}, 2500)
+				} else {
+					clearTimeout(this.timer)
+				}
+			},
+			'failedTips.isShow'(newVal, oldVal) {
+				if (newVal) {
+					this.timer = setTimeout(() => {
+						this.failedTips.isShow = false;
 					}, 2500)
 				} else {
 					clearTimeout(this.timer)

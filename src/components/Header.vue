@@ -1,5 +1,5 @@
 <template>
-    <el-header class="bg1" style="height:80px;">
+    <el-header class="bg1" style="height:60px;">
         <div class="headerContainer container flex flex-align-items-center flex-justify-content-center color1">
             <img class="logo" src="../../static/images/logo.png" alt=""/>
             <Menu :activeIndex="activeIndex"></Menu>
@@ -95,7 +95,7 @@
 
 <style scoped>
     .headerContainer {
-        height: 80px;
+        height: 60px;
         position: relative;
     }
 
