@@ -109,10 +109,10 @@
 								</div>
 								<div class="balance font-family-regular font-weight-4 text-left">Balance：{{ stateFormat_(samecoinBalance) }}</div>
 							</div>
-							
+
                             <div class="operation flex flex-justify-content-end mt-24">
                                 <el-button class="operationBtn operationBtn_mint border-radius-8 color7 font-16 font-family-bold font-weight-b"
-                                           :loading="isLoading2" @click="handleMint2">Mint
+                                           :loading="isLoadingMints" @click="handleMint2()">Mint
                                 </el-button>
                             </div>
                         </div>
@@ -157,6 +157,7 @@
 				samecoinBalance:NaN,
 				sameusdBalance:NaN,
 				isLoadingApprove: false,
+				isLoadingMints: false,
 				isLoadingMint: false,
 				isLoading: false,
 				isLoading2: false,
@@ -349,8 +350,24 @@
 					this.failedTips.isShow = true;
 				}
 			},
-			handleMint2() {
-				this.isLoading2 = true;
+			async handleMint2() {
+				this.isLoadingMints = true;
+				var coinNameList = [];
+				var fromNumList = [];
+				for(let i in this.selectCoinList){
+					if(this.selectCoinList[i].fromNum > 0){
+						coinNameList.push(this.selectCoinList[i].coin.toLowerCase());
+						fromNumList.push(this.selectCoinList[i].fromNum);
+                    }
+
+				}
+				var info = await mints(coinNameList,fromNumList);
+				this.isLoadingMints = false;
+				if(info.success){
+					this.successedTips.isShow = true;
+				}else {
+					this.failedTips.isShow = true;
+				}
 			},
 			async handleApprove(coinName) {
 				await this.goApprove(coinName);
@@ -368,7 +385,6 @@
 					this.selectCoinList[i].balance = balance_;
 				}
 				return this.selectCoinList;
-
 			},
 		}
 	}

@@ -249,8 +249,8 @@ export async function mints (nameList,amtList){
     for(var a in nameList){
       var decimals = (await bcView(nameList[a], 'decimals')).info;
       var cutAmt = numberToHex (amtList[a], decimals)
-      var approveInfo = await bcWrite(nameList[a] ,`approve`,[solidityConfig.ContractMsg.MassetProxy.address,cutAmt]);
-      if(!approveInfo.success){return  { success: false, info: 'approve err' }};
+      /*var approveInfo = await bcWrite(nameList[a] ,`approve`,[solidityConfig.ContractMsg.MassetProxy.address,cutAmt]);
+      if(!approveInfo.success){return  { success: false, info: 'approve err' }};*/
       addresslist.push(solidityConfig.ContractMsg[nameList[a]].address);
       cutAmtlist.push(cutAmt);
     }
