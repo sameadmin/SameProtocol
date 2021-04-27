@@ -40,7 +40,7 @@
                   </div>
                 </div>
               </div>
-              <div class="operation flex flex-justify-content-end mt-24">
+              <div class="operation flex flex-justify-content-between mt-24">
                 <el-button class="operationBtn operationBtn_approve border-radius-8 color6 font-14 font-family-bold font-weight-b"
                            @click="handleApprove">Approve
                 </el-button>

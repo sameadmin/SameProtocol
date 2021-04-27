@@ -300,10 +300,37 @@
 			handlerSelect() {
 				this.currCoin.showSelect = !this.currCoin.showSelect
 			},
+			/*handlerSelect (){
+              this.fromInfo.showSelect = !this.fromInfo.showSelect
+            },
+            handlerSelect1 (){
+              this.fromInfo.showSelect = !this.fromInfo.showSelect
+            },
+            handlerSelect2 (){
+              this.fromInfo2.showSelect = !this.fromInfo2.showSelect
+            },
+            handlerSelect3 (){
+              this.fromInfo3.showSelect = !this.fromInfo3.showSelect
+            },*/
 
+			/*handlerSelectCoin(index) {
+				//this.currCoin = item
+				for (let i in this.selectCoinList) {
+					if (i == index) {
+						this.selectCoinList[i].showSelect = !this.selectCoinList[i].showSelect;
+					}
+				}
+			},*/
 			handlerSelectCoin(item) {
 				this.currCoin = item
+				if(this.currCoin.showSelect){
+					this.currCoin.showSelect = false
+				}
 			},
+
+			/*handlerSelectCoin3(item) {
+				this.currCoin3 = item
+			},*/
 			handleShowReward() {
 				this.showNews = false;
 				this.showReward = true;
