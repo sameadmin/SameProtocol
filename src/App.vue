@@ -195,6 +195,9 @@
   .border-l{
     border-left: 1px solid rgba(0, 0, 0, 0.08);
   }
+  .border-r{
+	border-right: 1px solid rgba(0, 0, 0, 0.08);
+  }
   .border_l{
     border-left: 1px solid #FFFFFF;
   }

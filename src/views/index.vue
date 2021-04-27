@@ -22,19 +22,20 @@
                             <img class="toIcon mt-10" src="../../static/images/mint/to.png"/>
                             <div class="toInfoBox mt-10">
                                 <div class="toInfo flex border-b">
-                                    <div class="toInfo-l flex-1 flex flex-align-items-center flex-justify-content-between">
-                                        <div class="flex-1 ml-20 text-left mr-12">
-                                            <div class="toDesc font-family-regular font-weight-4 color2">To</div>
-                                            <el-input v-model="currCoin.fromNum" :disabled="isLoading"
-                                                      placeholder="0.00"></el-input>
-                                        </div>
-                                    </div>
-                                    <div class="toInfo-r flex flex-align-items-center">
-                                        <img class="currCoinIcon ml-18" :src="require(`../../static/images/mint/samecoin.png`)"/>
-                                        <div class="currCoin font-14 color4 font-family-bold font-weight-b ml-12">SameUSD
-                                        </div>
-                                    </div>
+									<div class="toInfo-l flex-1 flex flex-align-items-center flex-justify-content-between">
+										<div class="flex-1 ml-20 text-left mr-12">
+											<div class="toDesc font-family-regular font-weight-4 color2">To</div>
+											<el-input v-model="currCoin.fromNum" :disabled="isLoading"
+													  placeholder="0.00"></el-input>
+										</div>
+									</div>
+									<div class="toInfo-r flex flex-align-items-center">
+										<img class="currCoinIcon ml-18" :src="require(`../../static/images/mint/samecoin.png`)"/>
+										<div class="currCoin font-14 color4 font-family-bold font-weight-b ml-12">SameUSD
+										</div>
+									</div>
                                 </div>
+								<div class="balance font-family-regular font-weight-4 text-left border-b">Balance：{{ stateFormat_(currCoin.balance) }}</div>
                                 <div class="toInfo flex">
                                     <div class="toInfo-l flex-1 flex flex-align-items-center flex-justify-content-between">
                                         <div class="flex-1 ml-20 text-left mr-12">
@@ -51,6 +52,7 @@
                                         </div>
                                     </div>
                                 </div>
+								<div class="balance font-family-regular font-weight-4 text-left border-t">Balance：{{ stateFormat_(currCoin.balance) }}</div>
                             </div>
                             <div class="operation flex flex-justify-content-between mt-24">
                                 <el-button class="operationBtn operationBtn_approve color6 font-16 font-family-bold font-weight-b"
@@ -135,8 +137,7 @@
 	import MintPool from '@/components/MintPool'
 	import Tips from '@/components/Tips'
 	import FromItem from '@/components/FromItem'
-	import {stateFormat} from '@/common/utils'
-
+	import { stateFormat } from '@/common/utils'
 	export default {
 		name: 'index',
 		data() {
@@ -208,7 +209,9 @@
 					icon: require('../../static/images/waiting.png'),
 					status: 'Waiting...',
 					bg: '#129BFF'
-				}
+				},
+				timer: null,
+				time: 8
 			}
 		},
 		async created () {
@@ -218,7 +221,6 @@
 		},
 		mounted() {
 			this.intervalId = setInterval(async () => {
-
 				//this.updataBalance();
 				//this.checkApprove(this.currCoin,solidityConfig.ContractMsg.MassetProxy.address);
 				this.updataApprove();
@@ -228,8 +230,12 @@
 						this.currCoin.approve = this.selectCoinList[i].approve;
 					}
 				}
-
 			}, 1000)
+
+			this.countDown(256)
+		},
+		beforeDestroy() {
+			clearInterval(this.timer)
 		},
 		components: {
 			Header,
@@ -262,6 +268,24 @@
 			},
 		},
 		methods: {
+			countDown(time){
+				var m=0;
+				var s=0;
+				m = Math.floor(time/60%60);
+				m < 10 &&(m='0'+m);
+				s = Math.floor(time%60);
+				this.timer = setInterval(() => {
+					s--;
+					s < 10 && (s='0'+s);
+					if(s==0){
+						clearInterval(this.timer);
+					}
+					console.log(m+":"+s)
+				},1000);
+			},
+			async mintBtn(){
+				await mint(nameList[0],amtList[0]);
+			},
 			async goApprove(coinName){
 				this.isLoadingApprove = true;
 				let info = await goApprove(coinName.toLowerCase(),10000000000);
@@ -280,7 +304,6 @@
 			async checkApprove(name,fromAddr){
 				return await checkApprove(name,fromAddr);
             },
-
 			stateFormat_(num) {
 				return stateFormat(num)
 			},

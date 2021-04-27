@@ -19,7 +19,6 @@ export function stateFormat(cellValue) {
   }
 }
 
-
 export function FormatNoE(num_str) {
     num_str = num_str.toString();
     if (num_str.indexOf("+") != -1) {
@@ -82,4 +81,3 @@ export function FormatNoE(num_str) {
         return num_str;
     }
 }
-

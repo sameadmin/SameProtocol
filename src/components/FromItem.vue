@@ -32,7 +32,7 @@
                 </div>
             </div>
         </div>
-        <div class="balance font-family-regular font-weight-4 text-left">Balance：{{ stateFormat_(currCoin.balance) }}
+        <div class="balance font-family-regular font-weight-4 text-left border-r border-l border-b">Balance：{{ stateFormat_(currCoin.balance) }}
         </div>
         <h5 class="text-left" style="color: crimson" v-if="currCoin.balance<currCoin.fromNum">Current balance {{ stateFormat_(currCoin.balance) }} ,Insufficient amount</h5>
     </div>
@@ -119,9 +119,6 @@
         height: 40px;
         line-height: 40px;
         padding-left: 18px;
-        border-left: 1px solid rgba(0, 0, 0, 0.08);
-        border-right: 1px solid rgba(0, 0, 0, 0.08);
-        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
     }
 
     .currCoinIcon, .arrow-up-icon {
