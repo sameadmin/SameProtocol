@@ -376,8 +376,10 @@ export async function totalMintAmt(){
 export async function totalPerMintAmt(){
   var nowBlockId_ = await nowBlockId();
   var address = await toAccount();
-  var info = (await bcView ('mintRewardLogicProxy', 'totalPerMintAmt',[nowBlockId_,address])).info;
-  return info;
+  var totalPerMintAmt_ = (await bcView ('mintRewardLogicProxy', 'totalPerMintAmt',[nowBlockId_,address])).info;
+  var decimals = (await bcView('sameCoin', 'decimals')).info;
+  var val = hexToNumber (totalPerMintAmt_, decimals)
+  return val;
 }
 
 //获取初开始mint池初samecoin奖励数量
@@ -410,7 +412,10 @@ export async function nextRoundRewards(){
   if(totalMintAmt_ == 0 ){
     return 0;
   }
-  return Number(totalPerMintAmt_)/Number(totalMintAmt_)*Number(sameCoinPerBlock_);
+  var val = Number(totalPerMintAmt_)/Number(totalMintAmt_)*Number(sameCoinPerBlock_)
+  var decimals = (await bcView('sameCoin', 'decimals')).info;
+  val = hexToNumber (val, decimals)
+  return val;
   
 }
 
