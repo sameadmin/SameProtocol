@@ -22,7 +22,8 @@
               <div class="stackListHeaderItem mt-20 flex-1 pl-20 text-left">Earnings</div>
             </div>
             <div class="stackItemBox border-b" v-for="(item,index) in stackList" :key="index">
-              <div class="stackItem flex flex-align-items-center fontWeight-4 font-family-regular">
+              <div class="stackItem flex flex-align-items-center fontWeight-4 font-family-regular"
+			  @click="handlerStakeDetails(item)">
                 <div class="stackItem_ width-294 pl-24 text-left flex flex-align-items-center">
                   <img class="coinIcon" src="../../static/images/mint/btc.svg"/>
                   <img class="coinIcon coinIcon_" src="../../static/images/mint/same.svg"/>
@@ -45,7 +46,7 @@
                     <div class="color3 mt-2">{{ item.earning_ }}</div>
                   </div>
                   <div class="flex flex-align-items-center">
-                    <img class="earningIcon mr-20" src="../../static/images/stake/more.png" @click="handlerStakeDetails(item)"/>
+                    <img class="earningIcon mr-20" src="../../static/images/stake/more.png" @click.stop="handlerStakeDetails(item)"/>
                     <!-- <img class="earningIcon mr-30" :class="{'select-caret': showDetail,'select-reverse': !showDetail}"
                               src="../../static/images/mint/down.png" @click="handlerStakeDetails(item)"/> -->
                   </div>

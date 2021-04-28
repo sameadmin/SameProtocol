@@ -6,8 +6,8 @@
         <div class="stackContainer font-14 color1">
           <MintHeader :headerInfo="headerInfo"></MintHeader>
           <div class="stackList bg1 border-radius-8">
-            <div class="stackListHeader flex bg3 fontWeight-b font-family-bold">
-              <div class="stackListHeaderItem mt-20 width-294 pl-24 text-left">Stake</div>
+            <div class="stackListHeader flex bg3 fontWeight-b font-family-bold" @click="test">
+              <div class="stackListHeaderItem mt-20 width-294 pl-24 text-left">Save</div>
               <div class="stackListHeaderItem mt-20 width-148 pl-20 text-left border_l">APY</div>
               <div class="stackListHeaderItem mt-20 width-198 pl-20 text-left border_l">Yield per $1,000</div>
               <div class="stackListHeaderItem mt-20 width-176 pr-20 text-right border_l">
@@ -22,7 +22,8 @@
               <div class="stackListHeaderItem mt-20 flex-1 pl-20 text-left">Earnings</div>
             </div>
             <div class="stackItemBox border-b" v-for="(item,index) in stackList" :key="index">
-              <div class="stackItem flex flex-align-items-center fontWeight-4 font-family-regular">
+              <div class="stackItem flex flex-align-items-center fontWeight-4 font-family-regular"
+			   @click="handlerStakeDetails(item)">
                 <div class="stackItem_ width-294 pl-24 text-left flex flex-align-items-center">
                   <img class="coinIcon" src="../../static/images/mint/btc.svg"/>
                   <img class="coinIcon coinIcon_" src="../../static/images/mint/same.svg"/>
@@ -45,7 +46,7 @@
                     <div class="color3 mt-2">{{ item.earning_ }}</div>
                   </div>
                   <div class="flex flex-align-items-center">
-                    <img class="earningIcon mr-20" src="../../static/images/stake/more.png" @click="handlerStakeDetails(item)"/>
+                    <img class="earningIcon mr-20" src="../../static/images/stake/more.png" @click.stop="handlerStakeDetails(item)"/>
                     <!-- <img class="earningIcon mr-30" :class="{'select-caret': showDetail,'select-reverse': !showDetail}"
                               src="../../static/images/mint/down.png" @click="handlerStakeDetails(item)"/> -->
                   </div>
@@ -186,6 +187,22 @@
       FromItem
     },
     methods: {
+		test (){
+			/* this.$notify.error({
+			  title: '提示',
+			  message: '错误消息'
+			}); */
+			/* this.$notify({
+			  title: '提示',
+			  message: '成功消息',
+			  type: 'success'
+			}); */
+			this.$notify({
+			  title: '提示',
+			  message: '警告消息',
+			  type: 'warning'
+			});
+		},
       stateFormat_(num){
         return stateFormat(num)
       },

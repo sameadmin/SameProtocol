@@ -56,7 +56,7 @@
 
 			logout(){
 				$cookies.set("useWallet",false);
-				showConnect=false;
+				this.showConnect=false;
             },
 			handleClose() {
 				this.showConnect = false

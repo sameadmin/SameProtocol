@@ -85,6 +85,8 @@
     color: #FFFFFF!important;
     background-color: #8D31EC!important;
   }
+  .stackItem:hover,
+  .earningIcon:hover,
   .approveBtn:hover,
   .stakeBtn:hover{
     cursor: pointer;
