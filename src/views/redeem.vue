@@ -7,38 +7,46 @@
           <MintHeader :headerInfo="headerInfo"></MintHeader>
           <div class="mintBox bg1 border-radius-32">
             <div class="mintTab flex color2 font-18 font-family-bold">
-              <div class="tabItem flex-1" :class="{'activeItem color1' : curr == 0 }" @click="curr=0">Single Coin</div>
-              <div class="tabItem flex-1" :class="{'activeItem2 color1' : curr == 1 }" @click="curr=1">Multiple Coins</div>
+              <div class="tabItem flex-1" :class="{'activeItem color1' : curr == 0 }" @click="curr=0">SameUSD Amount</div>
+              <div class="tabItem flex-1" :class="{'activeItem2 color1' : curr == 1 }" @click="curr=1">Stablecoins Amount</div>
             </div>
             <div v-if="curr == 0" class="infoBox font-14">
-              <FromItem :fromInfo="fromInfo" :currCoin="currCoin" :selectCoinList="selectCoinList" :isDisabled="isLoading"
-                        @handlerSelect="handlerSelect" @handlerSelectCoin="handlerSelectCoin"></FromItem>
+              <FromItem :fromInfo="fromInfo" :isDisabled="isLoading"></FromItem>
               <img class="toIcon mt-10" src="../../static/images/mint/to.png" />
               <div class="toInfoBox mt-10">
                 <div class="toInfo flex border-b">
                   <div class="toInfo-l flex-1 flex flex-align-items-center flex-justify-content-between">
                     <div class="flex-1 ml-20 text-left mr-12">
                       <div class="toDesc font-family-regular font-weight-4 color2">To</div>
-                      <el-input v-model="toNum" :disabled="isLoading" placeholder="0.00"></el-input>
+                      <el-input v-model="currCoin.num" :disabled="isLoading2" placeholder="0.00"></el-input>
+                    </div>
+					<div class="max border-radius-8 color2 font-family-bold mr-12" @click="max">MAX</div>
+					<el-button class="approveBtn border-radius-8 color2 font-family-bold" @click="handleApprove(currCoin.coin)" 
+					:disabled="isLoadingApproves" :loading="isLoadingApproves" >Approve</el-button>
+                  </div>
+                  <div class="toInfo-r flex flex-align-items-center" @click.stop="handlerSelect">
+                    <div class="currCoinInfo flex flex-justify-content-between">
+                        <div class="flex ml-18">
+                            <img class="currCoinIcon" :src="currCoin.url"/>
+                            <div class="currCoin font-14 color3 font-family-bold font-weight-b ml-12">{{ currCoin.coin }}
+                            </div>
+                        </div>
+                        <img class="arrow-up-icon mr-20"
+                             :class="{'select-caret': currCoin.showSelect,'select-reverse': !currCoin.showSelect}"
+                             src="../../static/images/mint/down.png"/>
+                    </div>
+                    <div class="selectCoinList bg1" v-show="currCoin.showSelect">
+                        <div class="selectCoinItem flex flex-align-items-center" v-for="(item,index) in selectCoinList" :key="index"
+                             :class="{'activeCoinItem': currCoin.coin == item.coin }" @click.stop="handlerSelectCoin(item)">
+                            <img class="currCoinIcon ml-18" :src="item.url"/>
+                            <div class="currCoin font-14 color3 font-family-bold font-weight-b ml-12"
+                                 :class="{'activeCoin': currCoin.coin == item.coin }">{{ item.coin }}
+                            </div>
+                        </div>
                     </div>
                   </div>
-                  <div class="toInfo-r flex flex-align-items-center">
-                    <img class="currCoinIcon ml-18" src="../../static/images/mint/same.svg" />
-                    <div class="currCoin font-14 color4 font-family-bold font-weight-b ml-12">Same</div>
-                  </div>
                 </div>
-                <div class="toInfo flex">
-                  <div class="toInfo-l flex-1 flex flex-align-items-center flex-justify-content-between">
-                    <div class="flex-1 ml-20 text-left mr-12">
-                      <div class="toDesc font-family-regular font-weight-4 color2">Rewards(estimate)</div>
-                      <el-input v-model="toNum" :disabled="isLoading" placeholder="0.00"></el-input>
-                    </div>
-                  </div>
-                  <div class="toInfo-r flex flex-align-items-center">
-                    <img class="currCoinIcon ml-18" src="../../static/images/mint/same.svg" />
-                    <div class="currCoin font-14 color4 font-family-bold font-weight-b ml-12">Same</div>
-                  </div>
-                </div>
+				<div class="balance font-family-regular font-weight-4 text-left">Balance：{{ stateFormat_(currCoin.balance) }}</div>
               </div>
               <div class="operation flex flex-justify-content-between mt-24">
                 <el-button class="operationBtn operationBtn_approve border-radius-8 color6 font-16 font-family-bold font-weight-b"
@@ -50,36 +58,25 @@
               </div>
             </div>
             <div v-else class="infoBox font-14">
-              <FromItem :fromInfo="fromInfo2" :currCoin="currCoin2" :selectCoinList="selectCoinList" :isDisabled="isLoading2"
-                        @handlerSelect="handlerSelect2" @handlerSelectCoin="handlerSelectCoin2"></FromItem>
-              <FromItem :fromInfo="fromInfo3" :currCoin="currCoin3" :selectCoinList="selectCoinList" :isDisabled="isLoading2"
-                        @handlerSelect="handlerSelect3" @handlerSelectCoin="handlerSelectCoin3"></FromItem>
+              <FromItem :fromInfo="fromInfo" :isDisabled="isLoading2"></FromItem>
               <img class="toIcon" src="../../static/images/mint/to.png" />
-              <div class="toInfoBox mt-10">
+              <div class="toInfoBox mt-10" v-for="(temp,i) in selectCoinList" :key="i">
                 <div class="toInfo flex border-b">
                   <div class="toInfo-l flex-1 flex flex-align-items-center flex-justify-content-between">
                     <div class="flex-1 ml-20 text-left mr-12">
                       <div class="toDesc font-family-regular font-weight-4 color2">To</div>
-                      <el-input v-model="toNum" :disabled="isLoading2" placeholder="0.00"></el-input>
+                      <el-input v-model="temp.num" :disabled="isLoading2" placeholder="0.00"></el-input>
                     </div>
+					<div class="max border-radius-8 color2 font-family-bold mr-12" @click="max">MAX</div>
+					<el-button class="approveBtn border-radius-8 color2 font-family-bold" @click="handleApprove(currCoin.coin)" 
+					:disabled="isLoadingApproves" :loading="isLoadingApproves" >Approve</el-button>
                   </div>
                   <div class="toInfo-r flex flex-align-items-center">
-                    <img class="currCoinIcon ml-18" src="../../static/images/mint/same.svg" />
-                    <div class="currCoin font-14 color4 font-family-bold font-weight-b ml-12">Same</div>
+                      <img class="currCoinIcon ml-18" :src="temp.url"/>
+                      <div class="currCoin font-14 color4 font-family-bold font-weight-b ml-12">{{ temp.coin }}</div>
                   </div>
                 </div>
-                <div class="toInfo flex">
-                  <div class="toInfo-l flex-1 flex flex-align-items-center flex-justify-content-between">
-                    <div class="flex-1 ml-20 text-left mr-12">
-                      <div class="toDesc font-family-regular font-weight-4 color2">Rewards(estimate)</div>
-                      <el-input v-model="toNum" :disabled="isLoading2" placeholder="0.00"></el-input>
-                    </div>
-                  </div>
-                  <div class="toInfo-r flex flex-align-items-center">
-                    <img class="currCoinIcon ml-18" src="../../static/images/mint/same.svg" />
-                    <div class="currCoin font-14 color4 font-family-bold font-weight-b ml-12">Same</div>
-                  </div>
-                </div>
+				<div class="balance font-family-regular font-weight-4 text-left">Balance：{{ stateFormat_(temp.balance) }}</div>
               </div>
               <div class="operation flex flex-justify-content-end mt-24">
                 <el-button class="operationBtn operationBtn_mint border-radius-8 color7 font-16 font-family-bold font-weight-b"
@@ -110,7 +107,7 @@
   import MintHeader from '@/components/MintHeader'
   import MintPool from '@/components/MintPool'
   import Tips from '@/components/Tips'
-  import FromItem from '@/components/FromItem'
+  import FromItem from '@/components/FromItem2'
   import { stateFormat } from '@/common/utils'
   export default {
     name: 'index',
@@ -125,46 +122,47 @@
         isLoading2: false,
         activeIndex: '5',
         curr: 0,
-        toNum: '',
+		isLoadingApproves: false,
         fromInfo: {
-          fromNum: '',
-          showSelect: false,
-          balance: 19921849.12387
-        },
-        fromInfo2: {
-          fromNum: '',
-          showSelect: false,
-          balance: 19921849.12388
-        },
-        fromInfo3: {
-          fromNum: '',
-          showSelect: false,
-          balance: 19921849.12389
-        },
+			balance: 19921.12387,
+			url: require('../../static/images/mint/same.svg'),
+			coin: 'SameUSD',
+			num: ''
+		},
         currCoin: {
-          url: require('../../static/images/mint/eth.svg'),
-          coin: 'ETH'
-        },
-        currCoin2: {
-          url: require('../../static/images/mint/eth.svg'),
-          coin: 'ETH'
-        },
-        currCoin3: {
-          url: require('../../static/images/mint/eth.svg'),
-          coin: 'ETH'
+			num: '',
+			showSelect: false,
+			balance: 100,
+            url: require('../../static/images/mint/busd.png'),
+            coin: 'BUSD'
         },
         selectCoinList: [
           {
-            url: require('../../static/images/mint/eth.svg'),
-            coin: 'ETH'
+			url: require('../../static/images/mint/busd.png'),
+			coin: 'BUSD',
+			num: '',
+			balance: 19921849.12387,
+			approve: false,
+			showSelect: false,
+			balance: 100
           },
           {
             url: require('../../static/images/mint/btc.svg'),
-            coin: 'BTC'
+            coin: 'BTC',
+			num: '',
+			balance: 19921849.12388,
+			approve: false,
+			showSelect: false,
+			balance: 200
           },
           {
             url: require('../../static/images/mint/same.svg'),
-            coin: 'SAME'
+            coin: 'SAME',
+			num: '',
+			balance: 19921849.12389,
+			approve: false,
+			showSelect: false,
+			balance: 300
           }
         ],
         showNews: true,
@@ -214,24 +212,29 @@
       stateFormat_(num){
         return stateFormat(num)
       },
+	  max (){
+		  
+	  },
       handlerSelect (){
-        this.fromInfo.showSelect = !this.fromInfo.showSelect
-      },
-      handlerSelect2 (){
-        this.fromInfo2.showSelect = !this.fromInfo2.showSelect
-      },
-      handlerSelect3 (){
-        this.fromInfo3.showSelect = !this.fromInfo3.showSelect
+        this.currCoin.showSelect = !this.currCoin.showSelect
       },
       handlerSelectCoin (item){
         this.currCoin = item
+		if(this.currCoin.showSelect){
+			this.currCoin.showSelect = false
+		}
       },
-      handlerSelectCoin2 (item){
-        this.currCoin2 = item
-      },
-      handlerSelectCoin3 (item){
-        this.currCoin3 = item
-      },
+	  handlerSelect2 (temp){
+	    this.currCoin2= temp
+		this.currCoin2.showSelect = !this.currCoin2.showSelect
+	  },
+	  handlerSelectCoin2 (item){
+	    this.currCoin2 = item
+		console.log(this.currCoin2)
+		if(this.currCoin2.showSelect){
+			this.currCoin2.showSelect = false
+		}
+	  },
       handleShowReward (){
         this.showNews = false
         this.showReward = true
@@ -251,19 +254,9 @@
       },
       hideClickWrapper() {
         if (document.querySelector('.selectCoinList')) {
-          if(this.fromInfo.showSelect){
+          if(this.currCoin.showSelect){
             this.$nextTick(() => {
-              this.fromInfo.showSelect = false
-            })
-          }
-          if(this.fromInfo2.showSelect){
-            this.$nextTick(() => {
-              this.fromInfo2.showSelect = false
-            })
-          }
-          if(this.fromInfo3.showSelect){
-            this.$nextTick(() => {
-              this.fromInfo3.showSelect = false
+              this.currCoin.showSelect = false
             })
           }
         }
@@ -274,6 +267,47 @@
 
 <style scoped>
   @import '../assets/mint.css';
+  .toInfo-r {
+      position: relative;
+  }
+  .selectCoinList {
+      position: absolute;
+      top: 64px;
+      left: 0;
+      right: 0;
+      width: 100%;
+      z-index: 999;
+      border-radius: 8px;
+      box-shadow: 0px 0px 64px 0px rgba(0, 0, 0, 0.08), 0px 0px 32px 0px rgba(0, 0, 0, 0.08);
+  }
+  .selectCoinItem {
+      height: 40px;
+  }
+  .activeCoinItem, .selectCoinItem:hover {
+      background: #F3F4FF;
+  }
+  .activeCoin {
+      color: #1F2BFF;
+  }
+  .max:hover,
+  .toInfo-r:hover {
+      cursor: pointer;
+  }
+  .max {
+  	height: 30px;
+  	line-height: 30px;
+      padding-left: 8px;
+      padding-right: 10px;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+  }
+  .approveBtn{
+  	height: 32px;
+  	margin-right: 6px;
+  }
+  /deep/ .el-button{
+  	border-radius: 8px;
+  	padding: 0 12px;
+  }
   /deep/ .el-input__inner{
     border: none !important;
     padding: 0;

@@ -3,8 +3,8 @@
     <el-menu-item index="0" route="/">Mint</el-menu-item>
     <el-menu-item index="1" route="/Save">Save</el-menu-item>
     <el-menu-item index="2" route="/Stake">Stake</el-menu-item>
-    <el-menu-item index="3" route="/Governance">Governance</el-menu-item>
-    <el-menu-item index="4" route="/Stats">Stats</el-menu-item>
+    <!-- <el-menu-item index="3" route="/Governance">Governance</el-menu-item>
+    <el-menu-item index="4" route="/Stats">Stats</el-menu-item> -->
     <el-menu-item index="5" route="/Redeem">Redeem</el-menu-item>
   </el-menu>
 </template>

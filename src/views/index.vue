@@ -16,7 +16,7 @@
                         </div>
                         <div v-if="curr == 0" class="infoBox font-14">
                             <FromItem :showSelect_="true" :currCoin="currCoin" :selectCoinList="selectCoinList"
-                                      :isDisabled="!currCoin.approve"
+                                      :isDisabled="isLoading"
                                       @handlerSelect="handlerSelect()"
                                       @handlerSelectCoin="handlerSelectCoin"></FromItem>
                             <img class="toIcon mt-10" src="../../static/images/mint/to.png"/>
@@ -25,7 +25,7 @@
 									<div class="toInfo-l flex-1 flex flex-align-items-center flex-justify-content-between">
 										<div class="flex-1 ml-20 text-left mr-12">
 											<div class="toDesc font-family-regular font-weight-4 color2">To</div>
-											<el-input v-model="currCoin.fromNum" :disabled="true"
+											<el-input v-model="currCoin.fromNum" :disabled="isLoading"
 													  placeholder="0.00"></el-input>
 										</div>
 									</div>
@@ -44,7 +44,7 @@
 								            <div class="toDesc font-family-regular font-weight-4 color2">
 								                Rewards(estimate)
 								            </div>
-								            <el-input v-model="toNum" :disabled="true"
+								            <el-input v-model="toNum" :disabled="isLoading"
 								                      placeholder="0.00"></el-input>
 								        </div>
 								    </div>
@@ -70,7 +70,7 @@
                                     v-for="(item , index) in selectCoinList"
                                     :showSelect_="false"
                                     :fromInfo="item" :currCoin="item" :selectCoinList="selectCoinList"
-                                    :isDisabled="!item.approve"
+                                    :isDisabled="isLoading2"
                                     @handlerSelect="handlerSelects(index)"></FromItem>
                             <img class="toIcon" src="../../static/images/mint/to.png"/>
                             <div class="toInfoBox mt-10">
@@ -78,8 +78,8 @@
                                     <div class="toInfo-l flex-1 flex flex-align-items-center flex-justify-content-between">
                                         <div class="flex-1 ml-20 text-left mr-12">
                                             <div class="toDesc font-family-regular font-weight-4 color2">To</div>
-                                            <el-input  v-model="allOutPutAmt" :disabled="true"
-                                                      placeholder="0.00"></el-input><!-- /*selectCoinList[0].fromNum +selectCoinList[1].fromNum */ -->
+                                            <el-input v-model="toNum" :disabled="isLoading2"
+                                                      placeholder="0.00"></el-input>
                                         </div>
                                     </div>
                                     <div class="toInfo-r flex flex-align-items-center">
@@ -97,7 +97,7 @@
 								            <div class="toDesc font-family-regular font-weight-4 color2">
 								                Rewards(estimate)
 								            </div>
-								            <el-input v-model="toNum" :disabled="true"
+								            <el-input v-model="toNum" :disabled="isLoading2"
 								                      placeholder="0.00"></el-input>
 								        </div>
 								    </div>
@@ -112,7 +112,7 @@
 
                             <div class="operation flex flex-justify-content-end mt-24">
                                 <el-button class="operationBtn operationBtn_mint border-radius-8 color7 font-16 font-family-bold font-weight-b"
-                                           :loading="isLoadingMints" @click="handleMint2()" :disabled="!checkMints()">Mint
+                                           :loading="isLoadingMints" @click="handleMint2()">Mint
                                 </el-button>
                             </div>
                         </div>
@@ -154,7 +154,6 @@
 					title: 'Mint',
 					desc: 'Convert SameUSD by Stablecoins'
 				},
-				allOutPutAmt:NaN,
 				samecoinBalance:NaN,
 				sameusdBalance:NaN,
 				isLoadingApprove: false,
@@ -230,11 +229,10 @@
 
 		},
 		mounted() {
-			this.interval1Id = setInterval(async () => {
+			this.intervalId = setInterval(async () => {
 				//this.updataBalance();
 				//this.checkApprove(this.currCoin,solidityConfig.ContractMsg.MassetProxy.address);
 				this.updataApprove();
-				this.updataAllOutPutAmt();
 				for(let i in this.selectCoinList){
 					//this.checkApprove(this.selectCoinList[i].coin,solidityConfig.ContractMsg.MassetProxy.address);
 					if(this.currCoin.coin == this.selectCoinList[i].coin){
@@ -243,30 +241,16 @@
 				}
 			}, 1000)
 
-			this.interval2Id = setInterval(async () => {
-				this.updataAllOutPutAmt();
-			}, 100)
-
-
 			this.countDown(256)
 		},
 		beforeDestroy() {
 			if(this.timer){
-				clearInterval(this.timer);
+				clearInterval(this.timer)
 			}
-
+			
 			if(this.tipsTimer){
-				clearTimeout(this.tipsTimer);
+				clearTimeout(this.tipsTimer)
 			}
-
-			if(this.interval1Id){
-				clearInterval(this.interval1Id);
-			}
-
-			if(this.interval2Id){
-				clearInterval(this.interval2Id);
-			}
-
 		},
 		components: {
 			Header,
@@ -293,27 +277,8 @@
 					}, 2500)
 				}
 			},
-			'selectCoinList'(){
-				this.outPutAmt();
-			},
-
 		},
 		methods: {
-			checkMints(){
-				for(let i in this.selectCoinList){
-					if(Number(this.selectCoinList[i].fromNum)>0 && this.selectCoinList[i].approve){
-						return true;
-                    }
-				}
-				return false;
-            },
-
-			updataAllOutPutAmt(){
-				this.allOutPutAmt = 0;
-				for(let i in this.selectCoinList){
-					this.allOutPutAmt += Number(this.selectCoinList[i].fromNum)
-                }
-            },
 			countDown(time){
 				var m=0;
 				var s=0;
@@ -326,7 +291,7 @@
 					if(s==0){
 						clearInterval(this.timer);
 					}
-					//console.log(m+":"+s)
+					// console.log(m+":"+s)
 				},1000);
 			},
 			async mintBtn(){
