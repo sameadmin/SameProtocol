@@ -66,12 +66,12 @@
                             </div>
                         </div>
                         <div v-else class="infoBox font-14">
-                            <FromItem
+                            <FromItem2
                                     v-for="(item , index) in selectCoinList"
                                     :showSelect_="false"
                                     :fromInfo="item" :currCoin="item" :selectCoinList="selectCoinList"
                                     :isDisabled="isLoading2"
-                                    ></FromItem><!--@handlerSelect="handlerSelects(index)"-->
+                                    ></FromItem2><!--@handlerSelect="handlerSelects(index)"-->
                             <img class="toIcon" src="../../static/images/mint/to.png"/>
                             <div class="toInfoBox mt-10">
                                 <div class="toInfo flex border-b">
@@ -144,6 +144,7 @@
 	import MintPool from '@/components/MintPool'
 	import Tips from '@/components/Tips'
 	import FromItem from '@/components/FromItem'
+	import FromItem2 from '@/components/FromItem_.vue'
 	import { stateFormat } from '@/common/utils'
 	export default {
 		name: 'index',
@@ -260,7 +261,8 @@
 			MintHeader,
 			MintPool,
 			Tips,
-			FromItem
+			FromItem,
+			FromItem2
 		},
 		watch: {
 			'successedTips.isShow'(newVal, oldVal) {

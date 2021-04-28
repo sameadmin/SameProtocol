@@ -92,6 +92,10 @@
         width: 176px;
         border-left: 1px solid rgba(0, 0, 0, 0.08);
     }
+	
+	.fromInfo-r:hover {
+		cursor: auto;
+	}
 
     .balance {
         height: 40px;

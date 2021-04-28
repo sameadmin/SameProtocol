@@ -77,6 +77,7 @@
     padding: 0 20px;
   }
   .walletItem:hover{
+	cursor: pointer;
     background: #F3F4FF;
     border: 1px solid #1F2BFF;
   }
