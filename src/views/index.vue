@@ -71,7 +71,7 @@
                                     :showSelect_="false"
                                     :fromInfo="item" :currCoin="item" :selectCoinList="selectCoinList"
                                     :isDisabled="isLoading2"
-                                    @handlerSelect="handlerSelects(index)"></FromItem>
+                                    ></FromItem><!--@handlerSelect="handlerSelects(index)"-->
                             <img class="toIcon" src="../../static/images/mint/to.png"/>
                             <div class="toInfoBox mt-10">
                                 <div class="toInfo flex border-b">
@@ -230,7 +230,7 @@
 		},
 		mounted() {
 			this.intervalId = setInterval(async () => {
-				//this.updataBalance();
+				this.updataBalance();
 				//this.checkApprove(this.currCoin,solidityConfig.ContractMsg.MassetProxy.address);
 				this.updataApprove();
 				for(let i in this.selectCoinList){
@@ -247,7 +247,7 @@
 			if(this.timer){
 				clearInterval(this.timer)
 			}
-			
+
 			if(this.tipsTimer){
 				clearTimeout(this.tipsTimer)
 			}
@@ -318,14 +318,14 @@
 			stateFormat_(num) {
 				return stateFormat(num)
 			},
-			handlerSelects(index) {
+			/*handlerSelects(index) {
 				for (let i in this.selectCoinList) {
 					if (i == index) {
 						this.selectCoinList[i].showSelect = !this.selectCoinList[i].showSelect;
 					}
 				}
 				this.fromInfo.showSelect = !this.fromInfo.showSelect
-			},
+			},*/
 			handlerSelect() {
 				this.currCoin.showSelect = !this.currCoin.showSelect
 			},

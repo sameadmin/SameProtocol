@@ -316,3 +316,111 @@ export async function redeemMulti (nameList,amtList){
     return { success: false, info: e.message };
   }
 }
+
+//获取当前可提现奖励余额
+export async function getMintReward(){
+  let address = await toAccount();
+  var solidityConfig = require(`../solidityConfig`)
+  var userInfo = (await bcView ('mintRewardLogicProxy', 'userInfo',[address])).info;
+  var unclaimedSameCoin = userInfo.unclaimedSameCoin;
+  var pendingSameCoin = (await bcView ('mintRewardLogicProxy', 'pendingSameCoin',[address])).info;
+  var decimals = (await bcView('sameCoin', 'decimals')).info;
+  var val = hexToNumber (Number(pendingSameCoin)+Number(unclaimedSameCoin), decimals)
+  return val;
+}
+
+//获取samecoin 总共已经奖励
+export async function getTotalAwards(){
+  let address = await toAccount();
+  var totalAwards_ = (await bcView ('mintRewardLogicProxy', 'totalAwards',[])).info;
+  var decimals = (await bcView('sameCoin', 'decimals')).info;
+  totalAwards_ = hexToNumber (totalAwards_, decimals)
+  return totalAwards_;
+}
+
+//当前mint区块id
+export async function nowBlockId(){
+  var nowBlockId_ = (await bcView ('mintRewardLogicProxy', 'nowBlockId',[])).info;
+  return nowBlockId_;
+}
+
+//当前mint的区间间隔
+export async function getMintRewardInterval(){
+  var rewardInterval_ = Number((await bcView ('mintRewardLogicProxy', 'rewardInterval')).info);
+  return rewardInterval_;
+}
+
+//当前区块
+export async function nowBlocks(){
+  var blockNumber = await web3.eth.getBlockNumber();
+  return blockNumber;
+}
+
+//离下一次开奖还剩多少区块
+export async function nextDrawBlocks(){
+  var nowBlocks_ = await nowBlocks();
+  var rewardInterval_ = await getMintRewardInterval();
+  return nowBlocks_ % rewardInterval_;
+}
+
+//当前区间区块id总共多少sameusd
+export async function totalMintAmt(){
+  var nowBlockId_ = await nowBlockId();
+  var info = (await bcView ('mintRewardLogicProxy', 'mintBlockIdInfo',[nowBlockId_])).info;
+  var decimals = (await bcView('sameCoin', 'decimals')).info;
+  var val = hexToNumber (info.totalMintAmt, decimals)
+  return val;
+}
+
+//该区间区块我净存多少sameusd
+export async function totalPerMintAmt(){
+  var nowBlockId_ = await nowBlockId();
+  var address = await toAccount();
+  var info = (await bcView ('mintRewardLogicProxy', 'totalPerMintAmt',[nowBlockId_,address])).info;
+  return info;
+}
+
+//获取初开始mint池初samecoin奖励数量
+export async function initialSameCoin(){
+  var info = (await bcView ('mintRewardLogicProxy', 'initialSameCoin',[])).info;
+  return info;
+}
+
+//获取（总共已经奖励/初samecoin奖励）百分比
+export async function bonusPoolPercentage(){
+  var getTotalAwards_ = await getTotalAwards();
+  var initialSameCoin_ = await initialSameCoin();
+  return getTotalAwards_/initialSameCoin_;
+}
+
+//获取 Countdown 百分比
+export async function countdownPercentage(){
+  var nextDrawBlocks_ = await nextDrawBlocks();
+  var getMintRewardInterval_ = await getMintRewardInterval();
+  
+  return nextDrawBlocks_/getMintRewardInterval_;
+}
+
+//nowdegree
+export async function nextRoundRewards(){
+  var nowdegree_ = (await bcView ('mintRewardLogicProxy', 'nowdegree',[])).info;
+  var sameCoinPerBlock_= (await bcView ('mintRewardLogicProxy', 'sameCoinPerBlock',[nowdegree_])).info;
+  var totalPerMintAmt_ = await totalPerMintAmt();
+  var totalMintAmt_ = await totalMintAmt();
+  if(totalMintAmt_ == 0 ){
+    return 0;
+  }
+  return Number(totalPerMintAmt_)/Number(totalMintAmt_)*Number(sameCoinPerBlock_);
+  
+}
+
+//
+export async function mintClaim(){
+  try {
+    var address = await toAccount();
+    var info = await bcWrite(`mintRewardLogicProxy` ,`receivePrize`,[address]);
+    return { success: info.success, info: info.info };
+  }catch (e) {
+    return { success: false, info: e.message };
+  }
+}
