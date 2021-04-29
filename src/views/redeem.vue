@@ -39,7 +39,7 @@
 
 
                             <img class="toIcon mt-10" src="../../static/images/mint/to.png"/>
-                            <FromItem :showSelect_="false" :currCoin="currCoin" :selectCoinList="selectCoinList"
+                            <FromItem :showSelect_="true" :currCoin="currCoin" :selectCoinList="selectCoinList"
                                       :showApprove="false"
                                       :isDisabled="true"
                                       @handlerSelect="handlerSelect()"
