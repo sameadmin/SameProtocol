@@ -548,3 +548,13 @@ export async function saveEarnings(){
   pendingRewards_ = hexToNumber (pendingRewards_, decimals);
   return pendingRewards_;
 }
+
+//查询Balance
+export async function getBalance(coinName){
+  //getLPBalanceOf
+  var address = await toAccount();
+  var balance_ = (await bcView (coinName, 'balanceOf',[address])).info;
+  var decimals = (await bcView(coinName, 'decimals')).info;
+  balance_ = hexToNumber (balance_, decimals);
+  return Number(balance_);
+}

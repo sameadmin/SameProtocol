@@ -76,8 +76,18 @@
           </div>
         </div>
         <div class="mt-24 mr-20 ml-20">
-          <FromItem v-if="curr==0" :fromInfo="fromInfo" :currCoin="currCoin" :selectCoinList="selectCoinList"
-           @handlerSelect="handlerSelect" @handlerSelectCoin="handlerSelectCoin"></FromItem>
+
+          <!--<FromItem v-if="curr==0" :fromInfo="fromInfo" :currCoin="currCoin" :selectCoinList="selectCoinList"
+           @handlerSelect="handlerSelect" @handlerSelectCoin="handlerSelectCoin"></FromItem>-->
+          <!--:selectCoinList="selectCoinList"-->
+          <FromItem v-if="curr==0" :showSelect_="false" :currCoin="currCoin"
+                    :showMax="true"
+                    :showApprove="false"
+                    :showerr="true"
+                    :isDisabled="!currCoin.approve"
+                    @handlerSelect="handlerSelect()"
+                    @handlerSelectCoin="handlerSelectCoin"></FromItem>
+
           <div v-else class="withdrawInfo border flex mb-10">
              <div class="flex-1 color1 pl-20">
                 <div class="flex mt-20">
@@ -98,25 +108,31 @@
       </div>
       <span slot="footer" class="dialog-footer text-center font-14 font-family-bold font-weight-b">
         <div v-if="curr==0" class="flex flex-justify-content-end">
-          <div class="approveBtn border-radius-8 color6" @click="showDetail = false">Approve</div>
-          <div class="stakeBtn border-radius-8 ml-20 color7" @click="showDetail = false">Stake</div>
+          <el-button class="approveBtn border-radius-8 color6" @click="showDetail = false" :disabled="!currCoin.approve" :loading="isLoadingApproves">Approve</el-button>
+          <el-button class="stakeBtn border-radius-8 ml-20 color7" @click="showDetail = false">Stake</el-button>
         </div>
         <div v-else class="flex flex-justify-content-end">
-          <div class="approveBtn border-radius-8 color6" @click="showDetail = false">Claim All Rewards</div>
-          <div class="stakeBtn border-radius-8 ml-20 color7" @click="showDetail = false">Withdraw All Above</div>
+          <el-button class="approveBtn border-radius-8 color6" @click="showDetail = false">Claim All Rewards</el-button>
+          <el-button class="stakeBtn border-radius-8 ml-20 color7" @click="showDetail = false">Withdraw All Above</el-button>
         </div>
       </span>
     </el-dialog>
+    <Tips :showTips="successedTips"></Tips>
+    <Tips :showTips="failedTips"></Tips>
+    <Tips :showTips="waitingTips"></Tips>
   </div>
 </template>
 
 <script>
   import Header from '@/components/Header'
   import Footer from '@/components/Footer'
+  import Tips from '@/components/Tips'
   import MintHeader from '@/components/MintHeader'
   import FromItem from '@/components/FromItem'
   import { stateFormat } from '@/common/utils'
-  import {SaveRate,yieldPer,Annualized,totalSaveLiquidity,saveStaked,saveEarnings} from '../../src/assets/js/components'
+  import solidityConfig from '../../src/assets/solidityConfig'
+
+  import {SaveRate,yieldPer,Annualized,totalSaveLiquidity,saveStaked,saveEarnings,getBalance,checkApprove} from '../../src/assets/js/components'
   export default {
     name: 'save',
     data () {
@@ -149,22 +165,22 @@
           balance: 19921849.12387
         },
         currCoin: {
-          url: require('../../static/images/mint/eth.svg'),
-          coin: 'ETH'
+          url: require('../../static/images/mint/sameusd.png'),
+          coin: 'SameUSD',
+          fromNum: '',
+          approve: false,
+          showSelect: false,
+          balance: NaN
         },
         selectCoinList: [
           {
-            url: require('../../static/images/mint/eth.svg'),
-            coin: 'ETH'
+            url: require('../../static/images/mint/sameusd.png'),
+            coin: 'SameUSD',
+            fromNum: '',
+            approve: false,
+            showSelect: false,
+            balance: NaN
           },
-          {
-            url: require('../../static/images/mint/btc.svg'),
-            coin: 'BTC'
-          },
-          {
-            url: require('../../static/images/mint/same.svg'),
-            coin: 'SAME'
-          }
         ],
         detailTab: ["Stake/Approve","Claim/Withdraw"],
         curr: 0
@@ -174,6 +190,7 @@
       Header,
       Footer,
       MintHeader,
+      Tips,
       FromItem
     },
     async created(){
@@ -182,6 +199,7 @@
       await this.totalSaveLiquidity();
       await this.saveStaked();
       await this.saveEarnings();
+      await this.updataCurrCoin();
     },
     methods: {
 		test (){
@@ -234,7 +252,24 @@
       async saveEarnings(){
         this.stackList[0].earning =  (await saveEarnings());
         return this.stackList[0].earning ;
-      }
+      },
+      async checkApprove(name,fromAddr){
+        return await checkApprove(name,fromAddr);
+      },
+      async updataCurrCoin(){
+        this.currCoin.balance = await getBalance('sameUsd');
+        this.currCoin.approve = await this.checkApprove('sameUsd',solidityConfig.ContractMsg.saveRewardLogicProxy.address);
+      },
+      async goApprove(coinName){
+        this.isLoadingApproves = true;
+        let info = await goApprove(coinName.toLowerCase(),10000000000);
+        this.isLoadingApproves = false;
+        if(info.success){
+          this.successedTips.isShow = true;
+        }else {
+          this.failedTips.isShow = true;
+        }
+      },
     }
   }
 </script>
