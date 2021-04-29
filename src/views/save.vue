@@ -11,26 +11,26 @@
               <div class="stackListHeaderItem mt-20 width-148 pl-20 text-left border_l">APY</div>
               <div class="stackListHeaderItem mt-20 width-198 pl-20 text-left border_l">Yield per $1,000</div>
               <div class="stackListHeaderItem mt-20 width-176 pr-20 text-right border_l">
-                  <el-popover
-                      placement="top-start"
-                      trigger="hover"
-                      content="The total value of funds inthis save pool.">
-                      <el-button slot="reference">Liquidity</el-button>
-                    </el-popover>
+                <el-popover
+                        placement="top-start"
+                        trigger="hover"
+                        content="The total value of funds inthis save pool.">
+                  <el-button slot="reference">Liquidity</el-button>
+                </el-popover>
               </div>
-              <div class="stackListHeaderItem mt-20 width-168 pl-20 text-left border_l">Saved</div>
-              <div class="stackListHeaderItem mt-20 flex-1 pl-20 text-left border_l">Earnings</div>
+              <div class="stackListHeaderItem mt-20 width-168 pl-20 text-left border_l">Staked</div>
+              <div class="stackListHeaderItem mt-20 flex-1 pl-20 text-left">Earnings</div>
             </div>
             <div class="stackItemBox border-b" v-for="(item,index) in stackList" :key="index">
               <div class="stackItem flex flex-align-items-center fontWeight-4 font-family-regular"
-			   @click="handlerStakeDetails(item)">
+                   @click="handlerStakeDetails(item)">
                 <div class="stackItem_ width-294 pl-24 text-left flex flex-align-items-center">
                   <img class="coinIcon" src="../../static/images/mint/sameusd.png"/>
-                 <!-- <img class="coinIcon coinIcon_" src="../../static/images/mint/samecoin.png"/>-->
+                  <!-- <img class="coinIcon coinIcon_" src="../../static/images/mint/samecoin.png"/>-->
                   <div class="stackDesc color6">{{ item.stack }}</div>
                 </div>
-                <div class="width-148 pl-20 text-left fontWeight-b font-family-bold">{{ item.apy.toFixed(2) }}%</div>
-                <div class="width-198 pl-20 text-left">{{ item.yidld.toFixed(3) }} SAME/DAY</div>
+                <div class="width-148 pl-20 text-left fontWeight-b font-family-bold">{{ item.apy }}%</div>
+                <div class="width-198 pl-20 text-left">{{ item.yidld }} SAME/DAY</div>
                 <div class="width-176 pr-20 text-right">
                   <div class="color2 fontWeight-b font-family-bold">${{ stateFormat_(item.liquidity) }}</div>
                   <div class="color3 mt-2">{{ stateFormat_(item.liquidity) }} SameUSD</div>
@@ -45,10 +45,8 @@
                     <div class="color2">{{ stateFormat_(item.earning) }}</div>
                     <div class="color3 mt-2">{{ item.earning_ }}</div>
                   </div>
-                  <div class="flex flex-align-items-center font-12 font-family-regular font-weight-4">
-					<div class="approveBtn earningBtn border-radius-8 color6"  @click.stop="handlerStakeDetails(item,0)">Save</div>
-					<div class="stakeBtn earningBtn border-radius-8 ml-20 color7 mr-12"  @click.stop="handlerStakeDetails(item,1)">Withdraw</div>
-                    <!-- <img class="earningIcon mr-20" src="../../static/images/stake/more.png" @click.stop="handlerStakeDetails(item)"/> -->
+                  <div class="flex flex-align-items-center">
+                    <img class="earningIcon mr-20" src="../../static/images/stake/more.png" @click.stop="handlerStakeDetails(item)"/>
                     <!-- <img class="earningIcon mr-30" :class="{'select-caret': showDetail,'select-reverse': !showDetail}"
                               src="../../static/images/mint/down.png" @click="handlerStakeDetails(item)"/> -->
                   </div>
@@ -66,16 +64,15 @@
     </el-main>
     <Footer></Footer>
     <el-dialog
-      :visible.sync="showDetail"
-      width="500px"
-      :center="false"
-      :before-close="handleClose">
+            :visible.sync="showDetail"
+            width="500px"
+            :center="false"
+            :before-close="handleClose">
       <div class="">
         <div class="border-b">
           <div class="detailTab flex ml-20 color3 font-18 font-family-regular fontWeight-4">
-            <div class="detailtem flex-1" :class="{'detailActiveItem font-family-bold fontWeight-b color1' : curr == index }"
-			v-for="(item,index) in detailTab" :key="index"
-             @click="curr=index">{{ item }}</div>
+            <div class="detailtem flex-1" :class="{'detailActiveItem font-family-bold fontWeight-b color1' : curr == index }" v-for="(item,index) in detailTab" :key="index"
+                 @click="curr=index">{{ item }}</div>
           </div>
         </div>
         <div class="mt-24 mr-20 ml-20">
@@ -92,28 +89,26 @@
                     @handlerSelectCoin="handlerSelectCoin"></FromItem>
 
           <div v-else class="withdrawInfo border flex mb-10">
-             <div class="flex-1 color1 pl-20">
-                <div class="flex mt-20">
-                  <img class="currCoinIcon" src="../../static/images/mint/same.svg" />
-                  <div class="ml-10 font-16 font-family-regular fontWeight-4">SAME</div>
-                </div>
-                <div class="mt-20 font-24 font-family-bold fontWeight-b text-left">{{ stateFormat_(1000) }}</div>
-             </div>
-             <div class="flex-1 border-l color1 pl-20">
-                <div class="flex mt-20">
-                  <img class="currCoinIcon" src="../../static/images/mint/same.svg" />
-                  <div class="ml-10 font-16 font-family-regular fontWeight-4">SAME</div>
-                </div>
-                <div class="mt-20 font-24 font-family-bold fontWeight-b text-left">{{ stateFormat_(1000) }}</div>
-             </div>
+            <div class="flex-1 color1 pl-20">
+              <div class="flex mt-20">
+                <img class="currCoinIcon" src="../../static/images/mint/same.svg" />
+                <div class="ml-10 font-16 font-family-regular fontWeight-4">SAME</div>
+              </div>
+              <div class="mt-20 font-24 font-family-bold fontWeight-b text-left">{{ stateFormat_(1000) }}</div>
+            </div>
+            <div class="flex-1 border-l color1 pl-20">
+              <div class="flex mt-20">
+                <img class="currCoinIcon" src="../../static/images/mint/same.svg" />
+                <div class="ml-10 font-16 font-family-regular fontWeight-4">SAME</div>
+              </div>
+              <div class="mt-20 font-24 font-family-bold fontWeight-b text-left">{{ stateFormat_(1000) }}</div>
+            </div>
           </div>
         </div>
       </div>
       <span slot="footer" class="dialog-footer text-center font-14 font-family-bold font-weight-b">
         <div v-if="curr==0" class="flex flex-justify-content-end">
-          <el-button class="approveBtn border-radius-8 color6" @click="goApprove_('sameUsd')"
-                     :disabled="!currCoin.approve"
-                     :loading="isLoadingApproves">Approve</el-button>
+          <el-button class="approveBtn border-radius-8 color6" @click="showDetail = false" :disabled="!currCoin.approve" :loading="isLoadingApproves">Approve</el-button>
           <el-button class="stakeBtn border-radius-8 ml-20 color7" @click="showDetail = false">Stake</el-button>
         </div>
         <div v-else class="flex flex-justify-content-end">
@@ -137,33 +132,16 @@
   import { stateFormat } from '@/common/utils'
   import solidityConfig from '../../src/assets/solidityConfig'
 
-  import {SaveRate,yieldPer,Annualized,totalSaveLiquidity,saveStaked,saveEarnings,getBalance,checkApprove,goApprove_} from '../../src/assets/js/components'
+  import {SaveRate,yieldPer,Annualized,totalSaveLiquidity,saveStaked,saveEarnings,getBalance,checkApprove} from '../../src/assets/js/components'
   export default {
     name: 'save',
-    watch: {
-      'successedTips.isShow'(newVal, oldVal) {
-        if (newVal) {
-          this.tipsTimer = setTimeout(() => {
-            this.successedTips.isShow = false;
-          }, 2500)
-        }
-      },
-      'failedTips.isShow'(newVal, oldVal) {
-        if (newVal) {
-          this.tipsTimer = setTimeout(() => {
-            this.failedTips.isShow = false;
-          }, 2500)
-        }
-      },
-    },
     data () {
       return {
-        isLoadingApproves:false,
         activeIndex: '1',
         headerInfo: {
           icon: require('../../static/images/save.png'),
           title: 'Save',
-          desc: 'Save SameUSD to earn Samecoin'
+          desc: 'Save Samecoin-SameUSD LP token'
         },
         stackList: [
           {
@@ -196,30 +174,16 @@
         },
         selectCoinList: [
           {
-            url: require('../../static/images/mint/eth.svg'),
-            coin: 'ETH'
+            url: require('../../static/images/mint/sameusd.png'),
+            coin: 'SameUSD',
+            fromNum: '',
+            approve: false,
+            showSelect: false,
+            balance: NaN
           },
         ],
         detailTab: ["Stake/Approve","Claim/Withdraw"],
-        curr: 0,
-        successedTips: {
-          isShow: false,
-          icon: require('../../static/images/sucess.png'),
-          status: 'Successed',
-          bg: '#1F2BFF'
-        },
-        failedTips: {
-          isShow: false,
-          icon: require('../../static/images/failed.png'),
-          status: 'Failed',
-          bg: '#FE1148'
-        },
-        waitingTips: {
-          isShow: false,
-          icon: require('../../static/images/waiting.png'),
-          status: 'Waiting...',
-          bg: '#129BFF'
-        },
+        curr: 0
       }
     },
     components: {
@@ -238,22 +202,22 @@
       await this.updataCurrCoin();
     },
     methods: {
-		test (){
-			/* this.$notify.error({
-			  title: '提示',
-			  message: '错误消息'
-			}); */
-			/* this.$notify({
-			  title: '提示',
-			  message: '成功消息',
-			  type: 'success'
-			}); */
-			this.$notify({
-			  title: '提示',
-			  message: '警告消息',
-			  type: 'warning'
-			});
-		},
+      test (){
+        /* this.$notify.error({
+          title: '提示',
+          message: '错误消息'
+        }); */
+        /* this.$notify({
+          title: '提示',
+          message: '成功消息',
+          type: 'success'
+        }); */
+        this.$notify({
+          title: '提示',
+          message: '警告消息',
+          type: 'warning'
+        });
+      },
       stateFormat_(num){
         return stateFormat(num)
       },
@@ -296,9 +260,9 @@
         this.currCoin.balance = await getBalance('sameUsd');
         this.currCoin.approve = await this.checkApprove('sameUsd',solidityConfig.ContractMsg.saveRewardLogicProxy.address);
       },
-      async goApprove_(coinName){
+      async goApprove(coinName){
         this.isLoadingApproves = true;
-        let info = await goApprove_(coinName.toLowerCase(),10000000000,solidityConfig.ContractMsg.saveRewardLogicProxy.address);
+        let info = await goApprove(coinName.toLowerCase(),10000000000);
         this.isLoadingApproves = false;
         if(info.success){
           this.successedTips.isShow = true;
@@ -344,9 +308,9 @@
     color: #000000;
   }
   .el-button:focus, .el-button:hover{
-	  background: transparent;
-	  color: #000000;
-	  border-color: transparent;
+    background: transparent;
+    color: #000000;
+    border-color: transparent;
   }
 </style>
 <style>

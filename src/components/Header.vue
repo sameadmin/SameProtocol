@@ -5,8 +5,8 @@
 		        <img class="logo" src="../../static/images/logo.png" alt=""/>
 		        <Menu :activeIndex="activeIndex"></Menu>
 		        <div v-if="!accountAddress" class="connect font-family-bold font-14 fontWeight-b" @click="showConnect=true">CONNECT</div>
-		        <div v-else class="account border-l flex flex-align-items-center pl-24 font-family-bold font-14 fontWeight-b"
-				@click="showWalletInfo=!showWalletInfo">
+		        <!--<div v-else class="account border-l flex flex-align-items-center pl-24 font-family-bold font-14 fontWeight-b"
+				@click="showWalletInfo=!showWalletInfo">-->
 		        <div v-else class="account border-l flex flex-align-items-center pl-24 font-family-bold font-14 fontWeight-b"
 				@click.stop="showWalletInfo=!showWalletInfo">
 					<div class="">{{shorten(accountAddress)}}</div>
