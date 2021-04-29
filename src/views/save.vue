@@ -297,7 +297,7 @@
       },
       async goApprove_(coinName){
         this.isLoadingApproves = true;
-        let info = await goApprove_(coinName.toLowerCase(),10000000000,solidityConfig.ContractMsg.saveRewardLogicProxy.address);
+        let info = await goApprove_(coinName,10000000000,solidityConfig.ContractMsg.saveRewardLogicProxy.address);
         this.isLoadingApproves = false;
         if(info.success){
           this.successedTips.isShow = true;

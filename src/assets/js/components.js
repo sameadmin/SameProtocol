@@ -123,9 +123,11 @@ export async function goApprove(coinName,val) {
 
 export async function goApprove_(coinName,val,address) {
   try {
+    
     var solidityConfig = require(`../solidityConfig`)
     var decimals = (await bcView(coinName, 'decimals')).info;
     var amt = numberToHex (val, decimals);
+    console.log(coinName,val,[address,FormatNoE(amt)]);
     var approveInfo = await bcWrite(coinName ,`approve`,[address,FormatNoE(amt)]);
     return approveInfo;
   }catch (e) {
