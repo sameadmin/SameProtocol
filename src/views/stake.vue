@@ -23,7 +23,7 @@
             </div>
             <div class="stackItemBox border-b" v-for="(item,index) in stackList" :key="index">
               <div class="stackItem flex flex-align-items-center fontWeight-4 font-family-regular"
-			  @click="handlerStakeDetails(item)">
+			  @click="handlerStakeDetails(item,0)">
                 <div class="stackItem_ width-294 pl-24 text-left flex flex-align-items-center">
                   <img class="coinIcon" src="../../static/images/mint/btc.svg"/>
                   <img class="coinIcon coinIcon_" src="../../static/images/mint/same.svg"/>
