@@ -18,7 +18,7 @@
                   <el-button slot="reference">Liquidity</el-button>
                 </el-popover>
               </div>
-              <div class="stackListHeaderItem mt-20 width-168 pl-20 text-left border_l">Staked</div>
+              <div class="stackListHeaderItem mt-20 width-168 pl-20 text-left border_l">Saved</div>
               <div class="stackListHeaderItem mt-20 flex-1 pl-20 text-left border_l">Earnings</div>
             </div>
             <div class="stackItemBox border-b" v-for="(item,index) in stackList" :key="index">
@@ -46,7 +46,7 @@
                     <div class="color3 mt-2">{{ item.earning_ }}</div>
                   </div>
                   <div class="flex flex-align-items-center font-12 font-family-regular font-weight-4">
-					  <div class="approveBtn earningBtn border-radius-8 color6" style="padding: 0 8px!important;"  @click.stop="handlerStakeDetails(item,0)">Stake</div>
+					  <div class="approveBtn earningBtn border-radius-8 color6" style="padding: 0 8px!important;"  @click.stop="handlerStakeDetails(item,0)">Save</div>
 					  <div class="stakeBtn earningBtn border-radius-8 ml-20 color7 mr-12" style="padding: 0 8px!important;" @click.stop="handlerStakeDetails(item,1)">Withdraw</div>
                     <!-- <img class="earningIcon mr-20" src="../../static/images/stake/more.png" @click.stop="handlerStakeDetails(item)"/> -->
                     <!-- <img class="earningIcon mr-30" :class="{'select-caret': showDetail,'select-reverse': !showDetail}"
