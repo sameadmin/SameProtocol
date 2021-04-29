@@ -29,8 +29,8 @@
                   <!-- <img class="coinIcon coinIcon_" src="../../static/images/mint/samecoin.png"/>-->
                   <div class="stackDesc color6">{{ item.stack }}</div>
                 </div>
-                <div class="width-148 pl-20 text-left fontWeight-b font-family-bold">{{ item.apy.toFixed(2) }}%</div>
-                <div class="width-198 pl-20 text-left">{{ item.yidld.toFixed(3) }} SAME/DAY</div>
+                <div class="width-148 pl-20 text-left fontWeight-b font-family-bold">{{ item.apy }}%</div>
+                <div class="width-198 pl-20 text-left">{{ item.yidld }} SAME/DAY</div>
                 <div class="width-176 pr-20 text-right">
                   <div class="color2 fontWeight-b font-family-bold">${{ stateFormat_(item.liquidity.toFixed(0)) }}</div>
                   <div class="color3 mt-2">{{ stateFormat_(item.liquidity.toFixed(0)) }} SameUSD</div>
