@@ -376,7 +376,7 @@
 			},
 			async saveClaimAllRewards() {
 				this.isLoadingSaveClaim = true;
-				let info = await saveClaimAllRewards(val);
+				let info = await saveClaimAllRewards();
 				this.isLoadingSaveClaim = false;
 				if (info.success) {
 					this.successedTips.isShow = true;
