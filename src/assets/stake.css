@@ -103,3 +103,8 @@
     border-radius: 8px 8px 0px 0px;
     height: 110px;
   }
+  .earningBtn {
+	  height: 26px;
+	  line-height: 26px;
+	  padding: 0 8px;
+  }
