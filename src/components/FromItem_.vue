@@ -119,6 +119,8 @@
 
     .max:hover {
         cursor: pointer;
+		color: #1F2BFF;
+		border: 1px solid #1F2BFF;
     }
 	
 	.fromInfo-r:hover {

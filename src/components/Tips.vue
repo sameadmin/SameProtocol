@@ -24,8 +24,8 @@
 
 <style scoped>
     .tips {
-      position: absolute;
-      top: 58px;
+      position: fixed;
+      top: 118px;
       right: 20px;
       width: 361px;
       height: 80px;

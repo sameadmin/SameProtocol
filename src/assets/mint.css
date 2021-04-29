@@ -21,11 +21,18 @@
   border-top-left-radius: 32px;
   border-top-right-radius: 32px;
 }
+.tabItem:hover {
+	color: #1F2BFF;
+}
 .activeItem{
   background: #EDEDED url(../../static/images/mint/bg.png) no-repeat;
 }
 .activeItem2{
   background: #EDEDED url(../../static/images/mint/bg2.png) no-repeat;
+}
+.activeItem:hover,
+.activeItem2:hover {
+	color: #000000!important;
 }
 .activeItem,.activeItem2{
   background-size: 100%;

@@ -1,12 +1,12 @@
 <template>
-    <div class="pageContainer flex flex-direction-column" @click="hideClickWrapper" ><!--@click="hideClickWrapper"-->
+    <div class="pageContainer flex flex-direction-column" @click="hideClickWrapper">
         <Header :activeIndex="activeIndex"></Header>
         <el-main class="bg2">
             <div class="container flex flex-justify-content-center">
                 <div class="mintContainer">
                     <MintHeader :headerInfo="headerInfo"></MintHeader>
                     <div class="mintBox bg1 border-radius-32">
-                        <div class="mintTab flex color2 font-18 font-family-bold">
+                        <div class="mintTab flex color3 font-18 font-family-bold">
                             <div class="tabItem flex-1" :class="{'activeItem color1' : curr == 0 }" @click="curr=0">
                                 Single Coin
                             </div>

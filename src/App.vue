@@ -42,6 +42,9 @@
   .bg4{
     background: #1F2BFF;
   }
+  .bg5{
+    background: #F5F5F5;
+  }
   .flex {
     display: flex;
   }
@@ -179,6 +182,9 @@
   }
   .border-radius-8{
     border-radius: 8px;
+  }
+  .border-radius-16{
+    border-radius: 16px;
   }
   .border-radius-32{
     border-radius: 32px;

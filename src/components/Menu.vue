@@ -36,9 +36,13 @@
     font-size: 16px;
     font-family: 'Inter Medium';
     font-weight: 500;
+	margin: 0 20px;
+  }
+  .el-menu-item{
+	  padding: 0;
   }
   .el-menu--horizontal>.el-menu-item.is-active{
-    border-bottom: none !important;
+   /* border-bottom: none !important; */
     font-family: 'Inter Bold';
     font-weight: bold;
   }

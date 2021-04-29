@@ -9,12 +9,12 @@
                 <div class="max border-radius-8 color2 font-family-bold mr-12" v-if="showMax" @click="max(currCoin.approve)">MAX</div>
                 <el-button class="approveBtn border-radius-8 color2 font-family-bold" v-if="showApprove" @click="handleApprove(currCoin.coin)" :disabled="currCoin.approve" :loading="isLoadingApproves" >Approve</el-button>
             </div>
-            <div class="fromInfo-r flex flex-align-items-center"
+            <div class="fromInfo-r flex flex-align-items-center font-14 color3 font-family-bold font-weight-b"
                  @click.stop="handlerSelect">
                 <div class="currCoinInfo flex flex-justify-content-between">
                     <div class="flex ml-18">
                         <img class="currCoinIcon" :src="currCoin.url"/>
-                        <div class="currCoin font-14 color3 font-family-bold font-weight-b ml-12">{{ currCoin.coin }}
+                        <div class="currCoin ml-12">{{ currCoin.coin }}
                         </div>
                     </div>
                     <img class="arrow-up-icon mr-20" v-if="showSelect_"
@@ -137,6 +137,10 @@
     .fromInfo-r:hover {
         cursor: pointer;
     }
+	
+	.fromInfo-r:hover {
+	    color: #1F2BFF;
+	}
 
     .max {
 		height: 30px;
@@ -145,6 +149,11 @@
         padding-right: 10px;
         border: 1px solid rgba(0, 0, 0, 0.08);
     }
+	
+	.max:hover {
+		color: #1F2BFF;
+		border: 1px solid #1F2BFF;
+	}
 
 	.approveBtn{
 		height: 32px;

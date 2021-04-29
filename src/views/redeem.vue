@@ -6,7 +6,7 @@
                 <div class="mintContainer">
                     <MintHeader :headerInfo="headerInfo"></MintHeader>
                     <div class="mintBox bg1 border-radius-32">
-                        <div class="mintTab flex color2 font-18 font-family-bold">
+                        <div class="mintTab flex color3 font-18 font-family-bold">
                             <div class="tabItem flex-1" :class="{'activeItem color1' : curr == 0 }" @click="curr=0">
                                 SameUSD Aomunt
                             </div>
@@ -15,7 +15,6 @@
                             </div>
                         </div>
                         <div v-if="curr == 0" class="infoBox font-14">
-
                             <div class="toInfoBox mt-10">
                                 <div class="toInfo flex border-b">
                                     <div class="toInfo-l flex-1 flex flex-align-items-center flex-justify-content-between">
@@ -406,7 +405,12 @@
 
 <style scoped>
     @import '../assets/mint.css';
-
+	.max:hover {
+	    cursor: pointer;
+		color: #1F2BFF;
+		border: 1px solid #1F2BFF;
+	}
+	
     /deep/ .el-input__inner {
         border: none !important;
         padding: 0;
