@@ -16,7 +16,10 @@
                         </div>
                         <div v-if="curr == 0" class="infoBox font-14">
                             <FromItem :showSelect_="true" :currCoin="currCoin" :selectCoinList="selectCoinList"
-                                      :isDisabled="isLoading"
+                                      :showMax="true"
+                                      :showApprove="false"
+                                      :showerr="true"
+                                      :isDisabled="!currCoin.approve"
                                       @handlerSelect="handlerSelect()"
                                       @handlerSelectCoin="handlerSelectCoin"></FromItem>
                             <img class="toIcon mt-10" src="../../static/images/mint/to.png"/>
@@ -25,7 +28,7 @@
 									<div class="toInfo-l flex-1 flex flex-align-items-center flex-justify-content-between">
 										<div class="flex-1 ml-20 text-left mr-12">
 											<div class="toDesc font-family-regular font-weight-4 color2">To</div>
-											<el-input v-model="currCoin.fromNum" :disabled="isLoading"
+											<el-input v-model="currCoin.fromNum" :disabled="true"
 													  placeholder="0.00"></el-input>
 										</div>
 									</div>
@@ -44,7 +47,7 @@
 								            <div class="toDesc font-family-regular font-weight-4 color2">
 								                Rewards(estimate)
 								            </div>
-								            <el-input v-model="toNum" :disabled="isLoading"
+								            <el-input v-model="toNum" :disabled="true"
 								                      placeholder="0.00"></el-input>
 								        </div>
 								    </div>
@@ -66,19 +69,22 @@
                             </div>
                         </div>
                         <div v-else class="infoBox font-14">
-                            <FromItem2
+                            <FromItem
                                     v-for="(item , index) in selectCoinList"
+                                    :showApprove="true"
+                                    :showMax="true"
                                     :showSelect_="false"
+                                    :showerr="true"
                                     :fromInfo="item" :currCoin="item" :selectCoinList="selectCoinList"
-                                    :isDisabled="isLoading2"
-                                    ></FromItem2><!--@handlerSelect="handlerSelects(index)"-->
+                                    :isDisabled="!item.approve"
+                                    ></FromItem><!--@handlerSelect="handlerSelects(index)"-->
                             <img class="toIcon" src="../../static/images/mint/to.png"/>
                             <div class="toInfoBox mt-10">
                                 <div class="toInfo flex border-b">
                                     <div class="toInfo-l flex-1 flex flex-align-items-center flex-justify-content-between">
                                         <div class="flex-1 ml-20 text-left mr-12">
                                             <div class="toDesc font-family-regular font-weight-4 color2">To</div>
-                                            <el-input v-model="toNum" :disabled="isLoading2"
+                                            <el-input v-model="totalMint" :disabled="true"
                                                       placeholder="0.00"></el-input>
                                         </div>
                                     </div>
@@ -97,7 +103,7 @@
 								            <div class="toDesc font-family-regular font-weight-4 color2">
 								                Rewards(estimate)
 								            </div>
-								            <el-input v-model="toNum" :disabled="isLoading2"
+								            <el-input v-model="toNum" :disabled="true"
 								                      placeholder="0.00"></el-input>
 								        </div>
 								    </div>
@@ -157,6 +163,7 @@
 				},
 				samecoinBalance:NaN,
 				sameusdBalance:NaN,
+				totalMint:NaN,
 				isLoadingApprove: false,
 				isLoadingMints: false,
 				isLoadingMint: false,
@@ -232,21 +239,34 @@
 		mounted() {
 			this.intervalId = setInterval(async () => {
 				this.updataBalance();
-				//this.checkApprove(this.currCoin,solidityConfig.ContractMsg.MassetProxy.address);
 				this.updataApprove();
 				for(let i in this.selectCoinList){
-					//this.checkApprove(this.selectCoinList[i].coin,solidityConfig.ContractMsg.MassetProxy.address);
 					if(this.currCoin.coin == this.selectCoinList[i].coin){
 						this.currCoin.approve = this.selectCoinList[i].approve;
 					}
 				}
 			}, 1000)
 
+			this.interva2lId = setInterval(async () => {
+				this.totalMint = 0;
+				for(var i in this.selectCoinList){
+					this.totalMint += Number(this.selectCoinList[i].fromNum)
+                }
+			}, 100)
+
 			this.countDown(256)
 		},
 		beforeDestroy() {
 			if(this.timer){
 				clearInterval(this.timer)
+			}
+
+			if(this.intervalId){
+				clearInterval(this.intervalId)
+			}
+
+			if(this.interva2lId){
+				clearInterval(this.interva2lId)
 			}
 
 			if(this.tipsTimer){

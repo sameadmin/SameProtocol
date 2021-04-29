@@ -25,8 +25,8 @@
               <div class="stackItem flex flex-align-items-center fontWeight-4 font-family-regular"
 			   @click="handlerStakeDetails(item)">
                 <div class="stackItem_ width-294 pl-24 text-left flex flex-align-items-center">
-                  <img class="coinIcon" src="../../static/images/mint/btc.svg"/>
-                  <img class="coinIcon coinIcon_" src="../../static/images/mint/same.svg"/>
+                  <img class="coinIcon" src="../../static/images/mint/sameusd.png"/>
+                 <!-- <img class="coinIcon coinIcon_" src="../../static/images/mint/samecoin.png"/>-->
                   <div class="stackDesc color6">{{ item.stack }}</div>
                 </div>
                 <div class="width-148 pl-20 text-left fontWeight-b font-family-bold">{{ item.apy }}</div>
@@ -128,7 +128,7 @@
         },
         stackList: [
           {
-            stack: 'Samecoin-SameUSD',
+            stack: 'SameUSD',
             apy: '+ 1742.31%',
             yidld: '1.578 SAME / Day',
             liquidity: 3663991,
@@ -139,7 +139,7 @@
             earning_: 'SAME',
             isShow: true
           },
-          {
+          /*{
             stack: 'Samecoin-SameUSD',
             apy: '+ 1742.31%',
             yidld: '1.578 SAME / Day',
@@ -150,7 +150,7 @@
             earning: 150,
             earning_: 'SAME',
             isShow: false
-          }
+          }*/
         ],
         showDetail: false,
         fromInfo: {

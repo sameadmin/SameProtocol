@@ -429,3 +429,26 @@ export async function mintClaim(){
     return { success: false, info: e.message };
   }
 }
+
+
+//获取年化
+export async function Annualized(){
+
+}
+
+//每一千刀 的 日挖矿率
+export async function miningRate(){
+
+}
+
+//总共save存款sameusd价值
+export async function totalSave(){
+
+}
+
+//多少sameusd对应samecoin 价值
+
+
+//我的存款
+
+//我的未结算受益

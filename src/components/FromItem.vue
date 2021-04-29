@@ -6,8 +6,8 @@
                     <div class="fromDesc font-family-regular font-weight-4 color2">From</div>
                     <el-input v-model="currCoin.fromNum" :disabled="isDisabled" placeholder="0.00"></el-input>
                 </div>
-                <div class="max border-radius-8 color2 font-family-bold mr-12" @click="max()">MAX</div>
-                <el-button class="approveBtn border-radius-8 color2 font-family-bold" v-if="!showSelect_" @click="handleApprove(currCoin.coin)" :disabled="currCoin.approve" :loading="isLoadingApproves" >Approve</el-button>
+                <div class="max border-radius-8 color2 font-family-bold mr-12" v-if="showMax" @click="max(currCoin.approve)">MAX</div>
+                <el-button class="approveBtn border-radius-8 color2 font-family-bold" v-if="showApprove" @click="handleApprove(currCoin.coin)" :disabled="currCoin.approve" :loading="isLoadingApproves" >Approve</el-button>
             </div>
             <div class="fromInfo-r flex flex-align-items-center"
                  @click.stop="handlerSelect">
@@ -35,7 +35,7 @@
         </div>
         <div class="balance font-family-regular font-weight-4 text-left border-r border-l border-b">Balance：{{ stateFormat_(currCoin.balance) }}
         </div>
-        <h5 class="text-left" style="color: crimson" v-if="currCoin.balance<currCoin.fromNum">Current balance {{ stateFormat_(currCoin.balance) }} ,Insufficient amount</h5>
+        <h5 class="text-left" style="color: crimson" v-if="(currCoin.balance<currCoin.fromNum) && showerr">Current balance {{ stateFormat_(currCoin.balance) }} ,Insufficient amount</h5>
     </div>
 </template>
 
@@ -61,6 +61,11 @@
 			selectCoinList: Array,
 			isDisabled: Boolean,
 			showSelect_: Boolean,
+			showMax: Boolean,
+			showApprove: Boolean,
+			showerr: Boolean,
+            type:String
+
 		},
 		components: {},
 		methods: {
@@ -73,8 +78,11 @@
 			handlerSelectCoin(item) {
 				this.$emit('handlerSelectCoin', item)
 			},
-			max() {
-				this.currCoin.fromNum = this.stateFormat_(this.currCoin.balance);
+			max(approveType) {
+				if(!approveType){
+					return 0;
+                }
+				this.currCoin.fromNum = this.currCoin.balance;
 				return this.currCoin.fromNum;
 			},
 			async handleApprove(coinName) {
@@ -84,13 +92,21 @@
 				this.isLoadingApproves = true;
 				let info = await goApprove(coinName.toLowerCase(),10000000000);
 				this.isLoadingApproves = false;
-				/*if(info.success){
+				if(info.success){
 					this.successedTips.isShow = true;
 				}else {
 					this.failedTips.isShow = true;
-				}*/
+				}
 			},
-		}
+		},
+		mounted(){
+
+        },
+		beforeDestroy() {
+			if(this.intervalId){
+				clearInterval(this.intervalId)
+			}
+		},
 	}
 </script>
 
@@ -129,7 +145,7 @@
         padding-right: 10px;
         border: 1px solid rgba(0, 0, 0, 0.08);
     }
-	
+
 	.approveBtn{
 		height: 32px;
 		margin-right: 6px;
@@ -176,7 +192,7 @@
     .container {
         position: relative;
     }
-	
+
 	/deep/ .el-button{
 		border-radius: 8px;
 		padding: 0 12px;
