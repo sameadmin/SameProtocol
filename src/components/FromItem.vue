@@ -98,6 +98,7 @@
 					this.failedTips.isShow = true;
 				}
 			},
+
 		},
 		mounted(){
 
@@ -137,7 +138,7 @@
     .fromInfo-r:hover {
         cursor: pointer;
     }
-	
+
 	.fromInfo-r:hover {
 	    color: #1F2BFF;
 	}
@@ -149,7 +150,7 @@
         padding-right: 10px;
         border: 1px solid rgba(0, 0, 0, 0.08);
     }
-	
+
 	.max:hover {
 		color: #1F2BFF;
 		border: 1px solid #1F2BFF;

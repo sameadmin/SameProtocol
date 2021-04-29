@@ -92,8 +92,7 @@ export async function checkApprove(coinName,fromAddr) {
   try {
     let myAddr = await toAccount();
     let allowanceVal = (await bcView(coinName,'allowance',[myAddr,fromAddr])).info;
-    //console.log(coinName,allowanceVal,Math.pow(10,27));
-    
+    allowanceVal = Number(allowanceVal);
     var decimals = (await bcView(coinName, 'decimals')).info;
     var amt = Number(numberToHex (val, decimals));
     if(allowanceVal < amt){
@@ -572,4 +571,44 @@ export async function getBalance(coinName){
   var decimals = (await bcView(coinName, 'decimals')).info;
   balance_ = hexToNumber (balance_, decimals);
   return Number(balance_);
+}
+
+//save存sameusd
+export async function saveDeposit(val){
+  //deposit
+  try {
+    var address = await toAccount();
+    var decimals = (await bcView('sameUsd', 'decimals')).info;
+    var amt = numberToHex (val, decimals);
+    var info = await bcWrite(`saveRewardLogicProxy` ,`deposit`,[amt]);
+    return { success: info.success, info: info.info };
+  }catch (e) {
+    return { success: false, info: e.message };
+  }
+  
+}
+
+
+//save 取款
+export async function saveWithdraw(val){
+  try {
+    var address = await toAccount();
+    var decimals = (await bcView('sameUsd', 'decimals')).info;
+    var amt = numberToHex (val, decimals);
+    var info = await bcWrite(`saveRewardLogicProxy` ,`withdraw`,[amt]);
+    return { success: info.success, info: info.info };
+  }catch (e) {
+    return { success: false, info: e.message };
+  }
+  
+}
+
+//save 只拿奖励
+export async function saveClaimAllRewards(){
+  try {
+    var info = await bcWrite(`saveRewardLogicProxy` ,`claimAllRewards`,[]);
+    return { success: info.success, info: info.info };
+  }catch (e) {
+    return { success: false, info: e.message };
+  }
 }

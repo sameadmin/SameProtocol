@@ -108,8 +108,8 @@
       </div>
       <span slot="footer" class="dialog-footer text-center font-14 font-family-bold font-weight-b">
         <div v-if="curr==0" class="flex flex-justify-content-end">
-          <el-button class="approveBtn border-radius-8 color6" @click="goApprove_('sameUsd')" :disabled="!currCoin.approve" :loading="isLoadingApproves">Approve</el-button>
-          <el-button class="stakeBtn border-radius-8 ml-20 color7" @click="showDetail = false">Stake</el-button>
+          <el-button class="approveBtn border-radius-8 color6" @click="goApprove_('sameUsd')" :disabled="currCoin.approve" :loading="isLoadingApproves">Approve</el-button>
+          <el-button class="stakeBtn border-radius-8 ml-20 color7" @click="saveDeposit(currCoin.fromNum)" :disabled="isLoadingSaveDeposit" :loading="isLoadingSaveDeposit">Stake</el-button>
         </div>
         <div v-else class="flex flex-justify-content-end">
           <el-button class="approveBtn border-radius-8 color6" @click="showDetail = false">Claim All Rewards</el-button>
@@ -132,7 +132,7 @@
   import { stateFormat } from '@/common/utils'
   import solidityConfig from '../../src/assets/solidityConfig'
 
-  import {SaveRate,yieldPer,Annualized,totalSaveLiquidity,saveStaked,saveEarnings,getBalance,checkApprove,goApprove_} from '../../src/assets/js/components'
+  import {SaveRate,yieldPer,Annualized,totalSaveLiquidity,saveStaked,saveEarnings,getBalance,checkApprove,goApprove_,saveDeposit,saveWithdraw,saveClaimAllRewards} from '../../src/assets/js/components'
   export default {
     name: 'save',
     watch: {
@@ -154,6 +154,7 @@
     data () {
       return {
         isLoadingApproves:false,
+        isLoadingSaveDeposit:false,
         activeIndex: '1',
         headerInfo: {
           icon: require('../../static/images/save.png'),
@@ -167,9 +168,9 @@
             yidld: NaN,
             liquidity: NaN,
             liquidity_: NaN,
-            stacked: '100.5',
-            stacked_: '10',
-            earning: 150,
+            stacked: NaN,
+            stacked_: NaN,
+            earning: NaN,
             earning_: 'SAME',
             isShow: true
           },
@@ -228,6 +229,7 @@
       Tips,
       FromItem
     },
+
     async created(){
       await this.updataYieldPer();
       await this.Annualized();
@@ -235,6 +237,21 @@
       await this.saveStaked();
       await this.saveEarnings();
       await this.updataCurrCoin();
+    },
+    mounted() {
+      this.intervalId = setInterval(async () => {
+        /*await this.updataYieldPer();
+        await this.Annualized();
+        await this.totalSaveLiquidity();*/
+        await this.saveStaked();
+        await this.saveEarnings();
+        await this.updataCurrCoin();
+      }, 1000)
+    },
+    beforeDestroy() {
+      if(this.intervalId){
+        clearInterval(this.intervalId)
+      }
     },
     methods: {
       test (){
@@ -301,11 +318,24 @@
         this.isLoadingApproves = false;
         if(info.success){
           this.successedTips.isShow = true;
+          showDetail = false
         }else {
           this.failedTips.isShow = true;
         }
       },
-    }
+      async saveDeposit(val){
+        this.isLoadingSaveDeposit = true;
+        let info = await saveDeposit(val);
+        this.isLoadingSaveDeposit = false;
+        if(info.success){
+          this.successedTips.isShow = true;
+          showDetail = false
+        }else {
+          this.failedTips.isShow = true;
+        }
+      }
+    },
+
   }
 </script>
 
