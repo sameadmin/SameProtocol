@@ -19,21 +19,21 @@
                 </el-popover>
               </div>
               <div class="stackListHeaderItem mt-20 width-168 pl-20 text-left border_l">Staked</div>
-              <div class="stackListHeaderItem mt-20 flex-1 pl-20 text-left">Earnings</div>
+              <div class="stackListHeaderItem mt-20 flex-1 pl-20 text-left border_l">Earnings</div>
             </div>
             <div class="stackItemBox border-b" v-for="(item,index) in stackList" :key="index">
               <div class="stackItem flex flex-align-items-center fontWeight-4 font-family-regular"
-                   @click="handlerStakeDetails(item)">
+                   @click="handlerStakeDetails(item,0)">
                 <div class="stackItem_ width-294 pl-24 text-left flex flex-align-items-center">
                   <img class="coinIcon" src="../../static/images/mint/sameusd.png"/>
                   <!-- <img class="coinIcon coinIcon_" src="../../static/images/mint/samecoin.png"/>-->
                   <div class="stackDesc color6">{{ item.stack }}</div>
                 </div>
-                <div class="width-148 pl-20 text-left fontWeight-b font-family-bold">{{ item.apy }}%</div>
-                <div class="width-198 pl-20 text-left">{{ item.yidld }} SAME/DAY</div>
+                <div class="width-148 pl-20 text-left fontWeight-b font-family-bold">{{ item.apy.toFixed(2) }}%</div>
+                <div class="width-198 pl-20 text-left">{{ item.yidld.toFixed(3) }} SAME/DAY</div>
                 <div class="width-176 pr-20 text-right">
-                  <div class="color2 fontWeight-b font-family-bold">${{ stateFormat_(item.liquidity) }}</div>
-                  <div class="color3 mt-2">{{ stateFormat_(item.liquidity) }} SameUSD</div>
+                  <div class="color2 fontWeight-b font-family-bold">${{ stateFormat_(item.liquidity.toFixed(0)) }}</div>
+                  <div class="color3 mt-2">{{ stateFormat_(item.liquidity.toFixed(0)) }} SameUSD</div>
                   <!--<div class="color3 mt-2">{{ stateFormat_(item.liquidity_) }} SAME</div>-->
                 </div>
                 <div class="width-168 pl-20 text-left">
@@ -45,8 +45,10 @@
                     <div class="color2">{{ stateFormat_(item.earning) }}</div>
                     <div class="color3 mt-2">{{ item.earning_ }}</div>
                   </div>
-                  <div class="flex flex-align-items-center">
-                    <img class="earningIcon mr-20" src="../../static/images/stake/more.png" @click.stop="handlerStakeDetails(item)"/>
+                  <div class="flex flex-align-items-center font-12 font-family-regular font-weight-4">
+					  <div class="approveBtn earningBtn border-radius-8 color6"  @click.stop="handlerStakeDetails(item,0)">Stake</div>
+					  <div class="stakeBtn earningBtn border-radius-8 ml-20 color7 mr-12"  @click.stop="handlerStakeDetails(item,1)">Withdraw</div>
+                    <!-- <img class="earningIcon mr-20" src="../../static/images/stake/more.png" @click.stop="handlerStakeDetails(item)"/> -->
                     <!-- <img class="earningIcon mr-30" :class="{'select-caret': showDetail,'select-reverse': !showDetail}"
                               src="../../static/images/mint/down.png" @click="handlerStakeDetails(item)"/> -->
                   </div>
@@ -71,7 +73,8 @@
       <div class="">
         <div class="border-b">
           <div class="detailTab flex ml-20 color3 font-18 font-family-regular fontWeight-4">
-            <div class="detailtem flex-1" :class="{'detailActiveItem font-family-bold fontWeight-b color1' : curr == index }" v-for="(item,index) in detailTab" :key="index"
+            <div class="detailtem flex-1" :class="{'detailActiveItem font-family-bold fontWeight-b color1' : curr == index }" 
+			v-for="(item,index) in detailTab" :key="index"
                  @click="curr=index">{{ item }}</div>
           </div>
         </div>
@@ -109,7 +112,7 @@
       <span slot="footer" class="dialog-footer text-center font-14 font-family-bold font-weight-b">
         <div v-if="curr==0" class="flex flex-justify-content-end">
           <el-button class="approveBtn border-radius-8 color6" @click="goApprove_('sameUsd')" :disabled="!currCoin.approve" :loading="isLoadingApproves">Approve</el-button>
-          <el-button class="stakeBtn border-radius-8 ml-20 color7" @click="showDetail = false">Stake</el-button>
+          <el-button class="stakeBtn border-radius-8 ml-20 color7" @click="showDetail = false">Save</el-button>
         </div>
         <div v-else class="flex flex-justify-content-end">
           <el-button class="approveBtn border-radius-8 color6" @click="showDetail = false">Claim All Rewards</el-button>
@@ -158,15 +161,15 @@
         headerInfo: {
           icon: require('../../static/images/save.png'),
           title: 'Save',
-          desc: 'Save Samecoin-SameUSD LP token'
+          desc: 'Save SameUSD to earn Samecoin'
         },
         stackList: [
           {
             stack: 'SameUSD',
-            apy: NaN,
-            yidld: NaN,
-            liquidity: NaN,
-            liquidity_: NaN,
+            apy: 100.233,
+            yidld: 200.4566,
+            liquidity: 100.205,
+            liquidity_: 200.205,
             stacked: '100.5',
             stacked_: '10',
             earning: 150,
@@ -199,7 +202,7 @@
             balance: NaN
           },
         ],
-        detailTab: ["Stake/Approve","Claim/Withdraw"],
+        detailTab: ["Save","Claim/Withdraw"],
         curr: 0,
         successedTips: {
           isShow: false,
@@ -256,7 +259,8 @@
       stateFormat_(num){
         return stateFormat(num)
       },
-      handlerStakeDetails (item){
+      handlerStakeDetails (item,curr){
+		this.curr = curr
         this.showDetail = true
       },
       handleClose (){
