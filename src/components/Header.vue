@@ -5,15 +5,13 @@
 		        <img class="logo" src="../../static/images/logo.png" alt=""/>
 		        <Menu :activeIndex="activeIndex"></Menu>
 		        <div v-if="!accountAddress" class="connect font-family-bold font-14 fontWeight-b" @click="showConnect=true">CONNECT</div>
-		        <!--<div v-else class="account border-l flex flex-align-items-center pl-24 font-family-bold font-14 fontWeight-b"
-				@click="showWalletInfo=!showWalletInfo">-->
 		        <div v-else class="account border-l flex flex-align-items-center pl-24 font-family-bold font-14 fontWeight-b"
 				@click.stop="showWalletInfo=!showWalletInfo">
 					<div class="">{{shorten(accountAddress)}}</div>
 					<img class="arrow-up-icon ml-20" :class="{'select-caret': showWalletInfo,'select-reverse': !showWalletInfo}"
 					 src="../../static/images/mint/down.png" />
 				</div>
-				<div v-if="showWalletInfo" class="accountInfo bg1 border-radius-16">
+				<!-- <div v-if="showWalletInfo" class="accountInfo bg1 border-radius-16">
 					<div class="title border-b flex flex-justify-content-between flex-align-items-center">
 						<div class="ml-20 font-18 color2 font-family-bold fontWeight-b">Your Wallet</div>
 						<img class="closeIcon mr-20" src="../../static/images/header/close.png"
@@ -45,14 +43,14 @@
 							<div class="ml-20 color5 font-14 font-family-bold fontWeight-b">Log Out</div>
 						</div>
 					</div>
-
-				</div>
+				</div> -->
 		    </div>
-
 		</el-header>
 		<!-- <span @click="logout()">Logout</span> -->
 		<Connect :showConnect="showConnect" @handleClose="handleClose" @showConnect="onChangeType"/>
 		<ChangeNetework :showChangeDialog="showChangeDialog" @handleClose="handleClose2"></ChangeNetework>
+		<WalletInfo :showWalletInfo="showWalletInfo" :address="address" @closeWalletInfo="closeWalletInfo"
+		@logout="logout"></WalletInfo>
 	</div>
 </template>
 
@@ -60,7 +58,7 @@
 	import Menu from '@/components/Menu'
 	import Connect from './Connect'
 	import ChangeNetework from './changeNetwork.vue'
-
+	import WalletInfo from './WalletInfo.vue'
 	import Web3 from 'web3';
 	import {toAccount,shorten,balanceOf,CheckMetaMask} from '../../src/assets/js/components'
 	//import solidityConfig from '../../src/assets/solidityConfig'
@@ -83,7 +81,8 @@
 		components: {
 			Menu,
 			Connect,
-			ChangeNetework
+			ChangeNetework,
+			WalletInfo
 		},
 		watch: {
 			showChangeDialog (v){
@@ -95,17 +94,8 @@
 			}
 		},
 		methods: {
-			onCopy() {
-			    this.$message({
-					message: '复制成功!',
-					type: 'success'
-			    });
-			},
-			onError() {
-				this.$message.error('复制失败!');
-			},
-			handleViewInExplorer (){
-
+			closeWalletInfo (){
+				this.showWalletInfo = false
 			},
 			onChangeType (type) { // type是子组件$emit传递的参数
 				this.showConnect = type

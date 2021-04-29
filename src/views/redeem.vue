@@ -8,10 +8,10 @@
                     <div class="mintBox bg1 border-radius-32">
                         <div class="mintTab flex color3 font-18 font-family-bold">
                             <div class="tabItem flex-1" :class="{'activeItem color1' : curr == 0 }" @click="curr=0">
-                                SameUSD Aomunt
+                                SameUSD Amount
                             </div>
                             <div class="tabItem flex-1" :class="{'activeItem2 color1' : curr == 1 }" @click="curr=1">
-                                Stable Aomunt
+                                Stable Amount
                             </div>
                         </div>
                         <div v-if="curr == 0" class="infoBox font-14">
@@ -19,7 +19,7 @@
                                 <div class="toInfo flex border-b">
                                     <div class="toInfo-l flex-1 flex flex-align-items-center flex-justify-content-between">
                                         <div class="flex-1 ml-20 text-left mr-12">
-                                            <div class="toDesc font-family-regular font-weight-4 color2">To</div>
+                                            <div class="toDesc font-family-regular font-weight-4 color2">From</div>
                                             <el-input v-model="currCoin.fromNum" :disabled="false"
                                                       placeholder="0.00"></el-input>
                                         </div>
@@ -34,15 +34,12 @@
                                 <div class="balance font-family-regular font-weight-4 text-left">Balance：{{ stateFormat_(sameusdBalance) }}</div>
                             </div>
                             <h5 class="text-left" style="color: crimson" v-if="(sameusdBalance<currCoin.fromNum)">Current balance {{ stateFormat_(sameusdBalance) }} ,Insufficient amount</h5>
-
-
-
-                            <img class="toIcon mt-10" src="../../static/images/mint/to.png"/>
-                            <FromItem :showSelect_="true" :currCoin="currCoin" :selectCoinList="selectCoinList"
+                            <img class="toIcon mt-10 mb-10" src="../../static/images/mint/to.png"/>
+                            <ToItem :showSelect_="true" :currCoin="currCoin" :selectCoinList="selectCoinList"
                                       :showApprove="false"
                                       :isDisabled="true"
                                       @handlerSelect="handlerSelect()"
-                                      @handlerSelectCoin="handlerSelectCoin"></FromItem>
+                                      @handlerSelectCoin="handlerSelectCoin" />
 
                             <!--<div class="toInfoBox mt-10">
                                 <div class="toInfo flex border-b">
@@ -74,7 +71,7 @@
                                 <div class="toInfo flex border-b">
                                     <div class="toInfo-l flex-1 flex flex-align-items-center flex-justify-content-between">
                                         <div class="flex-1 ml-20 text-left mr-12">
-                                            <div class="toDesc font-family-regular font-weight-4 color2">To</div>
+                                            <div class="toDesc font-family-regular font-weight-4 color2">From</div>
                                             <el-input v-model="totalRedeem" :disabled="true"
                                                       placeholder="0.00"></el-input>
                                         </div>
@@ -89,22 +86,13 @@
                                 <div class="balance font-family-regular font-weight-4 text-left">Balance：{{ stateFormat_(sameusdBalance) }}</div>
                             </div>
                             <h5 class="text-left" style="color: crimson" v-if="(sameusdBalance<currCoin.fromNum)">Current balance {{ stateFormat_(sameusdBalance) }} ,Insufficient amount</h5>
-
-
-
-                            <img class="toIcon" src="../../static/images/mint/to.png"/>
-
-                            <FromItem
+                            <img class="toIcon mt-10 mb-10" src="../../static/images/mint/to.png"/>
+                            <ToItem
                                     v-for="(item , index) in selectCoinList"
                                     :showSelect_="false"
                                     :showApprove="false"
                                     :fromInfo="item" :currCoin="item" :selectCoinList="selectCoinList"
-                                    :isDisabled="isLoading2"
-                            ></FromItem><!--@handlerSelect="handlerSelects(index)"-->
-
-
-
-
+                                    :isDisabled="isLoading2" />
                             <div class="operation flex flex-justify-content-end mt-24">
                                 <el-button class="operationBtn operationBtn_mint border-radius-8 color7 font-16 font-family-bold font-weight-b"
                                            :loading="isLoadingMints" @click="handleRedeem2()">Redeem
@@ -141,6 +129,7 @@
 	import FromItem from '@/components/FromItem'
 	import FromItem2 from '@/components/FromItem_.vue'
 	import { stateFormat } from '@/common/utils'
+	import ToItem from '@/components/ToItem'
 	export default {
 		name: 'index',
 		data() {
@@ -264,6 +253,7 @@
 			MintHeader,
 			MintPool,
 			Tips,
+			ToItem,
 			FromItem,
 			FromItem2
 		},

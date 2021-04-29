@@ -112,10 +112,12 @@
     line-height: 60px;
     padding: 0 0 0 40px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-    font-size: 18px;
-    color: #262525;
     font-weight: bold;
     font-family: 'Inter Bold';
+  }
+  /deep/ .el-dialog__title{
+	  font-size: 18px;
+	  color: #262525;
   }
   /deep/ .el-dialog__headerbtn {
     font-size: 24px;

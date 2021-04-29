@@ -205,6 +205,6 @@
 
 	/deep/ .el-button{
 		border-radius: 8px;
-		padding: 0 12px;
+		padding: 0 12px!important;
 	}
 </style>

@@ -22,7 +22,7 @@
                                       :isDisabled="!currCoin.approve"
                                       @handlerSelect="handlerSelect()"
                                       @handlerSelectCoin="handlerSelectCoin"></FromItem>
-                            <img class="toIcon mt-10" src="../../static/images/mint/to.png"/>
+                            <img class="toIcon" src="../../static/images/mint/to.png"/>
                             <div class="toInfoBox mt-10">
                                 <div class="toInfo flex border-b">
 									<div class="toInfo-l flex-1 flex flex-align-items-center flex-justify-content-between">
@@ -60,9 +60,23 @@
 								<div class="balance font-family-regular font-weight-4 text-left">Balance：{{ stateFormat_(samecoinBalance) }}</div>
 							</div>
                             <div class="operation flex flex-justify-content-between mt-24">
-                                <el-button class="operationBtn operationBtn_approve color6 font-16 font-family-bold font-weight-b"
+                                <!-- <el-button class="operationBtn operationBtn_approve color6 font-16 font-family-bold font-weight-b"
                                            :loading="isLoadingApprove" @click="handleApprove(currCoin.coin)" :disabled="currCoin.approve">Approve({{currCoin.approve?'already':'notready'}})
-                                </el-button>
+                                </el-button> -->
+								<div v-if="!currCoin.approve" style="position: relative;">
+									<el-button class="operationBtn flex flex-align-items-center operationBtn_approve color6 font-16 font-family-bold font-weight-b"
+									    :disabled="currCoin.approve">
+										 Approve
+									</el-button>
+									<img class="lockIcon" src="../../static/images/mint/locked.png" />
+								</div>
+								<div v-else style="position: relative;">
+									<el-button class="operationBtn flex flex-align-items-center operationBtn_approve color6 font-16 font-family-bold font-weight-b"
+									    :loading="isLoadingApprove" @click="handleApprove(currCoin.coin)">
+										 Approve
+									</el-button>
+									<img class="lockIcon" src="../../static/images/mint/lock.png" />
+								</div>
                                 <el-button class="operationBtn operationBtn_mint ml-20 border-radius-8 color7 font-16 font-family-bold font-weight-b"
                                            :loading="isLoadingMint" @click="handleMint()" :disabled="!currCoin.approve">Mint
                                 </el-button>
@@ -420,6 +434,18 @@
 <style scoped>
     @import '../assets/mint.css';
 
+	/deep/ .el-button{
+		font-size: 16px;
+		font-weight: bold;
+	}
+	/deep/ .el-button.is-disabled{
+		background: #EDEDED;
+		border: 1px solid #EDEDED!important;
+		color: rgba(0, 0, 0, 0.54)!important;
+	}
+	/deep/ .el-button.is-disabled:hover{
+		background: #EDEDED!important;
+	}
     /deep/ .el-input__inner {
         border: none !important;
         padding: 0;
