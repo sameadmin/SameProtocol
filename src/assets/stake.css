@@ -64,16 +64,17 @@
   height: 20px;
 }
 .approveBtn{
-    border: 1px solid #1F2BFF;
+    border: 1px solid #1F2BFF !important;
   }
   .stakeBtn{
-    border: 1px solid #942BFF;
+    border: 1px solid #942BFF !important;
   }
   .approveBtn,.stakeBtn{
     height: 40px;
-    line-height: 40px;
-   /* border-radius: 20px;*/
-    padding: 0 30px;
+    /* line-height: 40px;
+    border-radius: 20px;*/
+    padding: 0 30px !important;
+	border-radius: 8px !important;
   }
   .approveBtn:hover,
   .approveBtn:focus{

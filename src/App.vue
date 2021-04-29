@@ -151,7 +151,7 @@
     margin-left: 18px;
   }
   .ml-20{
-    margin-left: 20px;
+    margin-left: 20px!important;
   }
   .mr-12{
     margin-right: 12px;

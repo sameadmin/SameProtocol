@@ -3,7 +3,7 @@
         <div class="fromInfo flex">
             <div class="fromInfo-l flex-1 flex flex-align-items-center flex-justify-content-between">
                 <div class="flex-1 ml-20 text-left mr-12">
-                    <div class="fromDesc font-family-regular font-weight-4 color2">From</div>
+                    <div class="fromDesc font-family-regular font-weight-4 color2">To</div>
                     <el-input v-model="fromInfo.num" :disabled="isDisabled" placeholder="0.00"></el-input>
                 </div>
             </div>
