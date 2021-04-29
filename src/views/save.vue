@@ -6,7 +6,7 @@
         <div class="stackContainer font-14 color1">
           <MintHeader :headerInfo="headerInfo"></MintHeader>
           <div class="stackList bg1 border-radius-8">
-            <div class="stackListHeader flex bg3 fontWeight-b font-family-bold" @click="test">
+            <div class="stackListHeader flex bg3 fontWeight-b font-family-bold" ><!--@click="test"-->
               <div class="stackListHeaderItem mt-20 width-294 pl-24 text-left">Save</div>
               <div class="stackListHeaderItem mt-20 width-148 pl-20 text-left border_l">APY</div>
               <div class="stackListHeaderItem mt-20 width-198 pl-20 text-left border_l">Yield per $1,000</div>
@@ -29,16 +29,16 @@
                  <!-- <img class="coinIcon coinIcon_" src="../../static/images/mint/samecoin.png"/>-->
                   <div class="stackDesc color6">{{ item.stack }}</div>
                 </div>
-                <div class="width-148 pl-20 text-left fontWeight-b font-family-bold">{{ item.apy }}</div>
-                <div class="width-198 pl-20 text-left">{{ item.yidld }}</div>
+                <div class="width-148 pl-20 text-left fontWeight-b font-family-bold">{{ item.apy }}%</div>
+                <div class="width-198 pl-20 text-left">{{ item.yidld }} SAME/DAY</div>
                 <div class="width-176 pr-20 text-right">
                   <div class="color2 fontWeight-b font-family-bold">${{ stateFormat_(item.liquidity) }}</div>
                   <div class="color3 mt-2">{{ stateFormat_(item.liquidity) }} SameUSD</div>
-                  <div class="color3 mt-2">{{ stateFormat_(item.liquidity_) }} SAME</div>
+                  <!--<div class="color3 mt-2">{{ stateFormat_(item.liquidity_) }} SAME</div>-->
                 </div>
                 <div class="width-168 pl-20 text-left">
                   <div class="color2">${{ stateFormat_(item.stacked) }}</div>
-                  <div class="color3 mt-2">{{ stateFormat_(item.stacked_) }} SameUSD</div>
+                  <div class="color3 mt-2"><!--{{ stateFormat_(item.stacked_) }}--> SameUSD</div>
                 </div>
                 <div class="flex-1 pl-20 text-left flex flex-justify-content-between">
                   <div class="">
@@ -116,6 +116,7 @@
   import MintHeader from '@/components/MintHeader'
   import FromItem from '@/components/FromItem'
   import { stateFormat } from '@/common/utils'
+  import {SaveRate,yieldPer,Annualized,totalSaveLiquidity,saveStaked,saveEarnings} from '../../src/assets/js/components'
   export default {
     name: 'save',
     data () {
@@ -129,28 +130,17 @@
         stackList: [
           {
             stack: 'SameUSD',
-            apy: '+ 1742.31%',
-            yidld: '1.578 SAME / Day',
-            liquidity: 3663991,
-            liquidity_: 52278,
+            apy: NaN,
+            yidld: NaN,
+            liquidity: NaN,
+            liquidity_: NaN,
             stacked: '100.5',
             stacked_: '10',
             earning: 150,
             earning_: 'SAME',
             isShow: true
           },
-          /*{
-            stack: 'Samecoin-SameUSD',
-            apy: '+ 1742.31%',
-            yidld: '1.578 SAME / Day',
-            liquidity: 3663991,
-            liquidity_: 52278,
-            stacked: '100.5',
-            stacked_: '10',
-            earning: 150,
-            earning_: 'SAME',
-            isShow: false
-          }*/
+
         ],
         showDetail: false,
         fromInfo: {
@@ -186,6 +176,13 @@
       MintHeader,
       FromItem
     },
+    async created(){
+      await this.updataYieldPer();
+      await this.Annualized();
+      await this.totalSaveLiquidity();
+      await this.saveStaked();
+      await this.saveEarnings();
+    },
     methods: {
 		test (){
 			/* this.$notify.error({
@@ -216,8 +213,28 @@
         this.fromInfo.showSelect = !this.fromInfo.showSelect
       },
       handlerSelectCoin (item){
-        this.currCoin = item
+        this.currCoin = item;
       },
+      async updataYieldPer(){
+        this.stackList[0].yidld =  (await yieldPer(1000000000000000000000)).toFixed(6);
+        return this.stackList[0].yidld;
+      },
+      async Annualized(){
+        this.stackList[0].apy =  (await Annualized(1000000000000000000000)).toFixed(6);
+        return this.stackList[0].apy ;
+      },
+      async totalSaveLiquidity(){
+        this.stackList[0].liquidity =  (await totalSaveLiquidity());
+        return this.stackList[0].liquidity ;
+      },
+      async saveStaked(){
+        this.stackList[0].stacked =    (await saveStaked());
+        return this.stackList[0].stacked ;
+      },
+      async saveEarnings(){
+        this.stackList[0].earning =  (await saveEarnings());
+        return this.stackList[0].earning ;
+      }
     }
   }
 </script>

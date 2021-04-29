@@ -122,12 +122,24 @@ export async function goApprove(coinName,val) {
   
 }
 
+export function checkSignin_(){
+  let useWallet =  JSON.parse($cookies.get("useWallet"));
+  if(useWallet==null){
+    $cookies.set("useWallet",false);
+  }else if(useWallet==false){
+    $cookies.set("useWallet",false);
+    return false;
+  }else {
+    return true;
+  }
+}
+
 //查询当前使用钱包地址
-export async function toAccount (checkSignin=true) {
+export async function toAccount () {
   try {
     var Web3 = require(`web3`);
     window.web3 = new Web3(ethereum);
-    if(checkSignin){
+    if(checkSignin_()){
       web3 = new Web3(web3.currentProvider);
     }else {
       web3 = new Web3({});
@@ -431,24 +443,108 @@ export async function mintClaim(){
 }
 
 
-//获取年化
-export async function Annualized(){
 
+
+//当前samecoin/sameusd 价格
+export async function samecoinPrice(){
+  return 0.5;
 }
 
-//每一千刀 的 日挖矿率
-export async function miningRate(){
-
+export async function save_LpSupply(){
+  //getLPBalanceOf
+  var solidityConfig = require(`../solidityConfig`)
+  var lpBalance_ = (await bcView ('saveRewardLogicProxy', 'getLPBalanceOf',[solidityConfig.ContractMsg.saveRewardLogicProxy.address])).info;
+  return Number(lpBalance_);
 }
 
-//总共save存款sameusd价值
-export async function totalSave(){
-
+export async function save_AccScoinPerShare(){
+  var accScoinPerShare_ = (await bcView ('saveRewardLogicProxy', 'accScoinPerShare',[])).info;
+  return Number(accScoinPerShare_);
 }
 
-//多少sameusd对应samecoin 价值
+export async function save_Nowdegree(){
+  var nowdegree_ = (await bcView ('saveRewardLogicProxy', 'nowdegree',[])).info;
+  return Number(nowdegree_);
+}
+
+export async function save_BONUS_MULTIPLIER(nowdegree_){
+  //BONUS_MULTIPLIER
+  var BONUS_MULTIPLIER_ = (await bcView ('saveRewardLogicProxy', 'BONUS_MULTIPLIER',[nowdegree_])).info;
+  return Number(BONUS_MULTIPLIER_);
+}
+
+export async function save_ScoinPerBlock(){
+//scoinPerBlock
+  var scoinPerBlock_ = (await bcView ('saveRewardLogicProxy', 'scoinPerBlock',[])).info;
+  return Number(scoinPerBlock_);
+}
 
 
-//我的存款
 
-//我的未结算受益
+//save - 每一千刀 的 日挖矿率
+export async function yieldPer(amt){
+  var val = (await SaveRate(amt))*amt;
+  var decimals = (await bcView('sameCoin', 'decimals')).info;
+  val = hexToNumber (val, decimals)
+  return val;
+}
+
+//save - SaveRate
+export async function SaveRate(amt){
+  var lpSupply_ = await save_LpSupply();
+  var accScoinPerShare_ = await save_AccScoinPerShare();
+  var nowdegree_  = await save_Nowdegree();
+  var BONUS_MULTIPLIER_ = await save_BONUS_MULTIPLIER(nowdegree_);
+  var dayBlockNumber = 60*60*24/15;
+  var scoinPerBlock_ = await save_ScoinPerBlock();
+  var rewardDebt = amt * accScoinPerShare_/1000000000000000000;
+  var scoinReward = dayBlockNumber * BONUS_MULTIPLIER_   * scoinPerBlock_;
+  accScoinPerShare_ = accScoinPerShare_+(scoinReward*1000000000000000000/(lpSupply_+amt));
+  var pendingSameCoin = (amt * accScoinPerShare_/1000000000000000000)-rewardDebt;
+  var samecoinPrice_ = await samecoinPrice();
+  var SaveRate_ = (pendingSameCoin/samecoinPrice_)/amt;
+  /*console.log('SaveRate_',SaveRate_);
+  console.log('samecoinPrice_',samecoinPrice_);
+  console.log('pendingSameCoin',pendingSameCoin);
+  console.log('accScoinPerShare_',accScoinPerShare_);
+  console.log('scoinReward',scoinReward);
+  console.log('rewardDebt',rewardDebt);
+  console.log('scoinPerBlock_',scoinPerBlock_);*/
+  return SaveRate_;
+}
+
+//save - 获取年化
+export async function Annualized(amt){
+  var val = Number(await SaveRate(amt));
+  return val*365*100;
+}
+
+//save - 总共save存款sameusd价值
+export async function totalSaveLiquidity(){
+  var ret = {sameusd:0,samecoin:0}
+  var lpSupply_ = await save_LpSupply();
+  var decimals = (await bcView('sameUsd', 'decimals')).info;
+  lpSupply_ = hexToNumber (lpSupply_, decimals)
+  return lpSupply_;
+}
+
+
+//save - 我的存款
+export async function saveStaked(){
+  var solidityConfig = require(`../solidityConfig`)
+  var address = await toAccount();
+  var myBalance_ = (await bcView ('saveRewardLogicProxy', 'userInfo',[address])).info.amount;
+  var decimals = (await bcView('sameUsd', 'decimals')).info;
+  myBalance_ = hexToNumber (myBalance_, decimals);
+  return Number(myBalance_);
+}
+
+//save - 我的未结算收益samecoin
+export async function saveEarnings(){
+//pendingRewards
+  var address = await toAccount();
+  var pendingRewards_ = (await bcView ('saveRewardLogicProxy', 'pendingRewards',[address])).info;
+  var decimals = (await bcView('sameCoin', 'decimals')).info;
+  pendingRewards_ = hexToNumber (pendingRewards_, decimals);
+  return pendingRewards_;
+}
