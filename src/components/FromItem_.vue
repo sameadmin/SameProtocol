@@ -4,17 +4,38 @@
             <div class="fromInfo-l flex-1 flex flex-align-items-center flex-justify-content-between">
                 <div class="flex-1 ml-20 text-left mr-12">
                     <div class="fromDesc font-family-regular font-weight-4 color2">From</div>
-                    <el-input v-model="fromInfo.num" :disabled="isDisabled" placeholder="0.00"></el-input>
+                    <el-input v-model="currCoin.fromNum" :disabled="isDisabled" placeholder="0.00"></el-input>
+                </div>
+                <div class="max border-radius-8 color2 font-family-bold mr-12" @click="max()">MAX</div>
+                <el-button class="approveBtn border-radius-8 color2 font-family-bold" v-if="!showSelect_" @click="handleApprove(currCoin.coin)" :disabled="currCoin.approve" :loading="isLoadingApproves" >Approve</el-button>
+            </div>
+            <div class="fromInfo-r flex flex-align-items-center"
+                 @click.stop="handlerSelect">
+                <div class="currCoinInfo flex flex-justify-content-between">
+                    <div class="flex ml-18">
+                        <img class="currCoinIcon" :src="currCoin.url"/>
+                        <div class="currCoin font-14 color3 font-family-bold font-weight-b ml-12">{{ currCoin.coin }}
+                        </div>
+                    </div>
+                    <img class="arrow-up-icon mr-20" v-if="showSelect_"
+                         :class="{'select-caret': currCoin.showSelect,'select-reverse': !currCoin.showSelect}"
+                         src="../../static/images/mint/down.png"/>
+                </div>
+                <div class="selectCoinList bg1" v-show="currCoin.showSelect" v-if="showSelect_">
+                    <div class="selectCoinItem flex flex-align-items-center" v-for="(item,index) in selectCoinList"
+                         :key="index"
+                         :class="{'activeCoinItem': currCoin.coin == item.coin }" @click="handlerSelectCoin(item)">
+                        <img class="currCoinIcon ml-18" :src="item.url"/>
+                        <div class="currCoin font-14 color3 font-family-bold font-weight-b ml-12"
+                             :class="{'activeCoin': currCoin.coin == item.coin }">{{ item.coin }}
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="fromInfo-r flex flex-align-items-center">
-                <img class="currCoinIcon ml-18" :src="fromInfo.url" />
-                <div class="currCoin font-14 color4 font-family-bold font-weight-b ml-12">{{ fromInfo.coin }}</div>
-            </div>
         </div>
-        <div class="balance font-family-regular font-weight-4 text-left border-r border-l border-b">Balance: {{ stateFormat_(fromInfo.balance) }}
+        <div class="balance font-family-regular font-weight-4 text-left border-r border-l border-b">Balance：{{ stateFormat_(currCoin.balance) }}
         </div>
-        <!-- <h5 class="text-left" style="color: crimson" v-if="currCoin.balance<currCoin.fromNum">Current balance {{ stateFormat_(currCoin.balance) }} ,Insufficient amount</h5> -->
+        <h5 class="text-left" style="color: crimson" v-if="currCoin.balance<currCoin.fromNum">Current balance {{ stateFormat_(currCoin.balance) }} ,Insufficient amount</h5>
     </div>
 </template>
 
@@ -35,8 +56,11 @@
 			},
 		},
 		props: {
-			fromInfo: Object,
+			/*fromInfo: Object,*/
+			currCoin: Object,
+			selectCoinList: Array,
 			isDisabled: Boolean,
+			showSelect_: Boolean,
 		},
 		components: {},
 		methods: {
@@ -92,9 +116,27 @@
         width: 176px;
         border-left: 1px solid rgba(0, 0, 0, 0.08);
     }
+
+    .max:hover {
+        cursor: pointer;
+    }
 	
 	.fromInfo-r:hover {
-		cursor: auto;
+	    cursor: auto;
+	}
+	
+
+    .max {
+		height: 30px;
+		line-height: 30px;
+        padding-left: 8px;
+        padding-right: 10px;
+        border: 1px solid rgba(0, 0, 0, 0.08);
+    }
+	
+	.approveBtn{
+		height: 32px;
+		margin-right: 6px;
 	}
 
     .balance {
@@ -138,4 +180,9 @@
     .container {
         position: relative;
     }
+	
+	/deep/ .el-button{
+		border-radius: 8px;
+		padding: 0 12px;
+	}
 </style>

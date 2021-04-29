@@ -489,10 +489,10 @@
                 </div>
 				<div class="balance font-family-regular font-weight-4 text-left">Balance：{{ stateFormat_(currCoin.balance) }}</div>
               </div>
-              <div class="operation flex flex-justify-content-between mt-24">
-                <el-button class="operationBtn operationBtn_approve border-radius-8 color6 font-16 font-family-bold font-weight-b"
+              <div class="operation flex flex-justify-content-end mt-24">
+               &lt;!&ndash; <el-button class="operationBtn operationBtn_approve border-radius-8 color6 font-16 font-family-bold font-weight-b"
                            @click="handleApprove">Approve
-                </el-button>
+                </el-button> &ndash;&gt;
                 <el-button class="operationBtn operationBtn_mint ml-20 border-radius-8 color7 font-16 font-family-bold font-weight-b"
                            :loading="isLoading" @click="handleMint">Mint
                 </el-button>
@@ -509,10 +509,12 @@
                       <el-input v-model="temp.num" :disabled="isLoading2" placeholder="0.00"></el-input>
                     </div>
 					<div class="max border-radius-8 color2 font-family-bold mr-12" @click="max">MAX</div>
+					&lt;!&ndash; <el-button class="approveBtn border-radius-8 color2 font-family-bold" @click="handleApprove(currCoin.coin)"
+					:disabled="isLoadingApproves" :loading="isLoadingApproves" >Approve</el-button> &ndash;&gt;
 					<el-button class="approveBtn border-radius-8 color2 font-family-bold" @click="handleApprove(currCoin.coin)"
 					:disabled="isLoadingApproves" :loading="isLoadingApproves" >Approve</el-button>
                   </div>
-                  <div class="toInfo-r flex flex-align-items-center">
+                  <div class="toInfo-r toInfo-r-h flex flex-align-items-center">
                       <img class="currCoinIcon ml-18" :src="temp.url"/>
                       <div class="currCoin font-14 color4 font-family-bold font-weight-b ml-12">{{ temp.coin }}</div>
                   </div>
@@ -734,6 +736,9 @@
   .toInfo-r:hover {
       cursor: pointer;
   }
+  .toInfo-r-h:hover {
+      cursor: auto !important;
+  }
   .max {
   	height: 30px;
   	line-height: 30px;
@@ -771,5 +776,4 @@
     font-size: 18px;
     font-family: 'Inter Bold';
   }
-</style>
--->
+</style>-->
