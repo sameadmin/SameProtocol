@@ -12,7 +12,7 @@
       <div class="ml-10 color2 fontWeight-6 font-family-semiBold">Mint Reward</div>
     </div>
     <div class="RewardBalance mt-10 flex flex-justify-content-center color2 fontWeight-6 font-family-semiBold">{{/*FormatNoE*/(stateFormat_(myRewards))}}</div>
-    <el-button class="claimBtn mt-20 color5 fontWeight-b font-family-bold border-radius-8"
+    <el-button class="claimBtn color5 fontWeight-b font-family-bold border-radius-8"
          @click="mintClaim()">Claim</el-button>
 
     <div class="percentItem" >
@@ -232,8 +232,8 @@
     height: 24px;
   }
   .claimBtn{
+	  width: 100%;
     height: 60px;
-    line-height: 60px;
     background: #1F2BFF;
   }
   .coinIcon{
@@ -268,6 +268,21 @@
   .claimBtn:hover{
     opacity: 0.6;
   }
+  .el-button{
+	  padding: 0;
+	  margin-top: 10px;
+	  font-size: 18px;
+	  font-family: 'Inter Bold';
+	  font-weight: bold;
+	  color: #FFFFFF;
+	  border: 1px solid #1F2BFF;
+	  border-radius: 8px;
+  }
+  .el-button:hover {
+		color: #FFFFFF;
+		border-color: #1F2BFF;
+		background-color: #1F2BFF
+  }
   @media only screen and (max-width: 1400px) {
     .rewardContainer{
       width: 306px;
@@ -279,7 +294,6 @@
     }
     .claimBtn{
       height: 48px;
-      line-height: 48px;
     }
   }
   /deep/ .el-progress-bar__outer{

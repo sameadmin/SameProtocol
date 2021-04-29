@@ -1,5 +1,5 @@
 <template>
-    <div class="pageContainer flex flex-direction-column" @click="hideClickWrapper" ><!--@click="hideClickWrapper"-->
+    <div class="pageContainer flex flex-direction-column" @click="hideClickWrapper" >
         <Header :activeIndex="activeIndex"></Header>
         <el-main class="bg2">
             <div class="container flex flex-justify-content-center">
@@ -63,7 +63,7 @@
                                 </div>
                                 <div class="balance font-family-regular font-weight-4 text-left">Balance：{{ stateFormat_(samecoinBalance) }}</div>
                             </div>-->
-                            <div class="operation flex flex-justify-content-between mt-24">
+                            <div class="operation flex flex-justify-content-end mt-24">
                                 <el-button class="operationBtn operationBtn_mint ml-20 border-radius-8 color7 font-16 font-family-bold font-weight-b"
                                            :loading="isLoadingMint" @click="handleRedeem()" >Redeem
                                 </el-button>
