@@ -119,8 +119,21 @@ export async function goApprove(coinName,val) {
     console.log(e.message);
     return approveInfo;
   }
-  
 }
+
+export async function goApprove_(coinName,val,address) {
+  try {
+    var solidityConfig = require(`../solidityConfig`)
+    var decimals = (await bcView(coinName, 'decimals')).info;
+    var amt = numberToHex (val, decimals);
+    var approveInfo = await bcWrite(coinName ,`approve`,[address,FormatNoE(amt)]);
+    return approveInfo;
+  }catch (e) {
+    console.log(e.message);
+    return approveInfo;
+  }
+}
+
 
 export function checkSignin_(){
   let useWallet =  JSON.parse($cookies.get("useWallet"));

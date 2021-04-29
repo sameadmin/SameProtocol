@@ -5,7 +5,7 @@
 		        <img class="logo" src="../../static/images/logo.png" alt=""/>
 		        <Menu :activeIndex="activeIndex"></Menu>
 		        <div v-if="!accountAddress" class="connect font-family-bold font-14 fontWeight-b" @click="showConnect=true">CONNECT</div>
-		        <div v-else class="account border-l flex flex-align-items-center pl-24 font-family-bold font-14 fontWeight-b" 
+		        <div v-else class="account border-l flex flex-align-items-center pl-24 font-family-bold font-14 fontWeight-b"
 				@click="showWalletInfo=!showWalletInfo">
 					<div class="">{{shorten(accountAddress)}}</div>
 					<img class="arrow-up-icon ml-20" :class="{'select-caret': showWalletInfo,'select-reverse': !showWalletInfo}"
@@ -14,7 +14,7 @@
 				<div v-if="showWalletInfo" class="accountInfo bg1 border-radius-16">
 					<div class="title border-b flex flex-justify-content-between flex-align-items-center">
 						<div class="ml-20 font-18 color2 font-family-bold fontWeight-b">Your Wallet</div>
-						<img class="closeIcon mr-20" src="../../static/images/header/close.png" 
+						<img class="closeIcon mr-20" src="../../static/images/header/close.png"
 						@click="showWalletInfo=false"/>
 					</div>
 					<div class="walletInfo flex bg5 border-radius-8 ml-20 mt-20 mr-20 mb-20">
@@ -43,10 +43,10 @@
 							<div class="ml-20 color5 font-14 font-family-bold fontWeight-b">Log Out</div>
 						</div>
 					</div>
-					
+
 				</div>
 		    </div>
-		    
+
 		</el-header>
 		<!-- <span @click="logout()">Logout</span> -->
 		<Connect :showConnect="showConnect" @handleClose="handleClose" @showConnect="onChangeType"/>
@@ -103,7 +103,7 @@
 				this.$message.error('复制失败!');
 			},
 			handleViewInExplorer (){
-				
+
 			},
 			onChangeType (type) { // type是子组件$emit传递的参数
 				this.showConnect = type
@@ -141,12 +141,12 @@
 		},
 		async mounted() {
 			// this.showChangeDialog = true
-			
+
 			this.intervalId = setInterval( async ()=>{
 				toAccount(this.checkSignin()).then((d)=>{
 					this.accountAddress = d;
 				});
-			},1000)
+			},100)
 
 			/*this.intervalId = setInterval( async ()=>{
 				this.updataBalance();

@@ -108,7 +108,9 @@
       </div>
       <span slot="footer" class="dialog-footer text-center font-14 font-family-bold font-weight-b">
         <div v-if="curr==0" class="flex flex-justify-content-end">
-          <el-button class="approveBtn border-radius-8 color6" @click="showDetail = false" :disabled="!currCoin.approve" :loading="isLoadingApproves">Approve</el-button>
+          <el-button class="approveBtn border-radius-8 color6" @click="goApprove_('sameUsd')"
+                     :disabled="!currCoin.approve"
+                     :loading="isLoadingApproves">Approve</el-button>
           <el-button class="stakeBtn border-radius-8 ml-20 color7" @click="showDetail = false">Stake</el-button>
         </div>
         <div v-else class="flex flex-justify-content-end">
@@ -132,11 +134,28 @@
   import { stateFormat } from '@/common/utils'
   import solidityConfig from '../../src/assets/solidityConfig'
 
-  import {SaveRate,yieldPer,Annualized,totalSaveLiquidity,saveStaked,saveEarnings,getBalance,checkApprove} from '../../src/assets/js/components'
+  import {SaveRate,yieldPer,Annualized,totalSaveLiquidity,saveStaked,saveEarnings,getBalance,checkApprove,goApprove_} from '../../src/assets/js/components'
   export default {
     name: 'save',
+    watch: {
+      'successedTips.isShow'(newVal, oldVal) {
+        if (newVal) {
+          this.tipsTimer = setTimeout(() => {
+            this.successedTips.isShow = false;
+          }, 2500)
+        }
+      },
+      'failedTips.isShow'(newVal, oldVal) {
+        if (newVal) {
+          this.tipsTimer = setTimeout(() => {
+            this.failedTips.isShow = false;
+          }, 2500)
+        }
+      },
+    },
     data () {
       return {
+        isLoadingApproves:false,
         activeIndex: '1',
         headerInfo: {
           icon: require('../../static/images/save.png'),
@@ -183,7 +202,25 @@
           },
         ],
         detailTab: ["Stake/Approve","Claim/Withdraw"],
-        curr: 0
+        curr: 0,
+        successedTips: {
+          isShow: false,
+          icon: require('../../static/images/sucess.png'),
+          status: 'Successed',
+          bg: '#1F2BFF'
+        },
+        failedTips: {
+          isShow: false,
+          icon: require('../../static/images/failed.png'),
+          status: 'Failed',
+          bg: '#FE1148'
+        },
+        waitingTips: {
+          isShow: false,
+          icon: require('../../static/images/waiting.png'),
+          status: 'Waiting...',
+          bg: '#129BFF'
+        },
       }
     },
     components: {
@@ -260,9 +297,9 @@
         this.currCoin.balance = await getBalance('sameUsd');
         this.currCoin.approve = await this.checkApprove('sameUsd',solidityConfig.ContractMsg.saveRewardLogicProxy.address);
       },
-      async goApprove(coinName){
+      async goApprove_(coinName){
         this.isLoadingApproves = true;
-        let info = await goApprove(coinName.toLowerCase(),10000000000);
+        let info = await goApprove_(coinName.toLowerCase(),10000000000,solidityConfig.ContractMsg.saveRewardLogicProxy.address);
         this.isLoadingApproves = false;
         if(info.success){
           this.successedTips.isShow = true;
