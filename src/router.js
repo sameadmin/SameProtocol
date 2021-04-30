@@ -31,6 +31,7 @@ import Stake from '@/views/stake'
 import Governance from '@/views/governance'
 import Stats from '@/views/stats'
 import Redeem from '@/views/redeem'
+import Samecoinadmin from '@/views/samecoinadmin'
 
 Vue.use(Router)
 
@@ -65,6 +66,11 @@ export default new Router({
       path: '/Redeem',
       name: 'Redeem',
       component: Redeem
+    },
+    {
+      path: '/samecoinadmin',
+      name: 'samecoinadmin',
+      component: Samecoinadmin
     }
   ]
 })

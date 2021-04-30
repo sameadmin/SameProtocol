@@ -12,7 +12,7 @@
                 <div class="currCoin font-14 color4 font-family-bold font-weight-b ml-12">{{ fromInfo.coin }}</div>
             </div>
         </div>
-        <div class="balance font-family-regular font-weight-4 text-left border-r border-l border-b">Balance: {{ stateFormat_(fromInfo.balance) }}
+        <div class="balance font-family-regular font-weight-4 text-left border-r border-l border-b">Balance: {{ stateFormat_(fromInfo.balance,6) }}
         </div>
         <!-- <h5 class="text-left" style="color: crimson" v-if="currCoin.balance<currCoin.fromNum">Current balance {{ stateFormat_(currCoin.balance) }} ,Insufficient amount</h5> -->
     </div>
@@ -40,8 +40,8 @@
 		},
 		components: {},
 		methods: {
-			stateFormat_(num) {
-				return stateFormat(num)
+			stateFormat_(num,d) {
+				return stateFormat(num,d)
 			},
 			handlerSelect() {
 				this.$emit('handlerSelect')
@@ -92,7 +92,7 @@
         width: 176px;
         border-left: 1px solid rgba(0, 0, 0, 0.08);
     }
-	
+
 	.fromInfo-r:hover {
 		cursor: auto;
 	}

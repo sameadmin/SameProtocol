@@ -24,10 +24,10 @@
 	    					<img class="copyIcon" src="../../static/images/header/copy.png" />
 	    					<div class="ml-10">Copy Address</div>
 	    				</div>
-	    				<div class="operationItem flex-1 flex" @click="handleViewInExplorer">
-	    					<img class="browserIcon" src="../../static/images/header/browser.png" />
-	    					<div class="ml-10">View in Explorer</div>
-	    				</div>
+	    				<a class="operationItem flex-1 flex viewInExplorer" @click="handleViewInExplorer" :href="`https://bscscan.com/address/${address}`" target="_blank" >
+							<img class="browserIcon" src="../../static/images/header/browser.png" />
+							<div class="ml-10">View in Explorer</div>
+	    				</a>
 	    			</div>
 	    		</div>
 	    	</div>
@@ -104,7 +104,7 @@
 			this.failedTips.isShow = true;
 		},
 		handleViewInExplorer (){
-		
+
 		},
     }
   }
@@ -169,4 +169,8 @@
   /deep/ .el-dialog__body {
     padding: 0 0 20px 0!important;
   }
+	.viewInExplorer{
+		text-decoration: none;
+		color:inherit;
+	}
 </style>

@@ -26,40 +26,20 @@
                                         <div class="max border-radius-8 color2 font-family-bold mr-12"  @click="max()">MAX</div>
                                     </div>
                                     <div class="toInfo-r flex flex-align-items-center">
-                                        <img class="currCoinIcon ml-18" :src="require(`../../static/images/mint/samecoin.png`)"/>
+                                        <img class="currCoinIcon ml-18" :src="require(`../../static/images/mint/sameusd.png`)"/>
                                         <div class="currCoin font-14 color4 font-family-bold font-weight-b ml-12">SameUSD
                                         </div>
                                     </div>
                                 </div>
-                                <div class="balance font-family-regular font-weight-4 text-left">Balance：{{ stateFormat_(sameusdBalance) }}</div>
+                                <div class="balance font-family-regular font-weight-4 text-left">Balance：{{ stateFormat_(sameusdBalance,6) }}</div>
                             </div>
-                            <h5 class="text-left" style="color: crimson" v-if="(sameusdBalance<currCoin.fromNum)">Current balance {{ stateFormat_(sameusdBalance) }} ,Insufficient amount</h5>
+                            <h5 class="text-left" style="color: crimson" v-if="(sameusdBalance<currCoin.fromNum)">Current balance {{ stateFormat_(sameusdBalance,6) }} ,Insufficient amount</h5>
                             <img class="toIcon mt-10 mb-10" src="../../static/images/mint/to.png"/>
                             <ToItem :showSelect_="true" :currCoin="currCoin" :selectCoinList="selectCoinList"
                                       :showApprove="false"
                                       :isDisabled="true"
                                       @handlerSelect="handlerSelect()"
                                       @handlerSelectCoin="handlerSelectCoin" />
-
-                            <!--<div class="toInfoBox mt-10">
-                                <div class="toInfo flex border-b">
-                                    <div class="toInfo-l flex-1 flex flex-align-items-center flex-justify-content-between">
-                                        <div class="flex-1 ml-20 text-left mr-12">
-                                            <div class="toDesc font-family-regular font-weight-4 color2">
-                                                Rewards(estimate)
-                                            </div>
-                                            <el-input v-model="toNum" :disabled="isLoading"
-                                                      placeholder="0.00"></el-input>
-                                        </div>
-                                    </div>
-                                    <div class="toInfo-r flex flex-align-items-center">
-                                        <img class="currCoinIcon ml-18" :src="require(`../../static/images/mint/sameusd.png`)"/>
-                                        <div class="currCoin font-14 color4 font-family-bold font-weight-b ml-12">Samecoin
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="balance font-family-regular font-weight-4 text-left">Balance：{{ stateFormat_(samecoinBalance) }}</div>
-                            </div>-->
                             <div class="operation flex flex-justify-content-end mt-24">
                                 <el-button class="operationBtn operationBtn_mint ml-20 border-radius-8 color7 font-16 font-family-bold font-weight-b"
                                            :loading="isLoadingMint" @click="handleRedeem()" >Redeem
@@ -78,14 +58,14 @@
                                         <div class="max border-radius-8 color2 font-family-bold mr-12"  @click="max()">MAX</div>
                                     </div>
                                     <div class="toInfo-r flex flex-align-items-center">
-                                        <img class="currCoinIcon ml-18" :src="require(`../../static/images/mint/samecoin.png`)"/>
+                                        <img class="currCoinIcon ml-18" :src="require(`../../static/images/mint/sameusd.png`)"/>
                                         <div class="currCoin font-14 color4 font-family-bold font-weight-b ml-12">SameUSD
                                         </div>
                                     </div>
                                 </div>
-                                <div class="balance font-family-regular font-weight-4 text-left">Balance：{{ stateFormat_(sameusdBalance) }}</div>
+                                <div class="balance font-family-regular font-weight-4 text-left">Balance：{{ stateFormat_(sameusdBalance,6) }}</div>
                             </div>
-                            <h5 class="text-left" style="color: crimson" v-if="(sameusdBalance<currCoin.fromNum)">Current balance {{ stateFormat_(sameusdBalance) }} ,Insufficient amount</h5>
+                            <h5 class="text-left" style="color: crimson" v-if="(sameusdBalance<currCoin.fromNum)">Current balance {{ stateFormat_(sameusdBalance,6) }} ,Insufficient amount</h5>
                             <img class="toIcon mt-10 mb-10" src="../../static/images/mint/to.png"/>
                             <ToItem
                                     v-for="(item , index) in selectCoinList"
@@ -313,8 +293,8 @@
 			async checkApprove(name,fromAddr){
 				return await checkApprove(name,fromAddr);
 			},
-			stateFormat_(num) {
-				return stateFormat(num)
+			stateFormat_(num,d) {
+				return stateFormat(num,d)
 			},
 			/*handlerSelects(index) {
 				for (let i in this.selectCoinList) {
@@ -400,7 +380,7 @@
 		color: #1F2BFF;
 		border: 1px solid #1F2BFF;
 	}
-	
+
     /deep/ .el-input__inner {
         border: none !important;
         padding: 0;

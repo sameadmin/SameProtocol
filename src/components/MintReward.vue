@@ -8,10 +8,10 @@
       <img class="rightIcon" src="../../static/images/mint/down_.png" @click="handleHideReward"/>
     </div>
     <div class="mt-10 flex flex-justify-content-center">
-      <img class="coinIcon" src="../../static/images/mint/same.svg"/>
+      <img class="coinIcon" src="../../static/images/mint/samecoin.png"/>
       <div class="ml-10 color2 fontWeight-6 font-family-semiBold">Mint Reward</div>
     </div>
-    <div class="RewardBalance mt-10 flex flex-justify-content-center color2 fontWeight-6 font-family-semiBold">{{/*FormatNoE*/(stateFormat_(myRewards))}}</div>
+    <div class="RewardBalance mt-10 flex flex-justify-content-center color2 fontWeight-6 font-family-semiBold">{{/*FormatNoE*/(stateFormat_(myRewards,4))}}</div>
     <el-button class="claimBtn color5 fontWeight-b font-family-bold border-radius-8"
          @click="mintClaim()">Claim</el-button>
 
@@ -27,7 +27,7 @@
     <div class="percentItem" >
       <div class="mt-20 flex flex-justify-content-between font-14">
         <div class="color2 fontWeight-4 font-family-regular">Total Minted Rewards:</div>
-        <div class="color6 fontWeight-b font-family-bold">{{/*FormatNoE*/(stateFormat_(totalAwards))}} SAME</div>
+        <div class="color6 fontWeight-b font-family-bold">{{/*FormatNoE*/(stateFormat_(totalAwards,4))}} SAME</div>
       </div>
       <!--<el-progress class="mt-10" :percentage="42" :color="'#1F2BFF'" :show-text="false" :stroke-width="10"></el-progress>-->
     </div>
@@ -108,8 +108,8 @@
       async getTotalAwards(){
         return await getTotalAwards();
       },
-      stateFormat_(num) {
-        return stateFormat(num);
+      stateFormat_(num,d) {
+        return stateFormat(num,d);
       },
       FormatNoE(val){
         return FormatNoE(val);

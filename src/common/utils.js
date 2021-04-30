@@ -1,4 +1,4 @@
-export function stateFormat(cellValue) {
+export function stateFormat(cellValue,decimals=18) {
   if (cellValue) {
     // return Number(cellValue)
     //   .toFixed(6)
@@ -9,6 +9,7 @@ export function stateFormat(cellValue) {
 
       cellValue += "";
       if (!cellValue.includes(".")) cellValue += ".";
+      cellValue = (Number(cellValue)).toFixed(decimals);
       return cellValue
           .replace(/(\d)(?=(\d{3})+\.)/g, ($0, $1) => {
             return $1 + ",";

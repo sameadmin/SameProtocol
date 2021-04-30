@@ -20,15 +20,18 @@
         <img v-else class="enterIcon" src="../../static/images/connect/right.png" />
       </div>
     </div>
+    <!--<ChangeNetework :showChangeDialog="showChangeDialog" @handleClose="handleClose2"></ChangeNetework>-->
   </el-dialog>
 </template>
 
 <script>
   import {CheckMetaMask} from '../../src/assets/js/components'
+  import ChangeNetework from './changeNetwork.vue'
   export default {
     name: 'Connect',
     data () {
       return {
+        showChangeDialog: false,
         walletList: [
           {
             walletText: 'MetaMask',
@@ -45,16 +48,32 @@
         ]
       }
     },
+    /*watch: {
+      showChangeDialog (v){
+        if(v){
+          document.querySelector('.pageContainer').style.visibility = 'hidden'
+        }else{
+          document.querySelector('.pageContainer').style.visibility = 'visible'
+        }
+      }
+    },*/
     props: {
       showConnect: Boolean
     },
     components: {
-
+      ChangeNetework
     },
     methods: {
+      /*handleClose2 (){
+        this.showChangeDialog = false
+      },*/
       async CheckMetaMask() {
         $cookies.set("useWallet",true);
-        await CheckMetaMask();
+        var haveweb3 = await CheckMetaMask();
+        if(!haveweb3){
+          this.$emit('showChangeDialog_',true);
+          /*this.showChangeDialog = true*/
+        }
         this.$emit('showConnect',false)
       },
       handleClose (){

@@ -27,22 +27,22 @@
                 <div class="stackItem_ width-294 pl-24 text-left flex flex-align-items-center">
                   <img class="coinIcon" src="../../static/images/mint/sameusd.png"/>
                   <!-- <img class="coinIcon coinIcon_" src="../../static/images/mint/samecoin.png"/>-->
-                  <div class="stackDesc color6">{{ item.stack }}</div>
+                  <div class="stackDesc color6">{{item.stack }}</div>
                 </div>
                 <div class="width-148 pl-20 text-left fontWeight-b font-family-bold">{{ item.apy }}%</div>
                 <div class="width-198 pl-20 text-left">{{ item.yidld }} SAME/DAY</div>
                 <div class="width-176 pr-20 text-right">
-                  <div class="color2 fontWeight-b font-family-bold">${{ stateFormat_(item.liquidity.toFixed(0)) }}</div>
-                  <div class="color3 mt-2">{{ stateFormat_(item.liquidity.toFixed(0)) }} SameUSD</div>
+                  <div class="color2 fontWeight-b font-family-bold">${{ stateFormat_(item.liquidity,4) }}</div>
+                  <div class="color3 mt-2">{{ stateFormat_(item.liquidity,6) }} SameUSD</div>
                   <!--<div class="color3 mt-2">{{ stateFormat_(item.liquidity_) }} SAME</div>-->
                 </div>
                 <div class="width-168 pl-20 text-left">
-                  <div class="color2">${{ stateFormat_(item.stacked) }}</div>
+                  <div class="color2">${{ stateFormat_(item.stacked,6) }}</div>
                   <div class="color3 mt-2"><!--{{ stateFormat_(item.stacked_) }}--> SameUSD</div>
                 </div>
                 <div class="flex-1 pl-20 text-left flex flex-justify-content-between">
                   <div class="">
-                    <div class="color2">{{ stateFormat_(item.earning) }}</div>
+                    <div class="color2">{{ stateFormat_(item.earning,6) }}</div>
                     <div class="color3 mt-2">{{ item.earning_ }}</div>
                   </div>
                   <div class="flex flex-align-items-center font-12 font-family-regular font-weight-4">
@@ -98,7 +98,7 @@
                                 <div class="ml-10 font-16 font-family-regular fontWeight-4">SameUSD</div>
                             </div>
                             <div class="mt-20 font-24 font-family-bold fontWeight-b text-left">{{
-                                stateFormat_((stackList[0].stacked).toFixed(6)) }}
+                                stateFormat_(stackList[0].stacked,6) }}
                             </div>
                         </div>
                         <div class="flex-1 border-l color1 pl-20">
@@ -107,7 +107,7 @@
                                 <div class="ml-10 font-16 font-family-regular fontWeight-4">SameCoin</div>
                             </div>
                             <div class="mt-20 font-24 font-family-bold fontWeight-b text-left">{{
-                                stateFormat_((stackList[0].earning).toFixed(6)) }}
+                                stateFormat_(stackList[0].earning,6) }}
                             </div>
                         </div>
                     </div>
@@ -118,7 +118,7 @@
           <el-button class="approveBtn border-radius-8 color6" @click="goApprove_('sameUsd')"
                      :disabled="currCoin.approve" :loading="isLoadingApproves">Approve</el-button>
           <el-button class="stakeBtn border-radius-8 ml-20 color7" @click="saveDeposit(currCoin.fromNum)"
-                     :disabled="isLoadingSaveDeposit" :loading="isLoadingSaveDeposit">Stake</el-button>
+                     :disabled="isLoadingSaveDeposit" :loading="isLoadingSaveDeposit">Save</el-button>
         </div>
         <div v-else class="flex flex-justify-content-end">
           <el-button class="approveBtn border-radius-8 color6" @click="saveClaimAllRewards()"
@@ -298,8 +298,8 @@
 					type: 'warning'
 				});
 			},
-			stateFormat_(num) {
-				return stateFormat(num)
+			stateFormat_(num,d) {
+				return stateFormat(num,d)
 			},
 			handlerStakeDetails(item, curr) {
 				this.curr = curr
@@ -315,11 +315,11 @@
 				this.currCoin = item;
 			},
 			async updataYieldPer() {
-				this.stackList[0].yidld = (await yieldPer(1000000000000000000000)).toFixed(6);
+				this.stackList[0].yidld = (await yieldPer(1000000000000000000000)).toFixed(4);
 				return this.stackList[0].yidld;
 			},
 			async Annualized() {
-				this.stackList[0].apy = (await Annualized(1000000000000000000000)).toFixed(6);
+				this.stackList[0].apy = (await Annualized(1000000000000000000000)).toFixed(2);
 				return this.stackList[0].apy;
 			},
 			async totalSaveLiquidity() {

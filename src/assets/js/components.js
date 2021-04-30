@@ -62,10 +62,12 @@ export async function CheckMetaMask() {
       await ethereum.enable();
       // Acccounts now exposed
       //web3.eth.sendTransaction({/* ... */});//无故报错
+      return true;
     } catch (error) {
       console.log(error);
       // User denied account access...
     }
+    
   }
   // Legacy dapp browsers...
   else if (window.web3) {
@@ -74,6 +76,8 @@ export async function CheckMetaMask() {
     window.web3 = new Web3(web3.currentProvider);
     // Acccounts always exposed
     web3.eth.sendTransaction({/* ... */});
+    
+    return true;
   }
   // Non-dapp browsers...
   else {
@@ -81,7 +85,10 @@ export async function CheckMetaMask() {
     //this_.isWallet = false;
     //$('#myConnect').focus();
     //$('#errWaletlMsg').modal('show')
+
     console.log('Non-Ethereum browser detected. You should consider trying MetaMask!');
+    
+    return false;
   }
 }
 

@@ -33,9 +33,9 @@
                 </div>
             </div>
         </div>
-        <div class="balance font-family-regular font-weight-4 text-left border-r border-l border-b">Balance：{{ stateFormat_(currCoin.balance) }}
+        <div class="balance font-family-regular font-weight-4 text-left border-r border-l border-b">Balance：{{ stateFormat_(currCoin.balance,6) }}
         </div>
-        <h5 class="text-left" style="color: crimson" v-if="currCoin.balance<currCoin.fromNum">Current balance {{ stateFormat_(currCoin.balance) }} ,Insufficient amount</h5>
+        <h5 class="text-left" style="color: crimson" v-if="currCoin.balance<currCoin.fromNum">Current balance {{ stateFormat_(currCoin.balance,6) }} ,Insufficient amount</h5>
     </div>
 </template>
 
@@ -64,8 +64,8 @@
 		},
 		components: {},
 		methods: {
-			stateFormat_(num) {
-				return stateFormat(num)
+			stateFormat_(num,d) {
+				return stateFormat(num,d)
 			},
 			handlerSelect() {
 				this.$emit('handlerSelect')
@@ -122,11 +122,11 @@
 		color: #1F2BFF;
 		border: 1px solid #1F2BFF;
     }
-	
+
 	.fromInfo-r:hover {
 	    cursor: auto;
 	}
-	
+
 
     .max {
 		height: 30px;
@@ -135,7 +135,7 @@
         padding-right: 10px;
         border: 1px solid rgba(0, 0, 0, 0.08);
     }
-	
+
 	.approveBtn{
 		height: 32px;
 		margin-right: 6px;
@@ -182,7 +182,7 @@
     .container {
         position: relative;
     }
-	
+
 	/deep/ .el-button{
 		border-radius: 8px;
 		padding: 0 12px;

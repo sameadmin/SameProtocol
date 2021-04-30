@@ -33,12 +33,12 @@
 										</div>
 									</div>
 									<div class="toInfo-r flex flex-align-items-center">
-										<img class="currCoinIcon ml-18" :src="require(`../../static/images/mint/samecoin.png`)"/>
+										<img class="currCoinIcon ml-18" :src="require(`../../static/images/mint/sameusd.png`)"/>
 										<div class="currCoin font-14 color4 font-family-bold font-weight-b ml-12">SameUSD
 										</div>
 									</div>
                                 </div>
-								<div class="balance font-family-regular font-weight-4 text-left">Balance：{{ stateFormat_(sameusdBalance) }}</div>
+								<div class="balance font-family-regular font-weight-4 text-left">Balance：{{ stateFormat_(sameusdBalance,6) }}</div>
                             </div>
 							<div class="toInfoBox mt-10">
 								<div class="toInfo flex border-b">
@@ -52,12 +52,12 @@
 								        </div>
 								    </div>
 								    <div class="toInfo-r flex flex-align-items-center">
-								        <img class="currCoinIcon ml-18" :src="require(`../../static/images/mint/sameusd.png`)"/>
+								        <img class="currCoinIcon ml-18" :src="require(`../../static/images/mint/samecoin.png`)"/>
 								        <div class="currCoin font-14 color4 font-family-bold font-weight-b ml-12">Samecoin
 								        </div>
 								    </div>
 								</div>
-								<div class="balance font-family-regular font-weight-4 text-left">Balance：{{ stateFormat_(samecoinBalance) }}</div>
+								<div class="balance font-family-regular font-weight-4 text-left">Balance：{{ stateFormat_(samecoinBalance,6) }}</div>
 							</div>
                             <div class="operation flex flex-justify-content-between mt-24">
                                 <!-- <el-button class="operationBtn operationBtn_approve color6 font-16 font-family-bold font-weight-b"
@@ -65,14 +65,14 @@
                                 </el-button> -->
 								<div v-if="!currCoin.approve" style="position: relative;">
 									<el-button class="operationBtn flex flex-align-items-center operationBtn_approve color6 font-16 font-family-bold font-weight-b"
-									    :disabled="currCoin.approve">
+									    :disabled="currCoin.approve" @click="handleApprove(currCoin.coin)" :loading="isLoadingApprove">
 										 Approve
 									</el-button>
 									<img class="lockIcon" src="../../static/images/mint/locked.png" />
 								</div>
 								<div v-else style="position: relative;">
 									<el-button class="operationBtn flex flex-align-items-center operationBtn_approve color6 font-16 font-family-bold font-weight-b"
-									    :loading="isLoadingApprove" @click="handleApprove(currCoin.coin)">
+									    :loading="isLoadingApprove" :disabled="currCoin.approve">
 										 Approve
 									</el-button>
 									<img class="lockIcon" src="../../static/images/mint/lock.png" />
@@ -103,12 +103,12 @@
                                         </div>
                                     </div>
                                     <div class="toInfo-r flex flex-align-items-center">
-                                        <img class="currCoinIcon ml-18" :src="require(`../../static/images/mint/samecoin.png`)"/>
+                                        <img class="currCoinIcon ml-18" :src="require(`../../static/images/mint/sameusd.png`)"/>
                                         <div class="currCoin font-14 color4 font-family-bold font-weight-b ml-12">SameUSD
                                         </div>
                                     </div>
                                 </div>
-                                <div class="balance font-family-regular font-weight-4 text-left">Balance：{{ stateFormat_(sameusdBalance) }}</div>
+                                <div class="balance font-family-regular font-weight-4 text-left">Balance：{{ stateFormat_(sameusdBalance,6) }}</div>
                             </div>
 							<div class="toInfoBox mt-10">
 								<div class="toInfo flex border-b">
@@ -122,12 +122,12 @@
 								        </div>
 								    </div>
 								    <div class="toInfo-r flex flex-align-items-center">
-								        <img class="currCoinIcon ml-18" :src="require(`../../static/images/mint/sameusd.png`)"/>
+								        <img class="currCoinIcon ml-18" :src="require(`../../static/images/mint/samecoin.png`)"/>
 								        <div class="currCoin font-14 color4 font-family-bold font-weight-b ml-12">Samecoin
 								        </div>
 								    </div>
 								</div>
-								<div class="balance font-family-regular font-weight-4 text-left">Balance：{{ stateFormat_(samecoinBalance) }}</div>
+								<div class="balance font-family-regular font-weight-4 text-left">Balance：{{ stateFormat_(samecoinBalance,6) }}</div>
 							</div>
 
                             <div class="operation flex flex-justify-content-end mt-24">
@@ -351,8 +351,8 @@
 			async checkApprove(name,fromAddr){
 				return await checkApprove(name,fromAddr);
             },
-			stateFormat_(num) {
-				return stateFormat(num)
+			stateFormat_(num,d) {
+				return stateFormat(num,d)
 			},
 			/*handlerSelects(index) {
 				for (let i in this.selectCoinList) {

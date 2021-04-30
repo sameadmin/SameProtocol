@@ -13,7 +13,7 @@
           <div class="ml-20 color6">{{ item.coin }}</div>
         </div>
         <div class="w-148 pl-20">{{ item.liquidity }}</div>
-        <div class="w-152 pl-20 color2">{{(item.liquidity/sameUsdTotal).toFixed(2)}}%</div>
+        <div class="w-152 pl-20 color2">{{(item.liquidity/sameUsdTotal*100).toFixed(2)}}%</div>
       </div>
     </div>
   </div>
