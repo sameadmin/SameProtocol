@@ -393,6 +393,14 @@
 <style scoped>
     @import "../assets/stake.css";
 
+	/deep/ .el-button.is-disabled{
+		background: #EDEDED;
+		border: 1px solid #EDEDED!important;
+		color: rgba(0, 0, 0, 0.54)!important;
+	}
+	/deep/ .el-button.is-disabled:hover{
+		background: #EDEDED!important;
+	}
     /deep/ .el-dialog {
         border-radius: 16px;
         box-shadow: 0px 0px 64px 0px rgba(0, 0, 0, 0.08), 0px 0px 32px 0px rgba(0, 0, 0, 0.08);
