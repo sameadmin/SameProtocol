@@ -64,20 +64,20 @@
                                            :loading="isLoadingApprove" @click="handleApprove(currCoin.coin)" :disabled="currCoin.approve">Approve({{currCoin.approve?'already':'notready'}})
                                 </el-button> -->
 								<div v-if="!currCoin.approve" style="position: relative;">
-									<el-button class="operationBtn flex flex-align-items-center operationBtn_approve color6 font-16 font-family-bold font-weight-b"
+									<el-button class="operationBtn operationBtn_approve color6 font-16 font-family-bold font-weight-b"
 									    :disabled="currCoin.approve" @click="handleApprove(currCoin.coin)" :loading="isLoadingApprove">
 										 Approve
 									</el-button>
 									<img class="lockIcon" src="../../static/images/mint/locked.png" />
 								</div>
 								<div v-else style="position: relative;">
-									<el-button class="operationBtn flex flex-align-items-center operationBtn_approve color6 font-16 font-family-bold font-weight-b"
+									<el-button class="operationBtn operationBtn_approve color6 font-16 font-family-bold font-weight-b"
 									    :loading="isLoadingApprove" :disabled="currCoin.approve">
 										 Approve
 									</el-button>
 									<img class="lockIcon" src="../../static/images/mint/lock.png" />
 								</div>
-                                <el-button class="operationBtn operationBtn_mint ml-20 border-radius-8 color7 font-16 font-family-bold font-weight-b"
+                                <el-button class="operationBtn operationBtn_mint ml-20 color7 font-16 font-family-bold font-weight-b"
                                            :loading="isLoadingMint" @click="handleMint()" :disabled="!currCoin.approve">Mint
                                 </el-button>
                             </div>
