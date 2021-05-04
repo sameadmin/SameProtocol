@@ -10,9 +10,9 @@
               <div class="stackListHeaderItem mt-20 width-294 pl-24 text-left">Save</div>
               <div class="stackListHeaderItem mt-20 width-148 pl-20 text-left border_l">APY</div>
               <div class="stackListHeaderItem mt-20 width-198 pl-20 text-left border_l">Yield per $1,000</div>
-              <div class="stackListHeaderItem mt-20 width-176 pr-20 text-right border_l">
-                Liquidity
-                <el-popover
+              <div class="stackListHeaderItem mt-20 width-176 pr-20 text-right border_l" style="position: relative;">
+              				<div class="mr-20">Liquidity</div>
+                <el-popover style="position: absolute;top: 0; right: 20px;"
                         placement="top-start"
                         trigger="hover"
                         content="The total value of funds inthis save pool.">
@@ -498,6 +498,7 @@
         min-width: 148px !important;
         border: none !important;
         box-shadow: 0px 0px 32px 0px rgba(0, 0, 0, 0.08);
+		margin-left: -4px;
         font-size: 12px;
         font-weight: 400;
         font-family: 'Inter Regular';

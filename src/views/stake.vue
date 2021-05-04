@@ -14,7 +14,7 @@
 				<div class="mr-20">Liquidity</div>
                 <el-popover style="position: absolute;top: 0; right: 20px;"
                         placement="top-start"
-                        trigger="click"
+                        trigger="hover"
                         content="The total value of funds inthis save pool.">
                   <el-button slot="reference"><img class="tipsIcon" src="../../static/images/stake/tips.png" /></el-button>
                 </el-popover>
