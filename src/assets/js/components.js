@@ -463,8 +463,29 @@ export async function mintClaim(){
   }
 }
 
+//获取mint时预计samecoinRewards
+export async function mintSameCoinRewards(mintSameUSDVal){
+  //获取当前区块id有多少铸币总量 mintBlockIdInfo = 》totalMintAmt
+  let totalMintAmt_ = await totalMintAmt();
+  var decimals = (await bcView('sameCoin', 'decimals')).info;
+  //mintSameUSDVal 转换成 18位
+  let val = await numberToHex(mintSameUSDVal,decimals);
+  if(val == 0){
+    return 0;
+  }
+  //看比值
+  let ratio = totalMintAmt_==0? 1: val/totalMintAmt_;
+  //查当前 难度级别对应一个区间奖励多少 sameCoinPerBlock
+  var nowdegree_ = (await bcView ('mintRewardLogicProxy', 'nowdegree',[])).info;
+  var sameCoinPerBlock_= (await bcView ('mintRewardLogicProxy', 'sameCoinPerBlock',[nowdegree_])).info;
+  //console.log((sameCoinPerBlock_ * ratio, decimals));
+  var retVal = hexToNumber (sameCoinPerBlock_ * ratio, decimals)
+  //console.log(retVal);
+  
+  return retVal;
+}
 
-
+//===============Save==============
 
 //当前samecoin/sameusd 价格
 export async function samecoinPrice(){
@@ -619,3 +640,34 @@ export async function saveClaimAllRewards(){
     return { success: false, info: e.message };
   }
 }
+
+//===============Save==============
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

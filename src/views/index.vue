@@ -47,7 +47,7 @@
 								            <div class="toDesc font-family-regular font-weight-4 color2">
 								                Rewards(estimate)
 								            </div>
-								            <el-input v-model="toNum" :disabled="true"
+								            <el-input v-model="toRewards" :disabled="true"
 								                      placeholder="0.00"></el-input>
 								        </div>
 								    </div>
@@ -117,7 +117,7 @@
 								            <div class="toDesc font-family-regular font-weight-4 color2">
 								                Rewards(estimate)
 								            </div>
-								            <el-input v-model="toNum" :disabled="true"
+								            <el-input v-model="toRewards" :disabled="true"
 								                      placeholder="0.00"></el-input>
 								        </div>
 								    </div>
@@ -155,7 +155,7 @@
 
 <script>
 	import solidityConfig from '../../src/assets/solidityConfig'
-	import {balanceOf,checkApprove,goApprove,mint,mints} from '../../src/assets/js/components'
+	import {balanceOf,checkApprove,goApprove,mint,mints,mintSameCoinRewards} from '../../src/assets/js/components'
 	import Header from '@/components/Header'
 	import Footer from '@/components/Footer'
 	import MintNews from '@/components/MintNews'
@@ -185,7 +185,7 @@
 				isLoading2: false,
 				activeIndex: '0',
 				curr: 0,
-				toNum: '',
+				toRewards: NaN,
 				currCoin: {
 					url: require('../../static/images/mint/busd.png'),
 					coin: 'BUSD',
@@ -264,8 +264,9 @@
 			this.interva2lId = setInterval(async () => {
 				this.totalMint = 0;
 				for(var i in this.selectCoinList){
-					this.totalMint += Number(this.selectCoinList[i].fromNum)
+					this.totalMint += Number(this.selectCoinList[i].fromNum);
                 }
+				this.toRewards = await mintSameCoinRewards(this.totalMint);
 			}, 100)
 
 			this.countDown(256)
@@ -313,8 +314,14 @@
 					}, 2500)
 				}
 			},
+			async 'currCoin.fromNum'(){
+	            this.toRewards = await mintSameCoinRewards(this.currCoin.fromNum);
+            }
 		},
 		methods: {
+			async mintSameCoinRewards(val){
+				return await mintSameCoinRewards(val);
+            },
 			countDown(time){
 				var m=0;
 				var s=0;
