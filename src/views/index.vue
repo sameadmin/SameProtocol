@@ -78,7 +78,7 @@
 									<img class="lockIcon" src="../../static/images/mint/lock.png" />
 								</div>
                                 <el-button class="operationBtn operationBtn_mint ml-20 color7 font-16 font-family-bold font-weight-b"
-                                           :loading="isLoadingMint" @click="handleMint()" :disabled="!currCoin.approve">Mint
+                                           :loading="isLoadingMint" @click="handleMint" :disabled="!currCoin.approve">Mint
                                 </el-button>
                             </div>
                         </div>
@@ -132,7 +132,7 @@
 
                             <div class="operation flex flex-justify-content-end mt-24">
                                 <el-button class="operationBtn operationBtn_mint border-radius-8 color7 font-16 font-family-bold font-weight-b"
-                                           :loading="isLoadingMints" :disabled="isLoadingMints" @click="handleMint2()">Mint
+                                           :loading="isLoadingMints" :disabled="isLoadingMints" @click="handleMint2">Mint
                                 </el-button>
                             </div>
                         </div>
@@ -144,6 +144,8 @@
                 </div>
                 <MintNews :showNews="showNews" @handleShowReward="handleShowReward"></MintNews>
                 <MintReward :showReward="showReward" @handleHideReward="handleHideReward"></MintReward>
+				<Tips :showTips="approveSuccessfullyTips"></Tips>
+				<Tips :showTips="mintSuccessfullyTips"></Tips>
                 <Tips :showTips="successedTips"></Tips>
                 <Tips :showTips="failedTips"></Tips>
                 <Tips :showTips="waitingTips"></Tips>
@@ -222,6 +224,18 @@
 				],
 				showNews: true,
 				showReward: false,
+				approveSuccessfullyTips: {
+					isShow: false,
+					icon: require('../../static/images/sucess.png'),
+					status: 'Approve Successfully',
+					bg: '#1F2BFF'
+				},
+				mintSuccessfullyTips: {
+					isShow: false,
+					icon: require('../../static/images/sucess.png'),
+					status: 'Mint Successfully',
+					bg: '#1F2BFF'
+				},
 				successedTips: {
 					isShow: false,
 					icon: require('../../static/images/sucess.png'),
@@ -300,6 +314,20 @@
 			FromItem2
 		},
 		watch: {
+			'approveSuccessfullyTips.isShow'(newVal, oldVal) {
+				if (newVal) {
+					this.tipsTimer = setTimeout(() => {
+						this.approveSuccessfullyTips.isShow = false;
+					}, 2500)
+				}
+			},
+			'mintSuccessfullyTips.isShow'(newVal, oldVal) {
+				if (newVal) {
+					this.tipsTimer = setTimeout(() => {
+						this.mintSuccessfullyTips.isShow = false;
+					}, 2500)
+				}
+			},
 			'successedTips.isShow'(newVal, oldVal) {
 				if (newVal) {
 					this.tipsTimer = setTimeout(() => {
@@ -345,7 +373,7 @@
 				let info = await goApprove(coinName.toLowerCase(),100000000000);
 				this.isLoadingApprove = false;
 				if(info.success){
-					this.successedTips.isShow = true;
+					this.approveSuccessfullyTips.isShow = true;
 				}else {
 					this.failedTips.isShow = true;
                 }
@@ -391,7 +419,7 @@
 				var info = await mint(this.currCoin.coin.toLowerCase(),this.currCoin.fromNum);
 				this.isLoadingMint = false;
 				if(info.success){
-					this.successedTips.isShow = true;
+					this.mintSuccessfullyTips.isShow = true;
 				}else {
 					this.failedTips.isShow = true;
 				}
@@ -410,7 +438,7 @@
 				var info = await mints(coinNameList,fromNumList);
 				this.isLoadingMints = false;
 				if(info.success){
-					this.successedTips.isShow = true;
+					this.mintSuccessfullyTips.isShow = true;
 				}else {
 					this.failedTips.isShow = true;
 				}

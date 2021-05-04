@@ -87,6 +87,7 @@
                 </div>
                 <MintNews :showNews="showNews" @handleShowReward="handleShowReward"></MintNews>
                 <MintReward :showReward="showReward" @handleHideReward="handleHideReward"></MintReward>
+				<Tips :showTips="redeemSuccessfullyTips"></Tips>
                 <Tips :showTips="successedTips"></Tips>
                 <Tips :showTips="failedTips"></Tips>
                 <Tips :showTips="waitingTips"></Tips>
@@ -166,6 +167,12 @@
 				],
 				showNews: true,
 				showReward: false,
+				redeemSuccessfullyTips: {
+					isShow: false,
+					icon: require('../../static/images/sucess.png'),
+					status: 'Redeem Successfully',
+					bg: '#1F2BFF'
+				},
 				successedTips: {
 					isShow: false,
 					icon: require('../../static/images/sucess.png'),
@@ -238,6 +245,13 @@
 			FromItem2
 		},
 		watch: {
+			'redeemSuccessfullyTips.isShow'(newVal, oldVal) {
+				if (newVal) {
+					this.tipsTimer = setTimeout(() => {
+						this.redeemSuccessfullyTips.isShow = false;
+					}, 2500)
+				}
+			},
 			'successedTips.isShow'(newVal, oldVal) {
 				if (newVal) {
 					this.tipsTimer = setTimeout(() => {
@@ -326,7 +340,7 @@
 				var info = await redeem(this.currCoin.coin.toLowerCase(),this.currCoin.fromNum);
 				this.isLoadingMint = false;
 				if(info.success){
-					this.successedTips.isShow = true;
+					this.redeemSuccessfullyTips.isShow = true;
 				}else {
 					this.failedTips.isShow = true;
 				}

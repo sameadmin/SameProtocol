@@ -65,12 +65,12 @@
         },
       }
     },
+	components: {
+		Tips
+	},
     props: {
       showWalletInfo: Boolean,
 	  address: String
-    },
-    components: {
-		Tips
     },
 	watch: {
 		'copiedTips.isShow'(newVal, oldVal) {

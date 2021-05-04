@@ -3,7 +3,7 @@
 		<el-header class="bg1" style="height:60px;">
 		    <div class="headerContainer container flex flex-align-items-center flex-justify-content-center color1">
 		        <img class="logo" src="../../static/images/logo.png" alt=""/>
-		        <Menu :activeIndex="activeIndex"></Menu>
+		        <Menu :activeIndex="activeIndex" :textColor="'#161616'" :activeTextColor="'#1F2BFF'"></Menu>
 		        <div v-if="!accountAddress" class="connect font-family-bold font-14 fontWeight-b" @click="showConnect=true">CONNECT</div>
 		        <div v-else class="account border-l flex flex-align-items-center pl-24 font-family-bold font-14 fontWeight-b"
 				@click.stop="showWalletInfo=!showWalletInfo">
@@ -17,6 +17,7 @@
 		<ChangeNetework :showChangeDialog="showChangeDialog" @handleClose="handleClose2"></ChangeNetework>
 		<WalletInfo :showWalletInfo="showWalletInfo" :address="accountAddress" @closeWalletInfo="closeWalletInfo"
 		@logout="logout"></WalletInfo>
+		<Tips :showTips="logoutSuccessfullyTips"></Tips>
 	</div>
 </template>
 
@@ -25,6 +26,7 @@
 	import Connect from './Connect'
 	import ChangeNetework from './changeNetwork.vue'
 	import WalletInfo from './WalletInfo.vue'
+	import Tips from './Tips.vue'
 	//import Web3 from 'web3';
 	import {toAccount,shorten,balanceOf,CheckMetaMask,checkSignin_} from '../../src/assets/js/components'
 	//import solidityConfig from '../../src/assets/solidityConfig'
@@ -39,6 +41,12 @@
 				showChangeDialog: false,
 				showWalletInfo: false,
 				address: null,
+				logoutSuccessfullyTips: {
+					isShow: false,
+					icon: require('../../static/images/sucess.png'),
+					status: 'Logout Successfully',
+					bg: '#1F2BFF'
+				},
 			}
 		},
 		props: {
@@ -48,7 +56,8 @@
 			Menu,
 			Connect,
 			ChangeNetework,
-			WalletInfo
+			WalletInfo,
+			Tips
 		},
 		watch: {
 			showChangeDialog (v){
@@ -57,7 +66,14 @@
 				}else{
 					document.querySelector('.pageContainer').style.visibility = 'visible'
 				}
-			}
+			},
+			'logoutSuccessfullyTips.isShow'(newVal, oldVal) {
+				if (newVal) {
+					this.tipsTimer = setTimeout(() => {
+						this.logoutSuccessfullyTips.isShow = false;
+					}, 2500)
+				}
+			},
 		},
 		methods: {
 			closeWalletInfo (){
@@ -80,6 +96,7 @@
 				this.showWalletInfo = false
 				$cookies.set("useWallet",false);
 				this.showConnect=false;
+				this.logoutSuccessfullyTips.isShow = true
             },
 			handleClose() {
 				this.showConnect = false

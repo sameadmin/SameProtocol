@@ -11,11 +11,12 @@
               <div class="stackListHeaderItem mt-20 width-148 pl-20 text-left border_l">APY</div>
               <div class="stackListHeaderItem mt-20 width-198 pl-20 text-left border_l">Yield per $1,000</div>
               <div class="stackListHeaderItem mt-20 width-176 pr-20 text-right border_l">
+                Liquidity
                 <el-popover
                         placement="top-start"
                         trigger="hover"
                         content="The total value of funds inthis save pool.">
-                  <el-button slot="reference">Liquidity</el-button>
+                  <el-button slot="reference"><img class="tipsIcon" src="../../static/images/stake/tips.png" /></el-button>
                 </el-popover>
               </div>
               <div class="stackListHeaderItem mt-20 width-168 pl-20 text-left border_l">Saved</div>
@@ -128,6 +129,9 @@
         </div>
       </span>
         </el-dialog>
+		<Tips :showTips="saveSuccessfullyTips"></Tips>
+		<Tips :showTips="claimSuccessfullyTips"></Tips>
+		<Tips :showTips="withdrawSuccessfullyTips"></Tips>
         <Tips :showTips="successedTips"></Tips>
         <Tips :showTips="failedTips"></Tips>
         <Tips :showTips="waitingTips"></Tips>
@@ -161,6 +165,27 @@
 	export default {
 		name: 'save',
 		watch: {
+			'saveSuccessfullyTips.isShow'(newVal, oldVal) {
+				if (newVal) {
+					this.tipsTimer = setTimeout(() => {
+						this.saveSuccessfullyTips.isShow = false;
+					}, 2500)
+				}
+			},
+			'claimSuccessfullyTips.isShow'(newVal, oldVal) {
+				if (newVal) {
+					this.tipsTimer = setTimeout(() => {
+						this.claimSuccessfullyTips.isShow = false;
+					}, 2500)
+				}
+			},
+			'withdrawSuccessfullyTips.isShow'(newVal, oldVal) {
+				if (newVal) {
+					this.tipsTimer = setTimeout(() => {
+						this.withdrawSuccessfullyTips.isShow = false;
+					}, 2500)
+				}
+			},
 			'successedTips.isShow'(newVal, oldVal) {
 				if (newVal) {
 					this.tipsTimer = setTimeout(() => {
@@ -229,6 +254,24 @@
 				],
 				detailTab: ["Save", "Claim/Withdraw"],
 				curr: 0,
+				saveSuccessfullyTips: {
+					isShow: false,
+					icon: require('../../static/images/sucess.png'),
+					status: 'Save Successfully',
+					bg: '#1F2BFF'
+				},
+				claimSuccessfullyTips: {
+					isShow: false,
+					icon: require('../../static/images/sucess.png'),
+					status: 'Claim Successfully',
+					bg: '#1F2BFF'
+				},
+				withdrawSuccessfullyTips: {
+					isShow: false,
+					icon: require('../../static/images/sucess.png'),
+					status: 'Withdraw Successfully',
+					bg: '#1F2BFF'
+				},
 				successedTips: {
 					isShow: false,
 					icon: require('../../static/images/sucess.png'),
@@ -357,7 +400,7 @@
 				let info = await saveDeposit(val);
 				this.isLoadingSaveDeposit = false;
 				if (info.success) {
-					this.successedTips.isShow = true;
+					this.saveSuccessfullyTips.isShow = true;
 					showDetail = false
 				} else {
 					this.failedTips.isShow = true;
@@ -368,7 +411,7 @@
 				let info = await saveWithdraw(val);
 				this.isLoadingSaveWithdraw = false;
 				if (info.success) {
-					this.successedTips.isShow = true;
+					this.withdrawSuccessfullyTips.isShow = true;
 					showDetail = false
 				} else {
 					this.failedTips.isShow = true;
@@ -379,7 +422,7 @@
 				let info = await saveClaimAllRewards();
 				this.isLoadingSaveClaim = false;
 				if (info.success) {
-					this.successedTips.isShow = true;
+					this.claimSuccessfullyTips.isShow = true;
 					showDetail = false
 				} else {
 					this.failedTips.isShow = true;
