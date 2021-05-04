@@ -3,7 +3,7 @@ let ContractConfig = {
   
   ContractMsg: {
     Nexus: {
-      address: "0x72F28237a9cABD233D6372342327aa06Ef241CdF", abi: [
+      address: "0xa20bE285E2ceA48F0b60C1e9c033A81458EDD697", abi: [
         {
           "inputs": [
             {
@@ -182,7 +182,7 @@ let ContractConfig = {
       ]
     },
     Masset: {
-      address: "0xa67Cd3ceE48617fA5aDBF8254e94c92cd7Ea9c9a", abi: [
+      address: "0x5384afAF4829f5bdaEad58662d9D23A9162e839D", abi: [
         {
           "anonymous": false,
           "inputs": [
@@ -473,6 +473,21 @@ let ContractConfig = {
         {
           "constant": true,
           "inputs": [],
+          "name": "MAX_FEE",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ],
+          "payable": false,
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "constant": true,
+          "inputs": [],
           "name": "OwnerAddress",
           "outputs": [
             {
@@ -743,6 +758,11 @@ let ContractConfig = {
               "internalType": "string",
               "name": "_symbolArg",
               "type": "string"
+            },
+            {
+              "internalType": "address",
+              "name": "CEOAddress",
+              "type": "address"
             },
             {
               "internalType": "address",
@@ -1029,6 +1049,21 @@ let ContractConfig = {
           ],
           "payable": false,
           "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "constant": false,
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "MAX_FEE_",
+              "type": "uint256"
+            }
+          ],
+          "name": "setMAX_FEE",
+          "outputs": [],
+          "payable": false,
+          "stateMutability": "nonpayable",
           "type": "function"
         },
         {
@@ -1232,7 +1267,7 @@ let ContractConfig = {
       ]
     },
     MassetProxy: {
-      address: "0x2FCB59cA087b4508dEfd1d5aE68B4651f91C4f81", abi: [
+      address: "0xa1F8B875F00c7C9719A8C34299381E9799005579", abi: [
         {
           "anonymous": false,
           "inputs": [
@@ -1523,6 +1558,21 @@ let ContractConfig = {
         {
           "constant": true,
           "inputs": [],
+          "name": "MAX_FEE",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ],
+          "payable": false,
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "constant": true,
+          "inputs": [],
           "name": "OwnerAddress",
           "outputs": [
             {
@@ -1793,6 +1843,11 @@ let ContractConfig = {
               "internalType": "string",
               "name": "_symbolArg",
               "type": "string"
+            },
+            {
+              "internalType": "address",
+              "name": "CEOAddress",
+              "type": "address"
             },
             {
               "internalType": "address",
@@ -2086,6 +2141,21 @@ let ContractConfig = {
           "inputs": [
             {
               "internalType": "uint256",
+              "name": "MAX_FEE_",
+              "type": "uint256"
+            }
+          ],
+          "name": "setMAX_FEE",
+          "outputs": [],
+          "payable": false,
+          "stateMutability": "nonpayable",
+          "type": "function"
+        },
+        {
+          "constant": false,
+          "inputs": [
+            {
+              "internalType": "uint256",
               "name": "_redemptionFee",
               "type": "uint256"
             }
@@ -2282,7 +2352,7 @@ let ContractConfig = {
       ]
     },
     ForgeValidator: {
-      address: "0xba4AfEA84F7bc5621e46b6bFf1Aa5C016646D3B4", abi: [
+      address: "0x460CB5C88A607778aceB19A88Cc80Ebb7Bb2d019", abi: [
         {
           "constant": true,
           "inputs": [
@@ -2688,7 +2758,7 @@ let ContractConfig = {
       ]
     },
     BasketManager: {
-      address: "0x4c05149b0765a40ef599A0be3A68893ddFaC2fD2", abi: [
+      address: "0xdA2a7Ab7748957109Ba0DED64D14121cB4a119FE", abi: [
         {
           "anonymous": false,
           "inputs": [],
@@ -3827,7 +3897,7 @@ let ContractConfig = {
       ]
     },
     BasketManagerProxy: {
-      address: `0xf46BF5c7f42F0E080298f9013C5Ebd3cCcB99897`, abi: [
+      address: `0x5C44FCaE15399E1f10944ec15c4629CD4f621EbF`, abi: [
         {
           "anonymous": false,
           "inputs": [],
@@ -4966,7 +5036,7 @@ let ContractConfig = {
       ]
     },
     sameUsd:{
-      address: "0x2FCB59cA087b4508dEfd1d5aE68B4651f91C4f81", abi: [
+      address: "0xa1F8B875F00c7C9719A8C34299381E9799005579", abi: [
         {
           "anonymous": false,
           "inputs": [
@@ -6034,7 +6104,7 @@ let ContractConfig = {
       ]
     },
     sameusd:{
-      address: "0x2FCB59cA087b4508dEfd1d5aE68B4651f91C4f81", abi: [
+      address: "0xa1F8B875F00c7C9719A8C34299381E9799005579", abi: [
         {
           "anonymous": false,
           "inputs": [
@@ -7713,10 +7783,10 @@ let ContractConfig = {
       address:"0xb7a4f3e9097c08da09517b5ab877f7a917224ede",abi:[{"inputs":[{"internalType":"uint256","name":"_initialAmount","type":"uint256"},{"internalType":"string","name":"_tokenName","type":"string"},{"internalType":"uint8","name":"_decimalUnits","type":"uint8"},{"internalType":"string","name":"_tokenSymbol","type":"string"}],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"spender","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"constant":false,"inputs":[{"internalType":"address","name":"_owner","type":"address"},{"internalType":"uint256","name":"value","type":"uint256"}],"name":"allocateTo","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"internalType":"address","name":"","type":"address"},{"internalType":"address","name":"","type":"address"}],"name":"allowance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"_spender","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"decimals","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"dst","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transfer","outputs":[{"internalType":"bool","name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"src","type":"address"},{"internalType":"address","name":"dst","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transferFrom","outputs":[{"internalType":"bool","name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"}]
     },
     busd:{
-      address:"0x4f96fe3b7a6cf9725f59d353f723c1bdb64ca6aa",abi:[{"inputs":[{"internalType":"uint256","name":"chainId_","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"src","type":"address"},{"indexed":true,"internalType":"address","name":"guy","type":"address"},{"indexed":false,"internalType":"uint256","name":"wad","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":true,"inputs":[{"indexed":true,"internalType":"bytes4","name":"sig","type":"bytes4"},{"indexed":true,"internalType":"address","name":"usr","type":"address"},{"indexed":true,"internalType":"bytes32","name":"arg1","type":"bytes32"},{"indexed":true,"internalType":"bytes32","name":"arg2","type":"bytes32"},{"indexed":false,"internalType":"bytes","name":"data","type":"bytes"}],"name":"LogNote","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"src","type":"address"},{"indexed":true,"internalType":"address","name":"dst","type":"address"},{"indexed":false,"internalType":"uint256","name":"wad","type":"uint256"}],"name":"Transfer","type":"event"},{"constant":true,"inputs":[],"name":"DOMAIN_SEPARATOR","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"PERMIT_TYPEHASH","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"internalType":"address","name":"","type":"address"},{"internalType":"address","name":"","type":"address"}],"name":"allowance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"usr","type":"address"},{"internalType":"uint256","name":"wad","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"usr","type":"address"},{"internalType":"uint256","name":"wad","type":"uint256"}],"name":"burn","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"decimals","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"guy","type":"address"}],"name":"deny","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"usr","type":"address"},{"internalType":"uint256","name":"wad","type":"uint256"}],"name":"mint","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"src","type":"address"},{"internalType":"address","name":"dst","type":"address"},{"internalType":"uint256","name":"wad","type":"uint256"}],"name":"move","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"nonces","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"holder","type":"address"},{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"nonce","type":"uint256"},{"internalType":"uint256","name":"expiry","type":"uint256"},{"internalType":"bool","name":"allowed","type":"bool"},{"internalType":"uint8","name":"v","type":"uint8"},{"internalType":"bytes32","name":"r","type":"bytes32"},{"internalType":"bytes32","name":"s","type":"bytes32"}],"name":"permit","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"usr","type":"address"},{"internalType":"uint256","name":"wad","type":"uint256"}],"name":"pull","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"usr","type":"address"},{"internalType":"uint256","name":"wad","type":"uint256"}],"name":"push","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"guy","type":"address"}],"name":"rely","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"dst","type":"address"},{"internalType":"uint256","name":"wad","type":"uint256"}],"name":"transfer","outputs":[{"internalType":"bool","name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"src","type":"address"},{"internalType":"address","name":"dst","type":"address"},{"internalType":"uint256","name":"wad","type":"uint256"}],"name":"transferFrom","outputs":[{"internalType":"bool","name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"version","outputs":[{"internalType":"string","name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"wards","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"}]
+      address:"0xEB266ae001a2cb32711158e047Cddb6BCcF6dCee",abi:[{"inputs":[{"internalType":"uint256","name":"chainId_","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"src","type":"address"},{"indexed":true,"internalType":"address","name":"guy","type":"address"},{"indexed":false,"internalType":"uint256","name":"wad","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":true,"inputs":[{"indexed":true,"internalType":"bytes4","name":"sig","type":"bytes4"},{"indexed":true,"internalType":"address","name":"usr","type":"address"},{"indexed":true,"internalType":"bytes32","name":"arg1","type":"bytes32"},{"indexed":true,"internalType":"bytes32","name":"arg2","type":"bytes32"},{"indexed":false,"internalType":"bytes","name":"data","type":"bytes"}],"name":"LogNote","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"src","type":"address"},{"indexed":true,"internalType":"address","name":"dst","type":"address"},{"indexed":false,"internalType":"uint256","name":"wad","type":"uint256"}],"name":"Transfer","type":"event"},{"constant":true,"inputs":[],"name":"DOMAIN_SEPARATOR","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"PERMIT_TYPEHASH","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"internalType":"address","name":"","type":"address"},{"internalType":"address","name":"","type":"address"}],"name":"allowance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"usr","type":"address"},{"internalType":"uint256","name":"wad","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"usr","type":"address"},{"internalType":"uint256","name":"wad","type":"uint256"}],"name":"burn","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"decimals","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"guy","type":"address"}],"name":"deny","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"usr","type":"address"},{"internalType":"uint256","name":"wad","type":"uint256"}],"name":"mint","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"src","type":"address"},{"internalType":"address","name":"dst","type":"address"},{"internalType":"uint256","name":"wad","type":"uint256"}],"name":"move","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"nonces","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"holder","type":"address"},{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"nonce","type":"uint256"},{"internalType":"uint256","name":"expiry","type":"uint256"},{"internalType":"bool","name":"allowed","type":"bool"},{"internalType":"uint8","name":"v","type":"uint8"},{"internalType":"bytes32","name":"r","type":"bytes32"},{"internalType":"bytes32","name":"s","type":"bytes32"}],"name":"permit","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"usr","type":"address"},{"internalType":"uint256","name":"wad","type":"uint256"}],"name":"pull","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"usr","type":"address"},{"internalType":"uint256","name":"wad","type":"uint256"}],"name":"push","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"guy","type":"address"}],"name":"rely","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"dst","type":"address"},{"internalType":"uint256","name":"wad","type":"uint256"}],"name":"transfer","outputs":[{"internalType":"bool","name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"src","type":"address"},{"internalType":"address","name":"dst","type":"address"},{"internalType":"uint256","name":"wad","type":"uint256"}],"name":"transferFrom","outputs":[{"internalType":"bool","name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"version","outputs":[{"internalType":"string","name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"wards","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"}]
     },
     
-    saveLpRewardLogic:{address:"0x988C2BcdEfC430B0547bB7CC1E9Cb3c46ccf2685",abi:[
+    saveLpRewardLogic:{address:"0x7efFc29bb7993C134e557D6dFD651F2caD564dAB",abi:[
         {
           "inputs": [],
           "payable": false,
@@ -8341,7 +8411,7 @@ let ContractConfig = {
           "type": "function"
         }
       ]},
-    saveRewardLogic:{address:"0x988C2BcdEfC430B0547bB7CC1E9Cb3c46ccf2685",abi:[
+    saveRewardLogic:{address:"0x81B863a6214DaECD12a7918DC2Ba75173EdB385B",abi:[
         {
           "inputs": [],
           "payable": false,
@@ -8966,7 +9036,7 @@ let ContractConfig = {
           "type": "function"
         }
       ]},
-    mintRewardLogic:{address:"0x27F7776A64D0A3E72c492dB137A2e983d4E07670",abi:[
+    mintRewardLogic:{address:"0x30961a3362B80FE70c720C4bdA95aeA86F442BB7",abi:[
         {
           "inputs": [],
           "payable": false,
@@ -9556,7 +9626,7 @@ let ContractConfig = {
           "type": "function"
         }
       ]},
-    saveLpRewardLogicProxy:{address:"0x5f3330B2c178F9934C077A107ff9903651ACA235",abi:[
+    saveLpRewardLogicProxy:{address:"0xe8723338bE5761ff8bba1f5B8488396c33d22132",abi:[
         {
           "inputs": [],
           "payable": false,
@@ -10181,7 +10251,7 @@ let ContractConfig = {
           "type": "function"
         }
       ]},
-    saveRewardLogicProxy:{address:"0x5f3330B2c178F9934C077A107ff9903651ACA235",abi:[
+    saveRewardLogicProxy:{address:"0x71b9a39A209863a43d519Dd3d694243fC5dB5191",abi:[
         {
           "inputs": [],
           "payable": false,
@@ -10806,7 +10876,7 @@ let ContractConfig = {
           "type": "function"
         }
       ]},
-    mintRewardLogicProxy:{address:"0xEB57a9068D708FA374BAE7eb02A55CdfA7840820",abi:[
+    mintRewardLogicProxy:{address:"0x3bbd4938fB28B25a03ba8ccFE18f57385D13C73d",abi:[
         {
           "inputs": [],
           "payable": false,
@@ -11398,7 +11468,7 @@ let ContractConfig = {
       ]},
     
     MassetProxy_:{
-      address:"0x2FCB59cA087b4508dEfd1d5aE68B4651f91C4f81",abi:[
+      address:"0xa1F8B875F00c7C9719A8C34299381E9799005579",abi:[
         {
           "stateMutability": "payable",
           "type": "fallback"
@@ -11475,7 +11545,7 @@ let ContractConfig = {
       ]
     },
     BasketManagerProxy_:{
-      address:"0xf46BF5c7f42F0E080298f9013C5Ebd3cCcB99897",abi:[
+      address:"0x5C44FCaE15399E1f10944ec15c4629CD4f621EbF",abi:[
         {
           "stateMutability": "payable",
           "type": "fallback"
@@ -11552,7 +11622,7 @@ let ContractConfig = {
       ]
     },
     mintRewardLogicProxy_:{
-      address:"0xEB57a9068D708FA374BAE7eb02A55CdfA7840820",abi:[
+      address:"0x3bbd4938fB28B25a03ba8ccFE18f57385D13C73d",abi:[
         {
           "stateMutability": "payable",
           "type": "fallback"
@@ -11629,7 +11699,7 @@ let ContractConfig = {
       ]
     },
     saveRewardLogicProxy_:{
-      address:"0x5f3330B2c178F9934C077A107ff9903651ACA235",abi:[
+      address:"0x71b9a39A209863a43d519Dd3d694243fC5dB5191",abi:[
         {
           "stateMutability": "payable",
           "type": "fallback"
@@ -11706,7 +11776,7 @@ let ContractConfig = {
       ]
     },
     saveLpRewardLogicProxy_:{
-      address:"0x5f3330B2c178F9934C077A107ff9903651ACA235",abi:[
+      address:"0xe8723338bE5761ff8bba1f5B8488396c33d22132",abi:[
         {
           "stateMutability": "payable",
           "type": "fallback"

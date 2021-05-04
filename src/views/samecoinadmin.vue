@@ -273,19 +273,19 @@
 					this.solidityConfig_.ContractMsg.Nexus.address,
 					this.solidityConfig_.ContractMsg.MassetProxy.address,
 					[
-						this.solidityConfig_.ContractMsg.dai.address,
+						this.solidityConfig_.ContractMsg.busd.address,
 						this.solidityConfig_.ContractMsg.usdc.address,
-						this.solidityConfig_.ContractMsg.tusd.address,
+						//this.solidityConfig_.ContractMsg.tusd.address,
 						this.solidityConfig_.ContractMsg.usdt.address
 					],
 					[
 						this.solidityConfig_.ContractMsg.MassetProxy.address,
 						this.solidityConfig_.ContractMsg.MassetProxy.address,
-						this.solidityConfig_.ContractMsg.MassetProxy.address,
+						//this.solidityConfig_.ContractMsg.MassetProxy.address,
 						this.solidityConfig_.ContractMsg.MassetProxy.address
 					],
-					['1000000000000000000', '1000000000000000000', '1000000000000000000', '1000000000000000000'],
-					[false, false, false, false]
+					['1000000000000000000', '1000000000000000000', '1000000000000000000'],
+					[false, false, false]
 
 				])
 			},
@@ -293,6 +293,7 @@
 				this._initialize('MassetProxy', [
 					'SameUSD',
 					'SameUSD',
+					this.accountAddress,
 					this.solidityConfig_.ContractMsg.ForgeValidator.address,
 					this.solidityConfig_.ContractMsg.BasketManagerProxy.address,
 					this.solidityConfig_.ContractMsg.mintRewardLogicProxy.address
