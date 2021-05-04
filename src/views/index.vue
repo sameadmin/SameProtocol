@@ -132,7 +132,7 @@
 
                             <div class="operation flex flex-justify-content-end mt-24">
                                 <el-button class="operationBtn operationBtn_mint border-radius-8 color7 font-16 font-family-bold font-weight-b"
-                                           :loading="isLoadingMints" @click="handleMint2()">Mint
+                                           :loading="isLoadingMints" :disabled="isLoadingMints" @click="handleMint2()">Mint
                                 </el-button>
                             </div>
                         </div>

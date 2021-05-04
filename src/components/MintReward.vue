@@ -13,7 +13,10 @@
     </div>
     <div class="RewardBalance mt-10 flex flex-justify-content-center color2 fontWeight-6 font-family-semiBold">{{/*FormatNoE*/(stateFormat_(myRewards,4))}}</div>
     <el-button class="claimBtn color5 fontWeight-b font-family-bold border-radius-8"
-         @click="mintClaim()">Claim</el-button>
+         @click="mintClaim()"
+               :loading="isLoadingClaim"
+               :disabled="isLoadingClaim"
+    >Claim</el-button>
 
     <div class="percentItem" >
       <div class="mt-20 flex flex-justify-content-between font-14">
@@ -53,6 +56,9 @@
         </div>-->
       </div>
     </div>
+    <Tips :showTips="successedTips"></Tips>
+    <Tips :showTips="failedTips"></Tips>
+    <Tips :showTips="waitingTips"></Tips>
   </div>
 </template>
 
@@ -72,11 +78,32 @@
     countdownPercentage,
     mintClaim
   } from '../../src/assets/js/components'
+  import Tips from '@/components/Tips'
   import { stateFormat,FormatNoE } from '@/common/utils'
   export default {
     name: 'MintReward',
+    components:{
+      Tips
+    },
+    watch: {
+      'successedTips.isShow'(newVal, oldVal) {
+        if (newVal) {
+          this.tipsTimer = setTimeout(() => {
+            this.successedTips.isShow = false;
+          }, 2500)
+        }
+      },
+      'failedTips.isShow'(newVal, oldVal) {
+        if (newVal) {
+          this.tipsTimer = setTimeout(() => {
+            this.failedTips.isShow = false;
+          }, 2500)
+        }
+      },
+    },
     data (){
       return {
+        isLoadingClaim: false,
         myRewards: NaN,
         totalAwards:NaN,
         mintRewardInterval:NaN,
@@ -98,7 +125,25 @@
             val: '300 SAME',
             percent: 50
           }
-        ]
+        ],
+        successedTips: {
+          isShow: false,
+          icon: require('../../static/images/sucess.png'),
+          status: 'Successed',
+          bg: '#1F2BFF'
+        },
+        failedTips: {
+          isShow: false,
+          icon: require('../../static/images/failed.png'),
+          status: 'Failed',
+          bg: '#FE1148'
+        },
+        waitingTips: {
+          isShow: false,
+          icon: require('../../static/images/waiting.png'),
+          status: 'Waiting...',
+          bg: '#129BFF'
+        },
       }
     },
     props: {
@@ -143,7 +188,15 @@
         return await nextRoundRewards() ;
       },
       async mintClaim(){
-        return await mintClaim() ;
+        this.isLoadingClaim = true;
+        var info = await mintClaim() ;
+        this.isLoadingClaim = false;
+        if(info.success){
+          this.successedTips.isShow = true;
+        }else {
+          this.failedTips.isShow = true;
+        }
+        return info;
       },
     },
     beforeDestroy() {

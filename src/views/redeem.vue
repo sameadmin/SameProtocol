@@ -42,7 +42,7 @@
                                       @handlerSelectCoin="handlerSelectCoin" />
                             <div class="operation flex flex-justify-content-end mt-24">
                                 <el-button class="operationBtn operationBtn_mint ml-20 border-radius-8 color7 font-16 font-family-bold font-weight-b"
-                                           :loading="isLoadingMint" @click="handleRedeem()" >Redeem
+                                           :loading="isLoadingMint" :disabled="isLoadingMint|| totalRedeem == 0" @click="handleRedeem()" >Redeem
                                 </el-button>
                             </div>
                         </div>
@@ -75,7 +75,7 @@
                                     :isDisabled="isLoading2" />
                             <div class="operation flex flex-justify-content-end mt-24">
                                 <el-button class="operationBtn operationBtn_mint border-radius-8 color7 font-16 font-family-bold font-weight-b"
-                                           :loading="isLoadingMints" @click="handleRedeem2()">Redeem
+                                           :loading="isLoadingMints" :disabled="isLoadingMints || totalRedeem == 0" @click="handleRedeem2()">Redeem
                                 </el-button>
                             </div>
                         </div>
