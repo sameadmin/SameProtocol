@@ -7,7 +7,8 @@
 		        <div v-if="!accountAddress" class="connect font-family-bold font-14 fontWeight-b" @click="showConnect=true">CONNECT</div>
 		        <div v-else class="account border-l flex flex-align-items-center pl-24 font-family-bold font-14 fontWeight-b"
 				@click.stop="showWalletInfo=!showWalletInfo">
-					<div class="">{{shorten(accountAddress)}}</div>
+					<div class="network color6">BSC</div>
+					<div class="ml-10">{{shorten(accountAddress)}}</div>
 					<img class="arrow-up-icon ml-20" :class="{'select-caret': showWalletInfo,'select-reverse': !showWalletInfo}"
 					 src="../../static/images/mint/down.png" />
 				</div>
@@ -190,5 +191,10 @@
 		background: #DE004F;
 		border-radius: 4px;
 		border: 1px solid rgba(0, 0, 0, 0.16);
+	}
+	.network{
+		padding: 6px 10px;
+		border-radius: 4px;
+		background-color: #F7F7F7;
 	}
 </style>
