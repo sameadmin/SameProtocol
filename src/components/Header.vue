@@ -41,12 +41,7 @@
 				showChangeDialog: false,
 				showWalletInfo: false,
 				address: null,
-				logoutSuccessfullyTips: {
-					isShow: false,
-					icon: require('../../static/images/sucess.png'),
-					status: 'Logout Successfully',
-					bg: '#1F2BFF'
-				},
+				logoutSuccessfullyTips: this.globalTips.logoutSuccessfullyTips
 			}
 		},
 		props: {

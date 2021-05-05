@@ -38,12 +38,15 @@
                   <!--<div class="color3 mt-2">{{ stateFormat_(item.liquidity_) }} SAME</div>-->
                 </div>
                 <div class="width-168 pl-20 text-left">
-                  <div class="color2">${{ stateFormat_(item.stacked,6) }}</div>
+                  <div class="color2">{{ stateFormat_(item.stacked,6) }}</div>
                   <div class="color3 mt-2"><!--{{ stateFormat_(item.stacked_) }}--> SameUSD</div>
                 </div>
                 <div class="flex-1 pl-20 text-left flex flex-justify-content-between">
                   <div class="">
-                    <div class="color2">{{ stateFormat_(item.earning,6) }}</div>
+                    <!-- <div class="color2">{{ stateFormat_(item.earning,6) }}</div> -->
+					<countTo v-if="!item.earning" class="color2" :startVal='0' :endVal='Number(stateFormat_(item.earning,6))' :duration='3000'></countTo>
+					<countTo v-else class="color2" :startVal='0' :endVal='Number(stateFormat_(item.earning,6))'
+					  :decimals="6" :duration='3000'></countTo>
                     <div class="color3 mt-2">{{ item.earning_ }}</div>
                   </div>
                   <div class="flex flex-align-items-center font-12 font-family-regular font-weight-4">
@@ -132,13 +135,13 @@
 		<Tips :showTips="saveSuccessfullyTips"></Tips>
 		<Tips :showTips="claimSuccessfullyTips"></Tips>
 		<Tips :showTips="withdrawSuccessfullyTips"></Tips>
-        <Tips :showTips="successedTips"></Tips>
+        <Tips :showTips="approveSuccessfullyTips"></Tips>
         <Tips :showTips="failedTips"></Tips>
-        <Tips :showTips="waitingTips"></Tips>
     </div>
 </template>
 
 <script>
+	import countTo from 'vue-count-to';
 	import Header from '@/components/Header'
 	import Footer from '@/components/Footer'
 	import Tips from '@/components/Tips'
@@ -186,10 +189,10 @@
 					}, 2500)
 				}
 			},
-			'successedTips.isShow'(newVal, oldVal) {
+			'approveSuccessfullyTips.isShow'(newVal, oldVal) {
 				if (newVal) {
 					this.tipsTimer = setTimeout(() => {
-						this.successedTips.isShow = false;
+						this.approveSuccessfullyTips.isShow = false;
 					}, 2500)
 				}
 			},
@@ -254,42 +257,11 @@
 				],
 				detailTab: ["Save", "Claim/Withdraw"],
 				curr: 0,
-				saveSuccessfullyTips: {
-					isShow: false,
-					icon: require('../../static/images/sucess.png'),
-					status: 'Save Successfully',
-					bg: '#1F2BFF'
-				},
-				claimSuccessfullyTips: {
-					isShow: false,
-					icon: require('../../static/images/sucess.png'),
-					status: 'Claim Successfully',
-					bg: '#1F2BFF'
-				},
-				withdrawSuccessfullyTips: {
-					isShow: false,
-					icon: require('../../static/images/sucess.png'),
-					status: 'Withdraw Successfully',
-					bg: '#1F2BFF'
-				},
-				successedTips: {
-					isShow: false,
-					icon: require('../../static/images/sucess.png'),
-					status: 'Successed',
-					bg: '#1F2BFF'
-				},
-				failedTips: {
-					isShow: false,
-					icon: require('../../static/images/failed.png'),
-					status: 'Failed',
-					bg: '#FE1148'
-				},
-				waitingTips: {
-					isShow: false,
-					icon: require('../../static/images/waiting.png'),
-					status: 'Waiting...',
-					bg: '#129BFF'
-				},
+				saveSuccessfullyTips: this.globalTips.saveSuccessfullyTips,
+				claimSuccessfullyTips: this.globalTips.claimSuccessfullyTips,
+				withdrawSuccessfullyTips: this.globalTips.withdrawSuccessfullyTips,
+				approveSuccessfullyTips: this.globalTips.approveSuccessfullyTips,
+				failedTips: this.globalTips.failedTips
 			}
 		},
 		components: {
@@ -297,7 +269,8 @@
 			Footer,
 			MintHeader,
 			Tips,
-			FromItem
+			FromItem,
+			countTo
 		},
 
 		async created() {
@@ -389,7 +362,7 @@
 				let info = await goApprove_(coinName, 10000000000, solidityConfig.ContractMsg.saveRewardLogicProxy.address);
 				this.isLoadingApproves = false;
 				if (info.success) {
-					this.successedTips.isShow = true;
+					this.approveSuccessfullyTips.isShow = true;
 					showDetail = false
 				} else {
 					this.failedTips.isShow = true;

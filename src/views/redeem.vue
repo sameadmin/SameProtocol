@@ -88,9 +88,8 @@
                 <MintNews :showNews="showNews" @handleShowReward="handleShowReward"></MintNews>
                 <MintReward :showReward="showReward" @handleHideReward="handleHideReward"></MintReward>
 				<Tips :showTips="redeemSuccessfullyTips"></Tips>
-                <Tips :showTips="successedTips"></Tips>
+                <Tips :showTips="approveSuccessfullyTips"></Tips>
                 <Tips :showTips="failedTips"></Tips>
-                <Tips :showTips="waitingTips"></Tips>
             </div>
         </el-main>
         <Footer></Footer>
@@ -167,30 +166,9 @@
 				],
 				showNews: true,
 				showReward: false,
-				redeemSuccessfullyTips: {
-					isShow: false,
-					icon: require('../../static/images/sucess.png'),
-					status: 'Redeem Successfully',
-					bg: '#1F2BFF'
-				},
-				successedTips: {
-					isShow: false,
-					icon: require('../../static/images/sucess.png'),
-					status: 'Successed',
-					bg: '#1F2BFF'
-				},
-				failedTips: {
-					isShow: false,
-					icon: require('../../static/images/failed.png'),
-					status: 'Failed',
-					bg: '#FE1148'
-				},
-				waitingTips: {
-					isShow: false,
-					icon: require('../../static/images/waiting.png'),
-					status: 'Waiting...',
-					bg: '#129BFF'
-				},
+				redeemSuccessfullyTips: this.globalTips.redeemSuccessfullyTips,
+				approveSuccessfullyTips: this.globalTips.approveSuccessfullyTips,
+				failedTips: this.globalTips.failedTips,
 				tipsTimer: null,
 				timer: null,
 				time: 8
@@ -252,10 +230,10 @@
 					}, 2500)
 				}
 			},
-			'successedTips.isShow'(newVal, oldVal) {
+			'approveSuccessfullyTips.isShow'(newVal, oldVal) {
 				if (newVal) {
 					this.tipsTimer = setTimeout(() => {
-						this.successedTips.isShow = false;
+						this.approveSuccessfullyTips.isShow = false;
 					}, 2500)
 				}
 			},
@@ -294,7 +272,7 @@
 				let info = await goApprove(coinName.toLowerCase(),100000000000);
 				this.isLoadingApprove = false;
 				if(info.success){
-					this.successedTips.isShow = true;
+					this.approveSuccessfullyTips.isShow = true;
 				}else {
 					this.failedTips.isShow = true;
 				}
@@ -359,7 +337,7 @@
 				var info = await redeemMulti(coinNameList,fromNumList);
 				this.isLoadingMints = false;
 				if(info.success){
-					this.successedTips.isShow = true;
+					this.redeemSuccessfullyTips.isShow = true;
 				}else {
 					this.failedTips.isShow = true;
 				}

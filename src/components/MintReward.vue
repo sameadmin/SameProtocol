@@ -58,7 +58,6 @@
     </div>
     <Tips :showTips="successedTips"></Tips>
     <Tips :showTips="failedTips"></Tips>
-    <Tips :showTips="waitingTips"></Tips>
   </div>
 </template>
 
@@ -126,24 +125,8 @@
             percent: 50
           }
         ],
-        successedTips: {
-          isShow: false,
-          icon: require('../../static/images/sucess.png'),
-          status: 'Successed',
-          bg: '#1F2BFF'
-        },
-        failedTips: {
-          isShow: false,
-          icon: require('../../static/images/failed.png'),
-          status: 'Failed',
-          bg: '#FE1148'
-        },
-        waitingTips: {
-          isShow: false,
-          icon: require('../../static/images/waiting.png'),
-          status: 'Waiting...',
-          bg: '#129BFF'
-        },
+        successedTips: this.globalTips.successedTips,
+        failedTips: this.globalTips.failedTips,
       }
     },
     props: {

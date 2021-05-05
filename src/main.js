@@ -13,6 +13,9 @@ Vue.use(ElementUI)
 import animated from 'animate.css'
 Vue.use(animated)
 
+import globalTips from '@/common/global_tips.js'
+Vue.prototype.globalTips = globalTips
+
 Vue.config.productionTip = false
 
 new Vue({

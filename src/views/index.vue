@@ -146,9 +146,7 @@
                 <MintReward :showReward="showReward" @handleHideReward="handleHideReward"></MintReward>
 				<Tips :showTips="approveSuccessfullyTips"></Tips>
 				<Tips :showTips="mintSuccessfullyTips"></Tips>
-                <Tips :showTips="successedTips"></Tips>
                 <Tips :showTips="failedTips"></Tips>
-                <Tips :showTips="waitingTips"></Tips>
             </div>
         </el-main>
         <Footer></Footer>
@@ -224,36 +222,9 @@
 				],
 				showNews: true,
 				showReward: false,
-				approveSuccessfullyTips: {
-					isShow: false,
-					icon: require('../../static/images/sucess.png'),
-					status: 'Approve Successfully',
-					bg: '#1F2BFF'
-				},
-				mintSuccessfullyTips: {
-					isShow: false,
-					icon: require('../../static/images/sucess.png'),
-					status: 'Mint Successfully',
-					bg: '#1F2BFF'
-				},
-				successedTips: {
-					isShow: false,
-					icon: require('../../static/images/sucess.png'),
-					status: 'Successed',
-					bg: '#1F2BFF'
-				},
-				failedTips: {
-					isShow: false,
-					icon: require('../../static/images/failed.png'),
-					status: 'Failed',
-					bg: '#FE1148'
-				},
-				waitingTips: {
-					isShow: false,
-					icon: require('../../static/images/waiting.png'),
-					status: 'Waiting...',
-					bg: '#129BFF'
-				},
+				approveSuccessfullyTips: this.globalTips.approveSuccessfullyTips,
+				mintSuccessfullyTips: this.globalTips.mintSuccessfullyTips,
+				failedTips: this.globalTips.failedTips,
 				tipsTimer: null,
 				timer: null,
 				time: 8
@@ -325,13 +296,6 @@
 				if (newVal) {
 					this.tipsTimer = setTimeout(() => {
 						this.mintSuccessfullyTips.isShow = false;
-					}, 2500)
-				}
-			},
-			'successedTips.isShow'(newVal, oldVal) {
-				if (newVal) {
-					this.tipsTimer = setTimeout(() => {
-						this.successedTips.isShow = false;
 					}, 2500)
 				}
 			},

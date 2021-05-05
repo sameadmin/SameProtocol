@@ -50,12 +50,7 @@
             connected: false
           }*/
         ],
-		connectSuccessfullyTips: {
-			isShow: false,
-			icon: require('../../static/images/sucess.png'),
-			status: 'Connect Successfully',
-			bg: '#1F2BFF'
-		},
+		connectSuccessfullyTips: this.globalTips.connectSuccessfullyTips
       }
     },
     watch: {

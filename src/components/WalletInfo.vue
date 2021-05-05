@@ -51,18 +51,8 @@
     name: 'walletInfo',
     data () {
       return {
-        copiedTips: {
-        	isShow: false,
-        	icon: require('../../static/images/sucess.png'),
-        	status: 'Copied',
-        	bg: '#1F2BFF'
-        },
-        failedTips: {
-        	isShow: false,
-        	icon: require('../../static/images/failed.png'),
-        	status: 'Failed',
-        	bg: '#FE1148'
-        },
+        copiedTips: this.globalTips.copiedTips,
+        failedTips: this.globalTips.failedTips,
       }
     },
 	components: {

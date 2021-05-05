@@ -36,23 +36,32 @@
         <div class="balance font-family-regular font-weight-4 text-left border-r border-l border-b">Balance：{{ stateFormat_(currCoin.balance,6) }}
         </div>
         <h5 class="text-left" style="color: crimson" v-if="(currCoin.balance<currCoin.fromNum) && showerr">Current balance {{ stateFormat_(currCoin.balance,6) }} ,Insufficient amount</h5>
+		 <Tips :showTips="approveSuccessfullyTips"></Tips>
     </div>
 </template>
 
 <script>
 	import {stateFormat} from '@/common/utils'
 	import {remove0,goApprove} from '../../src/assets/js/components'
-
+	import Tips from '@/components/Tips'
 	export default {
 		name: 'FromItem',
 		data() {
 			return {
 				isLoadingApproves:false,
+				approveSuccessfullyTips: this.globalTips.approveSuccessfullyTips
             }
 		},
 		watch: {
 			'currCoin.fromNum'() {
 				this.currCoin.fromNum = remove0(this.currCoin.fromNum);
+			},
+			'approveSuccessfullyTips.isShow'(newVal, oldVal) {
+				if (newVal) {
+					this.tipsTimer = setTimeout(() => {
+						this.approveSuccessfullyTips.isShow = false;
+					}, 2500)
+				}
 			},
 		},
 		props: {
@@ -67,7 +76,9 @@
             type:String
 
 		},
-		components: {},
+		components: {
+			Tips
+		},
 		methods: {
 			stateFormat_(num,d) {
 				return stateFormat(num,d)
@@ -93,7 +104,7 @@
 				let info = await goApprove(coinName.toLowerCase(),10000000000);
 				this.isLoadingApproves = false;
 				if(info.success){
-					this.successedTips.isShow = true;
+					this.approveSuccessfullyTips.isShow = true;
 				}else {
 					this.failedTips.isShow = true;
 				}
