@@ -32,7 +32,7 @@
 													  placeholder="0.00"></el-input>
 										</div>
 									</div>
-									<div class="toInfo-r flex flex-align-items-center">
+									<div class="toInfo-r flex flex-align-items-center"  @click="addCoin('sameusd','SUSD')">
 										<img class="currCoinIcon ml-18" :src="require(`../../static/images/mint/sameusd.png`)"/>
 										<div class="currCoin font-14 color4 font-family-bold font-weight-b ml-12">SameUSD
 										</div>
@@ -51,7 +51,7 @@
 								                      placeholder="0.00"></el-input>
 								        </div>
 								    </div>
-								    <div class="toInfo-r flex flex-align-items-center">
+								    <div class="toInfo-r flex flex-align-items-center"  @click="addCoin('samecoin','SCOIN')">
 								        <img class="currCoinIcon ml-18" :src="require(`../../static/images/mint/samecoin.png`)"/>
 								        <div class="currCoin font-14 color4 font-family-bold font-weight-b ml-12">Samecoin
 								        </div>
@@ -102,7 +102,7 @@
                                                       placeholder="0.00"></el-input>
                                         </div>
                                     </div>
-                                    <div class="toInfo-r flex flex-align-items-center">
+                                    <div class="toInfo-r flex flex-align-items-center" @click="addCoin('sameusd','SUSD')">
                                         <img class="currCoinIcon ml-18" :src="require(`../../static/images/mint/sameusd.png`)"/>
                                         <div class="currCoin font-14 color4 font-family-bold font-weight-b ml-12">SameUSD
                                         </div>
@@ -121,7 +121,7 @@
 								                      placeholder="0.00"></el-input>
 								        </div>
 								    </div>
-								    <div class="toInfo-r flex flex-align-items-center">
+								    <div class="toInfo-r flex flex-align-items-center" @click="addCoin('samecoin','SCOIN')">
 								        <img class="currCoinIcon ml-18" :src="require(`../../static/images/mint/samecoin.png`)"/>
 								        <div class="currCoin font-14 color4 font-family-bold font-weight-b ml-12">Samecoin
 								        </div>
@@ -155,7 +155,7 @@
 
 <script>
 	import solidityConfig from '../../src/assets/solidityConfig'
-	import {balanceOf,checkApprove,goApprove,mint,mints,mintSameCoinRewards} from '../../src/assets/js/components'
+	import {balanceOf,checkApprove,goApprove,mint,mints,mintSameCoinRewards,addCoin} from '../../src/assets/js/components'
 	import Header from '@/components/Header'
 	import Footer from '@/components/Footer'
 	import MintNews from '@/components/MintNews'
@@ -236,6 +236,7 @@
 
 		},
 		mounted() {
+			var this_ = this;
 			this.intervalId = setInterval(async () => {
 				this.updataBalance();
 				this.updataApprove();
@@ -247,11 +248,11 @@
 			}, 1000)
 
 			this.interva2lId = setInterval(async () => {
-				this.totalMint = 0;
+				this_.totalMint = 0;
 				for(var i in this.selectCoinList){
-					this.totalMint += Number(this.selectCoinList[i].fromNum);
+					this_.totalMint += Number(this_.selectCoinList[i].fromNum);
                 }
-				this.toRewards = await mintSameCoinRewards(this.totalMint);
+				this_.toRewards = await mintSameCoinRewards(this_.totalMint);
 			}, 100)
 
 			this.countDown(256)
@@ -311,6 +312,9 @@
             }
 		},
 		methods: {
+			async addCoin(coinName,symbol){
+				return await addCoin(coinName,symbol);
+			},
 			async mintSameCoinRewards(val){
 				return await mintSameCoinRewards(val);
             },

@@ -15,7 +15,7 @@
 		    </div>
 		</el-header>
 		<Connect :showConnect="showConnect" @handleClose="handleClose" @showConnect="onChangeType" @showChangeDialog_="onChangeDialogType"/>
-		<ChangeNetework :showChangeDialog="showChangeDialog" @handleClose="handleClose2"></ChangeNetework>
+		<Warning :showChangeDialog="showChangeDialog" @handleClose="handleClose2" :msg="showWarningMsg" :title_="showWarningtitle"></Warning>
 		<WalletInfo :showWalletInfo="showWalletInfo" :address="accountAddress" @closeWalletInfo="closeWalletInfo"
 		@logout="logout"></WalletInfo>
 		<Tips :showTips="logoutSuccessfullyTips"></Tips>
@@ -25,7 +25,7 @@
 <script>
 	import Menu from '@/components/Menu'
 	import Connect from './Connect'
-	import ChangeNetework from './changeNetwork.vue'
+	import Warning from './Warning.vue'
 	import WalletInfo from './WalletInfo.vue'
 	import Tips from './Tips.vue'
 	//import Web3 from 'web3';
@@ -40,6 +40,8 @@
 				showConnect: false,
 				accountAddress:null,
 				showChangeDialog: false,
+				showWarningtitle: false,
+				showWarningMsg: false,
 				showWalletInfo: false,
 				address: null,
 				logoutSuccessfullyTips: this.globalTips.logoutSuccessfullyTips
@@ -51,7 +53,7 @@
 		components: {
 			Menu,
 			Connect,
-			ChangeNetework,
+			Warning,
 			WalletInfo,
 			Tips
 		},
@@ -79,7 +81,10 @@
 				this.showConnect = type
 			},
 			onChangeDialogType(type){
+				//没安装钱包，弹出警告
 				this.showChangeDialog = type;
+				this.showWarningtitle = 'Warning';
+				this.showWarningMsg = 'You\'ll need to install MetaMask to continue. Once you have it installed,';
 			},
 			//查看是否使用钱包
 			async checkSignin(){
@@ -104,8 +109,21 @@
 			shorten(str){
 				return  shorten(str);
 			},
+			//检查当前网络id是否为kovan或bsc
+			async checkIsBsc(){
+				var id = ethereum.networkVersion;
+				console.log(id);
+				if(id == 42 || id == 56){
+					return true;
+				}
+				this.showChangeDialog = true;
+				this.showWarningtitle = 'Warning';
+				this.showWarningMsg = 'Please log in with Kovan test network or BSC network';
+				return false;
+			}
 		},
 		async mounted() {
+			var this_ = this;
 			// this.showChangeDialog = true
 
 			this.intervalId = setInterval( async ()=>{
@@ -117,9 +135,23 @@
 			/*this.intervalId = setInterval( async ()=>{
 				this.updataBalance();
 			},3000)*/
+			ethereum.on('accountsChanged', function (accounts) {
+				//console.log(accounts[0])
+			})
+
+			ethereum.on('networkChanged',async function (networkIDstring) {
+				console.log('networkIDstring',networkIDstring);
+				await this_.checkIsBsc();
+			})
+
+			//ethereum.autoRefreshOnNetworkChange;
 		},
 		async created () {
-			this.accountAddress = await toAccount()
+			this.accountAddress = await toAccount();
+
+			//检查当前web3 网络 是否为kovan或bsc
+			await this.checkIsBsc();
+
 		}
 	}
 </script>

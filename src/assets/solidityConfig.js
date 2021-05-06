@@ -182,7 +182,7 @@ let ContractConfig = {
       ]
     },
     Masset: {
-      address: "0x5384afAF4829f5bdaEad58662d9D23A9162e839D", abi: [
+      address: "0x7A333382718B93590329750AA3bc14Cd42cd17b1", abi: [
         {
           "anonymous": false,
           "inputs": [
@@ -1267,7 +1267,7 @@ let ContractConfig = {
       ]
     },
     MassetProxy: {
-      address: "0xa1F8B875F00c7C9719A8C34299381E9799005579", abi: [
+      address: "0x16651306354eDADcCE7D4437B629d29d896B1012", abi: [
         {
           "anonymous": false,
           "inputs": [
@@ -2352,7 +2352,7 @@ let ContractConfig = {
       ]
     },
     ForgeValidator: {
-      address: "0x460CB5C88A607778aceB19A88Cc80Ebb7Bb2d019", abi: [
+      address: "0xa9eBE52405eCc469b0AEa2a698686Af82CF667ad", abi: [
         {
           "constant": true,
           "inputs": [
@@ -2758,7 +2758,7 @@ let ContractConfig = {
       ]
     },
     BasketManager: {
-      address: "0xdA2a7Ab7748957109Ba0DED64D14121cB4a119FE", abi: [
+      address: "0x80566b954c7AAA1F55b9AEf6C863Da05ac669047", abi: [
         {
           "anonymous": false,
           "inputs": [],
@@ -2839,19 +2839,6 @@ let ContractConfig = {
           "anonymous": false,
           "inputs": [
             {
-              "indexed": false,
-              "internalType": "address",
-              "name": "account",
-              "type": "address"
-            }
-          ],
-          "name": "Paused",
-          "type": "event"
-        },
-        {
-          "anonymous": false,
-          "inputs": [
-            {
               "indexed": true,
               "internalType": "address",
               "name": "bAsset",
@@ -2868,17 +2855,19 @@ let ContractConfig = {
           "type": "event"
         },
         {
-          "anonymous": false,
-          "inputs": [
+          "constant": true,
+          "inputs": [],
+          "name": "OwnerAddress",
+          "outputs": [
             {
-              "indexed": false,
               "internalType": "address",
-              "name": "account",
+              "name": "",
               "type": "address"
             }
           ],
-          "name": "Unpaused",
-          "type": "event"
+          "payable": false,
+          "stateMutability": "view",
+          "type": "function"
         },
         {
           "constant": false,
@@ -3322,7 +3311,7 @@ let ContractConfig = {
           "inputs": [
             {
               "internalType": "address",
-              "name": "_nexus",
+              "name": "CEOAddress",
               "type": "address"
             },
             {
@@ -3381,6 +3370,21 @@ let ContractConfig = {
         {
           "constant": true,
           "inputs": [],
+          "name": "isCEO",
+          "outputs": [
+            {
+              "internalType": "bool",
+              "name": "",
+              "type": "bool"
+            }
+          ],
+          "payable": false,
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "constant": true,
+          "inputs": [],
           "name": "mAsset",
           "outputs": [
             {
@@ -3406,45 +3410,6 @@ let ContractConfig = {
           "outputs": [],
           "payable": false,
           "stateMutability": "nonpayable",
-          "type": "function"
-        },
-        {
-          "constant": true,
-          "inputs": [],
-          "name": "nexus",
-          "outputs": [
-            {
-              "internalType": "contract INexus",
-              "name": "",
-              "type": "address"
-            }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "constant": false,
-          "inputs": [],
-          "name": "pause",
-          "outputs": [],
-          "payable": false,
-          "stateMutability": "nonpayable",
-          "type": "function"
-        },
-        {
-          "constant": true,
-          "inputs": [],
-          "name": "paused",
-          "outputs": [
-            {
-              "internalType": "bool",
-              "name": "",
-              "type": "bool"
-            }
-          ],
-          "payable": false,
-          "stateMutability": "view",
           "type": "function"
         },
         {
@@ -3887,8 +3852,14 @@ let ContractConfig = {
         },
         {
           "constant": false,
-          "inputs": [],
-          "name": "unpause",
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "CEOAddress",
+              "type": "address"
+            }
+          ],
+          "name": "updataCEO",
           "outputs": [],
           "payable": false,
           "stateMutability": "nonpayable",
@@ -3897,7 +3868,7 @@ let ContractConfig = {
       ]
     },
     BasketManagerProxy: {
-      address: `0x5C44FCaE15399E1f10944ec15c4629CD4f621EbF`, abi: [
+      address: `0xf1AE9F822db2eB3B541955b7c4275b10847d6769`, abi: [
         {
           "anonymous": false,
           "inputs": [],
@@ -3978,19 +3949,6 @@ let ContractConfig = {
           "anonymous": false,
           "inputs": [
             {
-              "indexed": false,
-              "internalType": "address",
-              "name": "account",
-              "type": "address"
-            }
-          ],
-          "name": "Paused",
-          "type": "event"
-        },
-        {
-          "anonymous": false,
-          "inputs": [
-            {
               "indexed": true,
               "internalType": "address",
               "name": "bAsset",
@@ -4007,17 +3965,19 @@ let ContractConfig = {
           "type": "event"
         },
         {
-          "anonymous": false,
-          "inputs": [
+          "constant": true,
+          "inputs": [],
+          "name": "OwnerAddress",
+          "outputs": [
             {
-              "indexed": false,
               "internalType": "address",
-              "name": "account",
+              "name": "",
               "type": "address"
             }
           ],
-          "name": "Unpaused",
-          "type": "event"
+          "payable": false,
+          "stateMutability": "view",
+          "type": "function"
         },
         {
           "constant": false,
@@ -4461,7 +4421,7 @@ let ContractConfig = {
           "inputs": [
             {
               "internalType": "address",
-              "name": "_nexus",
+              "name": "CEOAddress",
               "type": "address"
             },
             {
@@ -4520,6 +4480,21 @@ let ContractConfig = {
         {
           "constant": true,
           "inputs": [],
+          "name": "isCEO",
+          "outputs": [
+            {
+              "internalType": "bool",
+              "name": "",
+              "type": "bool"
+            }
+          ],
+          "payable": false,
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "constant": true,
+          "inputs": [],
           "name": "mAsset",
           "outputs": [
             {
@@ -4545,45 +4520,6 @@ let ContractConfig = {
           "outputs": [],
           "payable": false,
           "stateMutability": "nonpayable",
-          "type": "function"
-        },
-        {
-          "constant": true,
-          "inputs": [],
-          "name": "nexus",
-          "outputs": [
-            {
-              "internalType": "contract INexus",
-              "name": "",
-              "type": "address"
-            }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "constant": false,
-          "inputs": [],
-          "name": "pause",
-          "outputs": [],
-          "payable": false,
-          "stateMutability": "nonpayable",
-          "type": "function"
-        },
-        {
-          "constant": true,
-          "inputs": [],
-          "name": "paused",
-          "outputs": [
-            {
-              "internalType": "bool",
-              "name": "",
-              "type": "bool"
-            }
-          ],
-          "payable": false,
-          "stateMutability": "view",
           "type": "function"
         },
         {
@@ -5026,8 +4962,14 @@ let ContractConfig = {
         },
         {
           "constant": false,
-          "inputs": [],
-          "name": "unpause",
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "CEOAddress",
+              "type": "address"
+            }
+          ],
+          "name": "updataCEO",
           "outputs": [],
           "payable": false,
           "stateMutability": "nonpayable",
@@ -5036,7 +4978,7 @@ let ContractConfig = {
       ]
     },
     sameUsd:{
-      address: "0xa1F8B875F00c7C9719A8C34299381E9799005579", abi: [
+      address: "0x16651306354eDADcCE7D4437B629d29d896B1012", abi: [
         {
           "anonymous": false,
           "inputs": [
@@ -6104,7 +6046,7 @@ let ContractConfig = {
       ]
     },
     sameusd:{
-      address: "0xa1F8B875F00c7C9719A8C34299381E9799005579", abi: [
+      address: "0x16651306354eDADcCE7D4437B629d29d896B1012", abi: [
         {
           "anonymous": false,
           "inputs": [
@@ -8411,7 +8353,7 @@ let ContractConfig = {
           "type": "function"
         }
       ]},
-    saveRewardLogic:{address:"0x81B863a6214DaECD12a7918DC2Ba75173EdB385B",abi:[
+    saveRewardLogic:{address:"0xB071C05bfBB5fe4917dC32EfcB677b2f58A5bf41",abi:[
         {
           "inputs": [],
           "payable": false,
@@ -9036,7 +8978,7 @@ let ContractConfig = {
           "type": "function"
         }
       ]},
-    mintRewardLogic:{address:"0x30961a3362B80FE70c720C4bdA95aeA86F442BB7",abi:[
+    mintRewardLogic:{address:"0x19fa85c5f341C72859EeFb72F3bBD0C92D0080D2",abi:[
         {
           "inputs": [],
           "payable": false,
@@ -10251,7 +10193,7 @@ let ContractConfig = {
           "type": "function"
         }
       ]},
-    saveRewardLogicProxy:{address:"0x71b9a39A209863a43d519Dd3d694243fC5dB5191",abi:[
+    saveRewardLogicProxy:{address:"0x7aA93E12ACd5142dFEab4a34109Ede16282cf5ad",abi:[
         {
           "inputs": [],
           "payable": false,
@@ -10876,7 +10818,7 @@ let ContractConfig = {
           "type": "function"
         }
       ]},
-    mintRewardLogicProxy:{address:"0x3bbd4938fB28B25a03ba8ccFE18f57385D13C73d",abi:[
+    mintRewardLogicProxy:{address:"0x47C0309c0bd141F91AAdfE652B0aC2AE8F9D1660",abi:[
         {
           "inputs": [],
           "payable": false,
@@ -11468,7 +11410,7 @@ let ContractConfig = {
       ]},
     
     MassetProxy_:{
-      address:"0xa1F8B875F00c7C9719A8C34299381E9799005579",abi:[
+      address:"0x16651306354eDADcCE7D4437B629d29d896B1012",abi:[
         {
           "stateMutability": "payable",
           "type": "fallback"
@@ -11545,7 +11487,7 @@ let ContractConfig = {
       ]
     },
     BasketManagerProxy_:{
-      address:"0x5C44FCaE15399E1f10944ec15c4629CD4f621EbF",abi:[
+      address:"0xf1AE9F822db2eB3B541955b7c4275b10847d6769",abi:[
         {
           "stateMutability": "payable",
           "type": "fallback"
@@ -11622,7 +11564,7 @@ let ContractConfig = {
       ]
     },
     mintRewardLogicProxy_:{
-      address:"0x3bbd4938fB28B25a03ba8ccFE18f57385D13C73d",abi:[
+      address:"0x47C0309c0bd141F91AAdfE652B0aC2AE8F9D1660",abi:[
         {
           "stateMutability": "payable",
           "type": "fallback"
@@ -11699,7 +11641,7 @@ let ContractConfig = {
       ]
     },
     saveRewardLogicProxy_:{
-      address:"0x71b9a39A209863a43d519Dd3d694243fC5dB5191",abi:[
+      address:"0x7aA93E12ACd5142dFEab4a34109Ede16282cf5ad",abi:[
         {
           "stateMutability": "payable",
           "type": "fallback"

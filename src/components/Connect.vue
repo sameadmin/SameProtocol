@@ -29,7 +29,7 @@
 
 <script>
   import {CheckMetaMask} from '../../src/assets/js/components'
-  import ChangeNetework from './changeNetwork.vue'
+  //import Warning from './Warning.vue'
   import Tips from '@/components/Tips'
   export default {
     name: 'Connect',
@@ -66,7 +66,7 @@
       showConnect: Boolean
     },
     components: {
-      ChangeNetework,
+		//Warning,
 	  Tips
     },
     methods: {
@@ -75,12 +75,14 @@
       },*/
       async CheckMetaMask() {
         $cookies.set("useWallet",true);
-		this.connectSuccessfullyTips.isShow = true
         var haveweb3 = await CheckMetaMask();
         if(!haveweb3){
+
           this.$emit('showChangeDialog_',true);
-          /*this.showChangeDialog = true*/
+			this.$emit('showConnect',false);
+			return ;
         }
+		  this.connectSuccessfullyTips.isShow = true;
         this.$emit('showConnect',false)
       },
       handleClose (){

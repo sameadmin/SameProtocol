@@ -44,9 +44,9 @@
                 <div class="flex-1 pl-20 text-left flex flex-justify-content-between">
                   <div class="">
                     <!-- <div class="color2">{{ stateFormat_(item.earning,6) }}</div> -->
-					<countTo v-if="!item.earning" class="color2" :startVal='0' :endVal='Number(stateFormat_(item.earning,6))' :duration='3000'></countTo>
-					<countTo v-else class="color2" :startVal='0' :endVal='Number(stateFormat_(item.earning,6))'
-					  :decimals="6" :duration='3000'></countTo>
+					<countTo v-if="!item.earning" class="color2" :startVal='0' :endVal='item.earning' :duration='300'></countTo>
+					<countTo v-else class="color2" :startVal='0' :endVal='item.earning'
+					  :decimals="6" :duration='300'></countTo>
                     <div class="color3 mt-2">{{ item.earning_ }}</div>
                   </div>
                   <div class="flex flex-align-items-center font-12 font-family-regular font-weight-4">

@@ -49,12 +49,64 @@ export function toDay (val) {
   return `${Y + M + D /*+ h + m + s*/}`
 }
 
+//添加代币
+export async function addCoin (coinName,symbol,image){
+  var solidityConfig = require(`../solidityConfig`);
+  var decimals = (await bcView(coinName, 'decimals')).info;
+  await ethereum.request({
+    method: 'wallet_watchAsset',
+    params: {
+      type: 'ERC20',
+      options: {
+        address: `${solidityConfig.ContractMsg[coinName].address}`,
+        symbol: symbol,
+        decimals: decimals,
+        image: image,
+      },
+    },
+  });
+}
+
+//添加bsc网络
+export async function addBSCNet (){
+	await  ethereum.request({
+		method: 'wallet_addEthereumChain',
+		params: [{
+			chainId: '0x38',
+			chainName: 'Binance Smart Chain',
+			nativeCurrency:
+				{
+					name: 'BNB',
+					symbol: 'BNB',
+					decimals: 18
+				},
+			rpcUrls: ['https://bsc-dataseed.binance.org/'],
+			blockExplorerUrls: ['https://bscscan.com/'],
+		}],
+	});
+}
+
+//查看代币列表
+/*
+export async function eth_accounts (){
+  
+  console.log(web3.eth.accounts.wallet);
+}
+*/
+
+
+
 //检查是否安装metaMask
 export async function CheckMetaMask() {
   var Web3 = require(`web3`);
   //let this_ = this;
   if (window.ethereum) {
     window.web3 = new Web3(ethereum);
+	
+    //await addCoin();
+    //await addBSCNet();
+    //await eth_accounts();
+    
     $cookies.set("useWallet",true);
     //this_.isWallet = true;
     try {
@@ -76,7 +128,9 @@ export async function CheckMetaMask() {
     window.web3 = new Web3(web3.currentProvider);
     // Acccounts always exposed
     web3.eth.sendTransaction({/* ... */});
-    
+	
+	  
+	  
     return true;
   }
   // Non-dapp browsers...
@@ -221,7 +275,6 @@ export async function bcWrite (ContractName, functionName, parameter, options = 
   } catch (e) {
     return { success: false, info: e.message }
   }
-  
 }
 
 //查看一揽子货币的某个币有多少 (dai usdc tusd usdt)
@@ -466,22 +519,20 @@ export async function mintClaim(){
 //获取mint时预计samecoinRewards
 export async function mintSameCoinRewards(mintSameUSDVal){
   //获取当前区块id有多少铸币总量 mintBlockIdInfo = 》totalMintAmt
-  let totalMintAmt_ = await totalMintAmt();
-  var decimals = (await bcView('sameCoin', 'decimals')).info;
+  let totalMintAmt_ = Number(await totalMintAmt());
+  var decimals = Number((await bcView('sameCoin', 'decimals')).info);
   //mintSameUSDVal 转换成 18位
-  let val = await numberToHex(mintSameUSDVal,decimals);
-  if(val == 0){
-    return 0;
-  }
+  let val =Number( await numberToHex(mintSameUSDVal,decimals));
   //看比值
   let ratio = totalMintAmt_==0? 1: val/totalMintAmt_;
+  console.log('val',val,'totalMintAmt_',totalMintAmt_,'ratio',ratio);
   //查当前 难度级别对应一个区间奖励多少 sameCoinPerBlock
   var nowdegree_ = (await bcView ('mintRewardLogicProxy', 'nowdegree',[])).info;
-  var sameCoinPerBlock_= (await bcView ('mintRewardLogicProxy', 'sameCoinPerBlock',[nowdegree_])).info;
+  var sameCoinPerBlock_= Number((await bcView ('mintRewardLogicProxy', 'sameCoinPerBlock',[nowdegree_])).info);
   //console.log((sameCoinPerBlock_ * ratio, decimals));
   var retVal = hexToNumber (sameCoinPerBlock_ * ratio, decimals)
+  //console.log((sameCoinPerBlock_, ratio, decimals));
   //console.log(retVal);
-  
   return retVal;
 }
 

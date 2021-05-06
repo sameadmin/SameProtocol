@@ -47,7 +47,7 @@
         <h1>部署流程</h1>
         <h3>主网部署流程</h3>
         <ol class="text-left">
-            <li>部署 Nexus</li>
+            <!--<li>部署 Nexus</li>-->
             <li>部署 ForgeValidator</li>
             <li>部署 Masset</li>
             <li>部署 BasketManager</li>
@@ -270,7 +270,8 @@
 			},
 			async BasketManager_initialize () {
 				this._initialize('BasketManagerProxy', [
-					this.solidityConfig_.ContractMsg.Nexus.address,
+					/*this.solidityConfig_.ContractMsg.Nexus.address,*/
+					this.accountAddress,
 					this.solidityConfig_.ContractMsg.MassetProxy.address,
 					[
 						this.solidityConfig_.ContractMsg.busd.address,
