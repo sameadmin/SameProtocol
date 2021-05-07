@@ -1,8 +1,10 @@
 <template>
-  <div v-show="showTips.isShow" class="tips flex border-radius-8 animate__animated animate__slideInRight" :style="{ background:showTips.bg }">
-    <img class="statusIcon" :src="showTips.icon"/>
-    <div class="statusDesc color5 font-16 fontWeight-6 font-family-semiBold">{{ showTips.status }}</div>
-  </div>
+  <!-- <div v-show="showTips.isShow" class="tips flex border-radius-8 animate__animated animate__bounceInRight animate__delay-1s" :style="{ background:showTips.bg }"> -->
+	  <div v-if="showTips.isShow" ref="tips" class="tips flex border-radius-8 animated" :style="{ background:showTips.bg }"
+	  :class="[showTips.isShow ? 'fadeInRight' : 'fadeOutRight']">
+	    <img class="statusIcon" :src="showTips.icon"/>
+	    <div class="statusDesc color5 font-16 fontWeight-6 font-family-semiBold">{{ showTips.status }}</div>
+	  </div>
 </template>
 
 <script>
@@ -10,12 +12,17 @@
     name: 'Successed',
     data (){
       return {
-
+		
       }
     },
     props: {
       showTips: Object
     },
+	watch: {
+		'showTips.isShow'(v) {
+			
+		}
+	},
     methods: {
 
     }
