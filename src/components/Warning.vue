@@ -12,8 +12,13 @@
 	  </div>
 	  <span slot="footer" class="dialog-footer text-center">
 	    <div class="flex flex-justify-content-between">
-			<el-button class="approveBtn border-radius-8 color6" round @click="switchWallet">Switch Wallet</el-button>
-			<el-button class="approveBtn border-radius-8 color6" round @click="dismiss">Dismiss</el-button>
+			<div v-if="type===0">
+				<el-button class="approveBtn border-radius-8 color6" round @click="switchWallet">Switch Wallet</el-button>
+
+			</div>
+			<div v-if="type===1">
+				<el-button class="approveBtn border-radius-8 color6" round @click="addNetwork">Add BSC network</el-button>
+			</div>
 	      <!-- <div class="approveBtn flex flex-align-items-center border-radius-8 color6" @click="switchWallet">Switch Wallet</div>
 	      <div class="stakeBtn flex flex-align-items-center border-radius-8 ml-20 color7" @click="dismiss">Dismiss</div> -->
 	    </div>
@@ -22,6 +27,7 @@
 </template>
 
 <script>
+	import {addBSCNet} from  '../../src/assets/js/components'
 	export default {
 		name: 'Warning',
 		data() {
@@ -30,6 +36,7 @@
 			}
 		},
 		props: {
+			type:Number,
 			showChangeDialog: Boolean,
 			msg: '',
 			title_: '',
@@ -44,8 +51,10 @@
 			switchWallet (){
 
 			},
-			dismiss (){
-
+			async addNetwork (){
+				await addBSCNet();
+				this.$emit('handleClose')
+				//this.$router.push('/');
 			}
 		}
 	}
@@ -60,7 +69,7 @@
 	    font-weight: bold;
 	    color: #000000;
 	}
-	
+
 	.el-button:focus, .el-button:hover {
 	    background: transparent;
 	    color: #000000;

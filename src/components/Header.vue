@@ -7,7 +7,7 @@
 		        <div v-if="!accountAddress" class="connect font-family-bold font-14 fontWeight-b" @click="showConnect=true">CONNECT</div>
 		        <div v-else class="account border-l flex flex-align-items-center pl-24 font-family-bold font-14 fontWeight-b"
 				@click.stop="showWalletInfo=!showWalletInfo">
-					<div class="network color6">BSC</div>
+					<div class="network color6">{{netword}}</div>
 					<div class="ml-10">{{shorten(accountAddress)}}</div>
 					<img class="arrow-up-icon ml-20" :class="{'select-caret': showWalletInfo,'select-reverse': !showWalletInfo}"
 					 src="../../static/images/mint/down.png" />
@@ -15,7 +15,7 @@
 		    </div>
 		</el-header>
 		<Connect :showConnect="showConnect" @handleClose="handleClose" @showConnect="onChangeType" @showChangeDialog_="onChangeDialogType"/>
-		<Warning :showChangeDialog="showChangeDialog" @handleClose="handleClose2" :msg="showWarningMsg" :title_="showWarningtitle"></Warning>
+		<Warning :showChangeDialog="showChangeDialog" @handleClose="handleClose2" :msg="showWarningMsg" :title_="showWarningtitle" :type="showWarningType"></Warning>
 		<WalletInfo :showWalletInfo="showWalletInfo" :address="accountAddress" @closeWalletInfo="closeWalletInfo"
 		@logout="logout"></WalletInfo>
 		<Tips :showTips="logoutSuccessfullyTips"></Tips>
@@ -37,11 +37,13 @@
 		name: 'Header',
 		data() {
 			return {
+				netword:false,
 				showConnect: false,
 				accountAddress:null,
 				showChangeDialog: false,
 				showWarningtitle: '',
 				showWarningMsg: false,
+				showWarningType: false,
 				showWalletInfo: false,
 				address: null,
 				logoutSuccessfullyTips: this.globalTips.logoutSuccessfullyTips
@@ -84,7 +86,8 @@
 				//没安装钱包，弹出警告
 				this.showChangeDialog = type;
 				this.showWarningtitle = 'Warning';
-				this.showWarningMsg = 'You\'ll need to install MetaMask to continue. Once you have it installed,';
+				this.showWarningMsg = 'You\'ll need to install MetaMask to continue. Once you have it installed';
+				this.showWarningType = 0;
 			},
 			//查看是否使用钱包
 			async checkSignin(){
@@ -119,7 +122,17 @@
 				this.showChangeDialog = true;
 				this.showWarningtitle = 'Warning';
 				this.showWarningMsg = 'Please log in with Kovan test network or BSC network';
+				this.showWarningType = 1;
+
 				return false;
+			},
+			showNetword(){
+				if(ethereum.networkVersion == 42){
+					return `Kovan`;
+				}
+				if(ethereum.networkVersion == 56){
+					return `BSC`;
+				}
 			}
 		},
 		async mounted() {
@@ -131,6 +144,10 @@
 					this.accountAddress = d;
 				});
 			},2000)
+
+			this.interval2Id = setInterval( async ()=>{
+				this.netword = this.showNetword();
+			},100)
 
 			/*this.intervalId = setInterval( async ()=>{
 				this.updataBalance();

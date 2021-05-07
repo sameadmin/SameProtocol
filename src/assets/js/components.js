@@ -525,7 +525,7 @@ export async function mintSameCoinRewards(mintSameUSDVal){
   let val =Number( await numberToHex(mintSameUSDVal,decimals));
   //看比值
   let ratio = totalMintAmt_==0? 1: val/totalMintAmt_;
-  console.log('val',val,'totalMintAmt_',totalMintAmt_,'ratio',ratio);
+  //console.log('val',val,'totalMintAmt_',totalMintAmt_,'ratio',ratio);
   //查当前 难度级别对应一个区间奖励多少 sameCoinPerBlock
   var nowdegree_ = (await bcView ('mintRewardLogicProxy', 'nowdegree',[])).info;
   var sameCoinPerBlock_= Number((await bcView ('mintRewardLogicProxy', 'sameCoinPerBlock',[nowdegree_])).info);
