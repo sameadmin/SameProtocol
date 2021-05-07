@@ -40,7 +40,7 @@
 				showConnect: false,
 				accountAddress:null,
 				showChangeDialog: false,
-				showWarningtitle: false,
+				showWarningtitle: '',
 				showWarningMsg: false,
 				showWalletInfo: false,
 				address: null,
@@ -112,7 +112,7 @@
 			//检查当前网络id是否为kovan或bsc
 			async checkIsBsc(){
 				var id = ethereum.networkVersion;
-				console.log(id);
+				// console.log(id);
 				if(id == 42 || id == 56){
 					return true;
 				}
