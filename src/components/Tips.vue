@@ -1,8 +1,8 @@
 <template>
-	<transition v-if="showTips.isShow" name="fade"
+	<transition name="fade"
 				 enter-active-class="animated fadeInRight"
 				 leave-active-class="animated fadeOutRight"> 
-		<div ref="tips" class="tips flex border-radius-8 animated" :style="{ background:showTips.bg }">
+		<div v-if="showTips.isShow" ref="tips" class="tips flex border-radius-8 animated" :style="{ background:showTips.bg }">
 		   <img class="statusIcon" :src="showTips.icon"/>
 		   <div class="statusDesc color5 font-16 fontWeight-6 font-family-semiBold">{{ showTips.status }}</div>
 		</div>
