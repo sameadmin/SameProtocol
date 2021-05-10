@@ -23,8 +23,7 @@
         <div class="color2 fontWeight-4 font-family-regular">Countdown(Blocks):</div>
         <div class="color6 fontWeight-b font-family-bold">{{nextDrawBlocks}} Blocks ({{mintRewardInterval}})</div>
       </div>
-      <!---->
-      <el-progress class="mt-10" :percentage="countdownPercentage_" :color="'#1F2BFF'" :show-text="false" :stroke-width="10"></el-progress>
+      <el-progress class="mt-10" :percentage="countdownPercentage_ ? countdownPercentage_ : 0" :color="'#1F2BFF'" :show-text="false" :stroke-width="10"></el-progress>
     </div>
 
     <div class="percentItem" >
