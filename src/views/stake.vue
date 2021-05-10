@@ -34,19 +34,19 @@
                 <div class="width-198 pl-20 text-left">{{ item.yidld }} SAME/DAY</div>
                 <div class="width-176 pr-20 text-right">
                   <div class="color2 fontWeight-b font-family-bold">${{ stateFormat_(item.liquidity,4) }}</div>
-                  <div class="color3 mt-2">{{ stateFormat_(item.liquidity,4) }} SameUSD</div>
+                  <div class="color3 mt-2">{{ stateFormat_(item.liquidity,4) }} LP</div>
                   <!--<div class="color3 mt-2">{{ stateFormat_(item.liquidity_) }} SAME</div>-->
                 </div>
                 <div class="width-168 pl-20 text-left">
                   <div class="color2">{{ stateFormat_(item.stacked,6) }}</div>
-                  <div class="color3 mt-2"><!--{{ stateFormat_(item.stacked_) }}--> SameUSD</div>
+                  <div class="color3 mt-2"><!--{{ stateFormat_(item.stacked_) }}--> LP</div>
                 </div>
                 <div class="flex-1 pl-20 text-left flex flex-justify-content-between">
                   <div class="">
                     <!-- <div class="color2">{{ stateFormat_(item.earning,6) }}</div> -->
-					<countTo v-if="!item.earning" class="color2" :startVal='0' :endVal='Number(stateFormat_(item.earning,6))' :duration='3000'></countTo>
-					<countTo v-else class="color2" :startVal='0' :endVal='Number(stateFormat_(item.earning,6))'
-					  :decimals="6" :duration='3000'></countTo>
+					<countTo v-if="!item.earning" class="color2" :startVal='0' :endVal='item.earning' :duration='3000'></countTo>
+					<countTo v-else class="color2" :startVal='0' :endVal='item.earning'
+					  :decimals="6" :duration='300'></countTo>
                     <div class="color3 mt-2">{{ item.earning_ }}</div>
                   </div>
                   <div class="flex flex-align-items-center font-12 font-family-regular font-weight-4">
@@ -99,7 +99,7 @@
             <div class="flex-1 color1 pl-20">
               <div class="flex mt-20">
                 <img class="currCoinIcon" src="../../static/images/mint/sameusd.png"/>
-                <div class="ml-10 font-16 font-family-regular fontWeight-4">SameUSD</div>
+                <div class="ml-10 font-16 font-family-regular fontWeight-4">LP</div>
               </div>
               <div class="mt-20 font-24 font-family-bold fontWeight-b text-left">{{
                 stateFormat_(stackList[0].stacked,6) }}
@@ -119,15 +119,15 @@
       </div>
       <span slot="footer" class="dialog-footer text-center font-14 font-family-bold font-weight-b">
         <div v-if="curr==0" class="flex flex-justify-content-end">
-          <el-button class="approveBtn border-radius-8 color6" @click="goApprove_('sameUsd')"
+          <el-button class="approveBtn border-radius-8 color6" @click="goApprove_('lp')"
                      :disabled="currCoin.approve" :loading="isLoadingApproves">Approve</el-button>
-          <el-button class="stakeBtn border-radius-8 ml-20 color7" @click="saveDeposit(currCoin.fromNum)"
+          <el-button class="stakeBtn border-radius-8 ml-20 color7" @click="saveDeposit(currCoin.fromNum,type)"
                      :disabled="isLoadingSaveDeposit" :loading="isLoadingSaveDeposit">Stake</el-button>
         </div>
         <div v-else class="flex flex-justify-content-end">
           <el-button class="approveBtn border-radius-8 color6" @click="saveClaimAllRewards()"
                      :disabled="isLoadingSaveClaim" :loading="isLoadingSaveClaim">Claim All Rewards</el-button>
-          <el-button class="stakeBtn border-radius-8 ml-20 color7" @click="saveWithdraw(stackList[0].stacked)"
+          <el-button class="stakeBtn border-radius-8 ml-20 color7" @click="saveWithdraw(stackList[0].stacked,type)"
                      :disabled="isLoadingSaveWithdraw" :loading="isLoadingSaveWithdraw">Withdraw All Above</el-button>
         </div>
       </span>
@@ -206,6 +206,7 @@
     },
     data() {
       return {
+        type: 1,
         isLoadingApproves: false,
         isLoadingSaveClaim: false,
         isLoadingSaveDeposit: false,
@@ -235,11 +236,11 @@
         fromInfo: {
           fromNum: '',
           showSelect: false,
-          balance: 19921849.12387
+          balance: 0
         },
         currCoin: {
           url: require('../../static/images/mint/sameusd.png'),
-          coin: 'SameUSD',
+          coin: 'LP',
           fromNum: '',
           approve: false,
           showSelect: false,
@@ -248,7 +249,7 @@
         selectCoinList: [
           {
             url: require('../../static/images/mint/sameusd.png'),
-            coin: 'SameUSD',
+            coin: 'LP',
             fromNum: '',
             approve: false,
             showSelect: false,
@@ -283,9 +284,6 @@
     },
     mounted() {
       this.intervalId = setInterval(async () => {
-        /*await this.updataYieldPer();
-        await this.Annualized();
-        */
         await this.totalSaveLiquidity();
         await this.saveStaked();
         await this.saveEarnings();
@@ -331,72 +329,72 @@
         this.currCoin = item;
       },
       async updataYieldPer() {
-        this.stackList[0].yidld = (await yieldPer(1000000000000000000000)).toFixed(2);
+        this.stackList[0].yidld = (await yieldPer(1000000000000000000000,this.type)).toFixed(2);
         return this.stackList[0].yidld;
       },
       async Annualized() {
-        this.stackList[0].apy = (await Annualized(1000000000000000000000)).toFixed(6);
+        this.stackList[0].apy = (await Annualized(1000000000000000000000,this.type)).toFixed(6);
         return this.stackList[0].apy;
       },
       async totalSaveLiquidity() {
-        this.stackList[0].liquidity = (await totalSaveLiquidity());
+        this.stackList[0].liquidity = (await totalSaveLiquidity(this.type));
         return this.stackList[0].liquidity;
       },
       async saveStaked() {
-        this.stackList[0].stacked = (await saveStaked());
+        this.stackList[0].stacked = (await saveStaked(this.type));
         return this.stackList[0].stacked;
       },
       async saveEarnings() {
-        this.stackList[0].earning = (await saveEarnings());
+        this.stackList[0].earning = (await saveEarnings(this.type));
         return this.stackList[0].earning;
       },
       async checkApprove(name, fromAddr) {
         return await checkApprove(name, fromAddr);
       },
       async updataCurrCoin() {
-        this.currCoin.balance = await getBalance('sameUsd');
-        this.currCoin.approve = await this.checkApprove('sameUsd', solidityConfig.ContractMsg.saveRewardLogicProxy.address);
+        this.currCoin.balance = await getBalance('lp');
+        this.currCoin.approve = await this.checkApprove('lp', solidityConfig.ContractMsg.saveLpRewardLogicProxy.address);
       },
       async goApprove_(coinName) {
         this.isLoadingApproves = true;
-        let info = await goApprove_(coinName, 10000000000, solidityConfig.ContractMsg.saveRewardLogicProxy.address);
+        let info = await goApprove_(coinName, 10000000000, solidityConfig.ContractMsg.saveLpRewardLogicProxy.address);
         this.isLoadingApproves = false;
         if (info.success) {
           this.approveSuccessfullyTips.isShow = true;
-          showDetail = false
+          this.showDetail = false
         } else {
           this.failedTips.isShow = true;
         }
       },
       async saveDeposit(val) {
         this.isLoadingSaveDeposit = true;
-        let info = await saveDeposit(val);
+        let info = await saveDeposit(val,this.type);
         this.isLoadingSaveDeposit = false;
         if (info.success) {
           this.stakeSuccessfullyTips.isShow = true;
-          showDetail = false
+          this.showDetail = false;
         } else {
           this.failedTips.isShow = true;
         }
       },
       async saveWithdraw(val) {
         this.isLoadingSaveWithdraw = true;
-        let info = await saveWithdraw(val);
+        let info = await saveWithdraw(val,this.type);
         this.isLoadingSaveWithdraw = false;
         if (info.success) {
           this.withdrawSuccessfullyTips.isShow = true;
-          showDetail = false
+          this.showDetail = false;
         } else {
           this.failedTips.isShow = true;
         }
       },
       async saveClaimAllRewards() {
         this.isLoadingSaveClaim = true;
-        let info = await saveClaimAllRewards();
+        let info = await saveClaimAllRewards(this.type);
         this.isLoadingSaveClaim = false;
         if (info.success) {
           this.claimSuccessfullyTips.isShow = true;
-          showDetail = false
+          this.showDetail = false;
         } else {
           this.failedTips.isShow = true;
         }

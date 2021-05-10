@@ -316,11 +316,13 @@ export async function mint (name,val){
     var solidityConfig = require(`../solidityConfig`)
     var decimals = (await bcView(name, 'decimals')).info;
     var amt = numberToHex (val, decimals);
+    
     /*var approveInfo = await bcWrite(name ,`approve`,[solidityConfig.ContractMsg.MassetProxy.address,amt]);
     if(!approveInfo.success){return  { success: false, info: 'approve err' }};*/
-    var info = await bcWrite(`MassetProxy` ,`mint`,[solidityConfig.ContractMsg[name].address,amt]);
+    var info = await bcWrite(`MassetProxy` ,`mint`,[solidityConfig.ContractMsg[name].address,FormatNoE(amt)]);
     return { success: info.success, info: info.info };
   }catch (e) {
+    console.log(e.message);
     return { success: false, info: e.message };
   }
 }
@@ -338,11 +340,12 @@ export async function mints (nameList,amtList){
       /*var approveInfo = await bcWrite(nameList[a] ,`approve`,[solidityConfig.ContractMsg.MassetProxy.address,cutAmt]);
       if(!approveInfo.success){return  { success: false, info: 'approve err' }};*/
       addresslist.push(solidityConfig.ContractMsg[nameList[a]].address);
-      cutAmtlist.push(cutAmt);
+      cutAmtlist.push(FormatNoE(cutAmt));
     }
     var info = await bcWrite(`MassetProxy` ,`mintMulti`,[addresslist,cutAmtlist,accAddress]);
     return { success: info.success, info: info.info };
   }catch (e) {
+    console.log(e.message);
     return { success: false, info: e.message };
   }
 }
@@ -358,9 +361,9 @@ export async function swap (inputName,outputName,amt){
     var outputdecimals = (await bcView(outputName, 'decimals')).info;
     var outputAmt = numberToHex (amt, outputdecimals);
     //console.log('okookko')
-    var approveInfo = await bcWrite(inputName ,`approve`,[solidityConfig.ContractMsg.MassetProxy.address,inputAmt]);
+    var approveInfo = await bcWrite(inputName ,`approve`,[solidityConfig.ContractMsg.MassetProxy.address,FormatNoE(inputAmt)]);
     if(!approveInfo.success){return  { success: false, info: 'approve err' }};
-    var info = await bcWrite(`MassetProxy` ,`swap`,[solidityConfig.ContractMsg[inputName].address,solidityConfig.ContractMsg[outputName].address,inputAmt,accAddress]);
+    var info = await bcWrite(`MassetProxy` ,`swap`,[solidityConfig.ContractMsg[inputName].address,solidityConfig.ContractMsg[outputName].address,FormatNoE(inputAmt),accAddress]);
     return { success: info.success, info: info.info };
   }catch (e) {
     return { success: false, info: e.message };
@@ -374,7 +377,7 @@ export async function redeem (outputName,val){
     var solidityConfig = require(`../solidityConfig`);
     var decimals = (await bcView(outputName, 'decimals')).info;
     var amt = numberToHex (val, decimals);
-    var info = await bcWrite(`MassetProxy` ,`redeem`,[solidityConfig.ContractMsg[outputName].address,amt]);
+    var info = await bcWrite(`MassetProxy` ,`redeem`,[solidityConfig.ContractMsg[outputName].address,FormatNoE(amt)]);
     return { success: info.success, info: info.info };
   }catch (e) {
     return { success: false, info: e.message };
@@ -394,7 +397,7 @@ export async function redeemMulti (nameList,amtList){
       var cutAmt = numberToHex (amtList[a], decimals)
       //var info = await bcWrite(nameList[a] ,`approve`,[solidityConfig.ContractMsg.MassetProxy.address,cutAmt]);
       addresslist.push(solidityConfig.ContractMsg[nameList[a]].address);
-      cutAmtlist.push(cutAmt);
+      cutAmtlist.push(FormatNoE(cutAmt));
     }
     var info = await bcWrite(`MassetProxy` ,`redeemMulti`,[addresslist,cutAmtlist,accAddress]);
     return { success: info.success, info: info.info };
@@ -539,62 +542,69 @@ export async function mintSameCoinRewards(mintSameUSDVal){
 //===============Save==============
 
 //当前samecoin/sameusd 价格
-export async function samecoinPrice(){
-  return 0.5;
+export async function samecoinPrice(type){
+  if (type==0){
+    //samecoin
+    return 0.5;
+  }
+  if (type==1){
+    //lp
+    return 0.5;
+  }
 }
 
-export async function save_LpSupply(){
+export async function save_LpSupply(type=0){
   //getLPBalanceOf
   var solidityConfig = require(`../solidityConfig`)
-  var lpBalance_ = (await bcView ('saveRewardLogicProxy', 'getLPBalanceOf',[solidityConfig.ContractMsg.saveRewardLogicProxy.address])).info;
+  var lpBalance_ = (await bcView (type==0?`saveRewardLogicProxy`:`saveLpRewardLogicProxy`, 'getLPBalanceOf',[solidityConfig.ContractMsg.saveRewardLogicProxy.address])).info;
   return Number(lpBalance_);
 }
 
-export async function save_AccScoinPerShare(){
-  var accScoinPerShare_ = (await bcView ('saveRewardLogicProxy', 'accScoinPerShare',[])).info;
+export async function save_AccScoinPerShare(type=0){
+  var accScoinPerShare_ = (await bcView (type==0?`saveRewardLogicProxy`:`saveLpRewardLogicProxy`, 'accScoinPerShare',[])).info;
   return Number(accScoinPerShare_);
 }
 
-export async function save_Nowdegree(){
-  var nowdegree_ = (await bcView ('saveRewardLogicProxy', 'nowdegree',[])).info;
+export async function save_Nowdegree(type=0){
+  var nowdegree_ = (await bcView (type==0?`saveRewardLogicProxy`:`saveLpRewardLogicProxy`, 'nowdegree',[])).info;
   return Number(nowdegree_);
 }
 
-export async function save_BONUS_MULTIPLIER(nowdegree_){
+export async function save_BONUS_MULTIPLIER(nowdegree_,type=0){
   //BONUS_MULTIPLIER
-  var BONUS_MULTIPLIER_ = (await bcView ('saveRewardLogicProxy', 'BONUS_MULTIPLIER',[nowdegree_])).info;
+  var BONUS_MULTIPLIER_ = (await bcView (type==0?`saveRewardLogicProxy`:`saveLpRewardLogicProxy`, 'BONUS_MULTIPLIER',[nowdegree_])).info;
   return Number(BONUS_MULTIPLIER_);
 }
 
-export async function save_ScoinPerBlock(){
+export async function save_ScoinPerBlock(type=0){
 //scoinPerBlock
-  var scoinPerBlock_ = (await bcView ('saveRewardLogicProxy', 'scoinPerBlock',[])).info;
+  var scoinPerBlock_ = (await bcView (type==0?`saveRewardLogicProxy`:`saveLpRewardLogicProxy`, 'scoinPerBlock',[])).info;
   return Number(scoinPerBlock_);
 }
 
 
 
 //save - 每一千刀 的 日挖矿率
-export async function yieldPer(amt){
-  var val = (await SaveRate(amt))*amt;
+export async function yieldPer(amt,type=0){
+  var val = (await SaveRate(amt,type))*amt;
   var decimals = (await bcView('sameCoin', 'decimals')).info;
   val = hexToNumber (val, decimals)
   return val;
 }
 
 //save - SaveRate
-export async function SaveRate(amt){
-  var lpSupply_ = await save_LpSupply();
-  var accScoinPerShare_ = await save_AccScoinPerShare();
-  var nowdegree_  = await save_Nowdegree();
-  var BONUS_MULTIPLIER_ = await save_BONUS_MULTIPLIER(nowdegree_);
+export async function SaveRate(amt,type=0){
+  var lpSupply_ = await save_LpSupply(type);
+  var accScoinPerShare_ = await save_AccScoinPerShare(type);
+  var nowdegree_  = await save_Nowdegree(type);
+  var BONUS_MULTIPLIER_ = await save_BONUS_MULTIPLIER(nowdegree_,type);
   var dayBlockNumber = 60*60*24/15;
-  var scoinPerBlock_ = await save_ScoinPerBlock();
+  var scoinPerBlock_ = await save_ScoinPerBlock(type);
   var rewardDebt = amt * accScoinPerShare_/1000000000000000000;
   var scoinReward = dayBlockNumber * BONUS_MULTIPLIER_   * scoinPerBlock_;
   accScoinPerShare_ = accScoinPerShare_+(scoinReward*1000000000000000000/(lpSupply_+amt));
   var pendingSameCoin = (amt * accScoinPerShare_/1000000000000000000)-rewardDebt;
-  var samecoinPrice_ = await samecoinPrice();
+  var samecoinPrice_ = await samecoinPrice(type);
   var SaveRate_ = (pendingSameCoin/samecoinPrice_)/amt;
   /*console.log('SaveRate_',SaveRate_);
   console.log('samecoinPrice_',samecoinPrice_);
@@ -607,37 +617,37 @@ export async function SaveRate(amt){
 }
 
 //save - 获取年化
-export async function Annualized(amt){
-  var val = Number(await SaveRate(amt));
+export async function Annualized(amt,type=0){
+  var val = Number(await SaveRate(amt,type));
   return val*365*100;
 }
 
 //save - 总共save存款sameusd价值
-export async function totalSaveLiquidity(){
+export async function totalSaveLiquidity(type=0){
   var ret = {sameusd:0,samecoin:0}
-  var lpSupply_ = await save_LpSupply();
-  var decimals = (await bcView('sameUsd', 'decimals')).info;
+  var lpSupply_ = await save_LpSupply(type);
+  var decimals = (await bcView(type==0?'sameusd':'lp', 'decimals')).info;
   lpSupply_ = hexToNumber (lpSupply_, decimals)
   return lpSupply_;
 }
 
 
 //save - 我的存款
-export async function saveStaked(){
+export async function saveStaked(type=0){
   var solidityConfig = require(`../solidityConfig`)
   var address = await toAccount();
-  var myBalance_ = (await bcView ('saveRewardLogicProxy', 'userInfo',[address])).info.amount;
-  var decimals = (await bcView('sameUsd', 'decimals')).info;
+  var myBalance_ = (await bcView (type==0?`saveRewardLogicProxy`:`saveLpRewardLogicProxy`, 'userInfo',[address])).info.amount;
+  var decimals = (await bcView(type==0?'sameusd':'lp', 'decimals')).info;
   myBalance_ = hexToNumber (myBalance_, decimals);
   return Number(myBalance_);
 }
 
 //save - 我的未结算收益samecoin
-export async function saveEarnings(){
+export async function saveEarnings(type=0){
 //pendingRewards
   var address = await toAccount();
-  var pendingRewards_ = (await bcView ('saveRewardLogicProxy', 'pendingRewards',[address])).info;
-  var decimals = (await bcView('sameCoin', 'decimals')).info;
+  var pendingRewards_ = (await bcView (type==0?`saveRewardLogicProxy`:`saveLpRewardLogicProxy`, 'pendingRewards',[address])).info;
+  var decimals = (await bcView(type==0?'sameusd':'lp', 'decimals')).info;
   pendingRewards_ = hexToNumber (pendingRewards_, decimals);
   return pendingRewards_;
 }
@@ -647,19 +657,26 @@ export async function getBalance(coinName){
   //getLPBalanceOf
   var address = await toAccount();
   var balance_ = (await bcView (coinName, 'balanceOf',[address])).info;
-  var decimals = (await bcView(coinName, 'decimals')).info;
+  var decimalsinfo = await bcView(coinName, 'decimals');
+  if(decimalsinfo.success){
+    var decimals = decimalsinfo.info;
+  }else {
+    decimals = 0;
+  }
+  //var decimals = (await bcView(coinName, 'decimals')).info;
+  //console.log((balance_, decimals));
   balance_ = hexToNumber (balance_, decimals);
   return Number(balance_);
 }
 
 //save存sameusd
-export async function saveDeposit(val){
+export async function saveDeposit(val,type=0){
   //deposit
   try {
     var address = await toAccount();
-    var decimals = (await bcView('sameUsd', 'decimals')).info;
+    var decimals = (await bcView(type==0?'sameusd':'lp', 'decimals')).info;
     var amt = numberToHex (val, decimals);
-    var info = await bcWrite(`saveRewardLogicProxy` ,`deposit`,[amt]);
+    var info = await bcWrite(type==0?`saveRewardLogicProxy`:`saveLpRewardLogicProxy` ,`deposit`,[amt]);
     return { success: info.success, info: info.info };
   }catch (e) {
     return { success: false, info: e.message };
@@ -669,23 +686,25 @@ export async function saveDeposit(val){
 
 
 //save 取款
-export async function saveWithdraw(val){
+export async function saveWithdraw(val,type=0){
   try {
     var address = await toAccount();
-    var decimals = (await bcView('sameUsd', 'decimals')).info;
+    var decimals = (await bcView(type==0?'sameusd':'lp', 'decimals')).info;
     var amt = numberToHex (val, decimals);
-    var info = await bcWrite(`saveRewardLogicProxy` ,`withdraw`,[amt]);
+    console.log(amt);
+    var info = await bcWrite(type==0?`saveRewardLogicProxy`:`saveLpRewardLogicProxy` ,`withdraw`,[amt]);
     return { success: info.success, info: info.info };
   }catch (e) {
+    console.log(e.message);
     return { success: false, info: e.message };
   }
   
 }
 
 //save 只拿奖励
-export async function saveClaimAllRewards(){
+export async function saveClaimAllRewards(type=0){
   try {
-    var info = await bcWrite(`saveRewardLogicProxy` ,`claimAllRewards`,[]);
+    var info = await bcWrite(type==0?`saveRewardLogicProxy`:`saveLpRewardLogicProxy` ,`claimAllRewards`,[]);
     return { success: info.success, info: info.info };
   }catch (e) {
     return { success: false, info: e.message };

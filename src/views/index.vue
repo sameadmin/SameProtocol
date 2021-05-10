@@ -388,6 +388,7 @@
 				this.isLoadingMint = false;
 				if(info.success){
 					this.mintSuccessfullyTips.isShow = true;
+					this.currCoin.fromNum = 0;
 				}else {
 					this.failedTips.isShow = true;
 				}
@@ -407,6 +408,9 @@
 				this.isLoadingMints = false;
 				if(info.success){
 					this.mintSuccessfullyTips.isShow = true;
+					for(let i in this.selectCoinList){
+						this.selectCoinList[i].fromNum = 0;
+					}
 				}else {
 					this.failedTips.isShow = true;
 				}

@@ -331,6 +331,11 @@
 				this.currCoin = item;
 			},
 			async updataYieldPer() {
+				//await totalSaveLiquidity()
+				var totalSaveLiquidity_ = await totalSaveLiquidity();
+				//一天几个块
+                var dayBockds = 60*60*24/4;
+
 				this.stackList[0].yidld = (await yieldPer(1000000000000000000000)).toFixed(4);
 				return this.stackList[0].yidld;
 			},
@@ -374,9 +379,10 @@
 				this.isLoadingSaveDeposit = false;
 				if (info.success) {
 					this.saveSuccessfullyTips.isShow = true;
-					showDetail = false
+					this.showDetail = false
 				} else {
 					this.failedTips.isShow = true;
+
 				}
 			},
 			async saveWithdraw(val) {
@@ -385,7 +391,7 @@
 				this.isLoadingSaveWithdraw = false;
 				if (info.success) {
 					this.withdrawSuccessfullyTips.isShow = true;
-					showDetail = false
+					this.showDetail = false
 				} else {
 					this.failedTips.isShow = true;
 				}
@@ -396,7 +402,7 @@
 				this.isLoadingSaveClaim = false;
 				if (info.success) {
 					this.claimSuccessfullyTips.isShow = true;
-					showDetail = false
+					this.showDetail = false
 				} else {
 					this.failedTips.isShow = true;
 				}

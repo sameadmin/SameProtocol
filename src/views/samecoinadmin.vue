@@ -130,6 +130,24 @@
             </li>
 
 
+            <li>恭喜你，可以进行下一步lp部署</li>
+
+            <li>saveLpRewardLogic 初始设置
+                <button @click="saveLpRewardLogicProxy_initialize()" type="button" class="btn-style btn-success "> 执行</button>
+            </li>
+
+            <li>saveLpRewardLogic set_SameCoinERC20
+                <button @click="saveLpRewardLogic_set_SameCoinERC20()" type="button" class="btn-style btn-success "> 执行</button>
+            </li>
+
+            <li>saveLpRewardLogic set_LpToken
+                <button @click="saveLpRewardLogic_set_LpToken()" type="button" class="btn-style btn-success "> 执行</button>
+            </li>
+
+            <li>saveLpRewardLogic bonusPoolRecharge
+                <button @click="saveLpRewardLogic_bonusPoolRecharge()" type="button" class="btn-style btn-success "> 执行</button>
+            </li>
+
             <!--<li>MassetProxy （initialize）=> （_nameArg,_symbolArg,_nexus,_forgeValidator,_basketManager）</li>
 
             <li>BasketManagerProxy 使用initialize (BasketManager地址 ，DelayedProxyAdmin地址 ，data)
@@ -240,14 +258,27 @@
 				await bcWrite(`sameCoin`, `approve`,[this.solidityConfig_.ContractMsg.saveRewardLogicProxy.address , '1000000000000000000000000000'] );
 				await bcWrite(`saveRewardLogicProxy`, `bonusPoolRecharge`,['1000000000000000000000'] );
 			},
+			async saveLpRewardLogic_bonusPoolRecharge (){
+				await bcWrite(`sameCoin`, `approve`,[this.solidityConfig_.ContractMsg.saveLpRewardLogicProxy.address , '1000000000000000000000000000'] );
+				await bcWrite(`saveLpRewardLogicProxy`, `bonusPoolRecharge`,['1000000000000000000000000000'] );
+			},
 			async saveRewardLogic_set_LpToken (){
 				await bcWrite(`saveRewardLogicProxy`, `set_LpTokenAddr`,[this.solidityConfig_.ContractMsg.sameUsd.address] );
+			},
+			async saveLpRewardLogic_set_LpToken (){
+				await bcWrite(`saveLpRewardLogicProxy`, `set_LpTokenAddr`,[this.solidityConfig_.ContractMsg.lp.address] );
 			},
 			async saveRewardLogic_set_SameCoinERC20 (){
 				await bcWrite(`saveRewardLogicProxy`, `set_SameCoinERC20Addr`,[this.solidityConfig_.ContractMsg.sameCoin.address] );
 			},
+            async saveLpRewardLogic_set_SameCoinERC20 (){
+				await bcWrite(`saveLpRewardLogicProxy`, `set_SameCoinERC20Addr`,[this.solidityConfig_.ContractMsg.sameCoin.address] );
+			},
 			async saveRewardLogic_initialize(){
 				await bcWrite(`saveRewardLogicProxy`, `initialize`,[] );
+			},
+			async saveLpRewardLogicProxy_initialize(){
+				await bcWrite(`saveLpRewardLogicProxy`, `initialize`,[] );
 			},
 			async mintRewardLogic_bonusPoolRecharge(){
 				await bcWrite(`sameCoin`, `approve`,[this.solidityConfig_.ContractMsg.mintRewardLogicProxy.address , '1000000000000000000000000000'] );
