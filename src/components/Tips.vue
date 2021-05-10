@@ -34,6 +34,7 @@
 <style scoped>
     .tips {
       position: fixed;
+	  z-index: 999;
       top: 118px;
       right: 20px;
       width: 361px;

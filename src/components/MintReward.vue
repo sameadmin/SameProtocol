@@ -110,7 +110,7 @@
         totalPerMintAmt_:NaN,
         nextRoundRewards_:NaN,
         nowBlocks_:NaN,
-        countdownPercentage_:NaN,
+        countdownPercentage_: 0,
         nextDrawBlocks:NaN,
         activeColor: '#1F2BFF',
         percentList: [
