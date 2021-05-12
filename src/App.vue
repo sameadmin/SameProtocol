@@ -218,4 +218,8 @@
   .bottomSeat{
     height: 48px;
   }
+  .loadingIcon{
+  	width: 16px;
+  	height: 16px;
+  }
 </style>

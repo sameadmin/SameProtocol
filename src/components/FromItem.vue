@@ -126,10 +126,6 @@
 </script>
 
 <style scoped>
-	.loadingIcon{
-		width: 16px;
-		height: 16px;
-	}
     .fromInfo {
         height: 54px;
         padding: 10px 0;
