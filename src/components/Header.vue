@@ -13,6 +13,10 @@
 					 src="../../static/images/mint/down.png" />
 				</div>
 		    </div>
+			<div class="headerContainer_m  flex flex-align-items-center flex-justify-content-center color1">
+				<img class="logo_m" src="../../static/images/logo_m.png" alt=""/>
+				<img class="switchIcon" src="" />
+			</div>
 		</el-header>
 		<Connect :showConnect="showConnect" @handleClose="handleClose" @showConnect="onChangeType" @showChangeDialog_="onChangeDialogType"/>
 		<Warning :showChangeDialog="showChangeDialog" @handleClose="handleClose2" :msg="showWarningMsg" :title_="showWarningtitle" :type="showWarningType"></Warning>
@@ -246,4 +250,19 @@
 		border-radius: 4px;
 		background-color: #F7F7F7;
 	}
+	@media only screen and (min-width: 440px) {
+		.headerContainer_m{
+			display: none;
+		}
+	}
+	@media only screen and (max-width: 440px) {
+		.headerContainer{
+			display: none;
+		}
+		.logo_m{
+			width: 180px;
+			height: 27px;
+		}
+	}
+	
 </style>

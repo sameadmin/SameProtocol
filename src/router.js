@@ -32,6 +32,7 @@ import Governance from '@/views/governance'
 import Stats from '@/views/stats'
 import Redeem from '@/views/redeem'
 import Samecoinadmin from '@/views/samecoinadmin'
+import CountDown from '@/views/countDown.vue'
 
 Vue.use(Router)
 
@@ -71,6 +72,11 @@ export default new Router({
       path: '/samecoinadmin',
       name: 'samecoinadmin',
       component: Samecoinadmin
-    }
+    },
+	{
+	  path: '/CountDown',
+	  name: 'CountDown',
+	  component: CountDown
+	}
   ]
 })
