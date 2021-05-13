@@ -586,15 +586,27 @@ export async function save_ScoinPerBlock(type=0){
 
 //save - 每一千刀 的 日挖矿率
 export async function yieldPer(amt,type=0){
-  var val = (await SaveRate(amt,type))*amt;
+  /*var val = (await SaveRate(amt,type))*amt;
   var decimals = (await bcView('sameCoin', 'decimals')).info;
-  val = hexToNumber (val, decimals)
-  return val;
+  val = hexToNumber (val, decimals)*/
+  
+  var totalSaveLiquidity_ = await totalSaveLiquidity(type);
+  //console.log('amt',amt,'totalSaveLiquidity_',totalSaveLiquidity_);
+  var rate = amt/totalSaveLiquidity_;
+  var nowdegree_  = await save_Nowdegree(type);
+  var BONUS_MULTIPLIER_ = await save_BONUS_MULTIPLIER(nowdegree_,type);
+  var scoinPerBlock_ = await save_ScoinPerBlock(type);
+  var dayBlockNumber = 60*60*24/3;
+  var scoinReward = dayBlockNumber * BONUS_MULTIPLIER_   * scoinPerBlock_;
+  var decimals = (await bcView('samecoin', 'decimals')).info;
+  scoinReward = hexToNumber (scoinReward, decimals)
+  //console.log('scoinReward',scoinReward);
+  return scoinReward*rate;
 }
 
 //save - SaveRate
 export async function SaveRate(amt,type=0){
-  var lpSupply_ = await save_LpSupply(type);
+  /*var lpSupply_ = await save_LpSupply(type);
   var accScoinPerShare_ = await save_AccScoinPerShare(type);
   var nowdegree_  = await save_Nowdegree(type);
   var BONUS_MULTIPLIER_ = await save_BONUS_MULTIPLIER(nowdegree_,type);
@@ -605,21 +617,17 @@ export async function SaveRate(amt,type=0){
   accScoinPerShare_ = accScoinPerShare_+(scoinReward*1000000000000000000/(lpSupply_+amt));
   var pendingSameCoin = (amt * accScoinPerShare_/1000000000000000000)-rewardDebt;
   var samecoinPrice_ = await samecoinPrice(type);
-  var SaveRate_ = (pendingSameCoin/samecoinPrice_)/amt;
-  /*console.log('SaveRate_',SaveRate_);
-  console.log('samecoinPrice_',samecoinPrice_);
-  console.log('pendingSameCoin',pendingSameCoin);
-  console.log('accScoinPerShare_',accScoinPerShare_);
-  console.log('scoinReward',scoinReward);
-  console.log('rewardDebt',rewardDebt);
-  console.log('scoinPerBlock_',scoinPerBlock_);*/
+  var SaveRate_ = (pendingSameCoin/samecoinPrice_)/amt;*/
+  
+  
   return SaveRate_;
 }
 
 //save - 获取年化
 export async function Annualized(amt,type=0){
-  var val = Number(await SaveRate(amt,type));
-  return val*365*100;
+  var totalSaveLiquidity_ = await totalSaveLiquidity(type);
+  var val = Number(await yieldPer(amt,type));
+  return 365*val/totalSaveLiquidity_;
 }
 
 //save - 总共save存款sameusd价值

@@ -38,7 +38,14 @@
 										</div>
 									</div>
                                 </div>
-								<div class="balance font-family-regular font-weight-4 text-left">Balance：{{ stateFormat_(sameusdBalance,6) }}</div>
+								<div class="balance flex flex-align-items-center font-family-regular font-weight-4 text-left border-r border-l border-b">Balance：
+									<div v-if="sameusdBalance" >Balance：{{ stateFormat_(sameusdBalance,6) }}</div>
+									<img v-else class="loadingIcon" src="../../static/images/loading.gif" />
+								</div>
+								<!--<div v-if="sameusdBalance" class="balance font-family-regular font-weight-4 text-left">Balance：{{ stateFormat_(sameusdBalance,6) }}</div>
+								<img v-else class="loadingIcon" src="../../static/images/loading.gif" />-->
+
+
                             </div>
 							<div class="toInfoBox mt-10">
 								<div class="toInfo flex border-b">
@@ -57,7 +64,12 @@
 								        </div>
 								    </div>
 								</div>
-								<div class="balance font-family-regular font-weight-4 text-left">Balance：{{ stateFormat_(samecoinBalance,6) }}</div>
+								<div class="balance flex flex-align-items-center font-family-regular font-weight-4 text-left border-r border-l border-b">Balance：
+									<div v-if="samecoinBalance" >Balance：{{ stateFormat_(samecoinBalance,6) }}</div>
+									<img v-else class="loadingIcon" src="../../static/images/loading.gif" />
+								</div>
+								<!--<div v-if="samecoinBalance" class="balance font-family-regular font-weight-4 text-left">Balance：{{ stateFormat_(samecoinBalance,6) }}</div>
+								<img v-else class="loadingIcon" src="../../static/images/loading.gif" />-->
 							</div>
                             <div class="operation flex flex-justify-content-between mt-24">
                                 <!-- <el-button class="operationBtn operationBtn_approve color6 font-16 font-family-bold font-weight-b"
@@ -108,7 +120,11 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="balance font-family-regular font-weight-4 text-left">Balance：{{ stateFormat_(sameusdBalance,6) }}</div>
+								<div class="balance flex flex-align-items-center font-family-regular font-weight-4 text-left border-r border-l border-b">Balance：
+									<div v-if="sameusdBalance" >Balance：{{ stateFormat_(sameusdBalance,6) }}</div>
+									<img v-else class="loadingIcon" src="../../static/images/loading.gif" />
+								</div>
+
                             </div>
 							<div class="toInfoBox mt-10">
 								<div class="toInfo flex border-b">
@@ -127,7 +143,10 @@
 								        </div>
 								    </div>
 								</div>
-								<div class="balance font-family-regular font-weight-4 text-left">Balance：{{ stateFormat_(samecoinBalance,6) }}</div>
+								<div class="balance flex flex-align-items-center font-family-regular font-weight-4 text-left border-r border-l border-b">Balance：
+									<div v-if="samecoinBalance" >Balance：{{ stateFormat_(samecoinBalance,6) }}</div>
+									<img v-else class="loadingIcon" src="../../static/images/loading.gif" />
+								</div>
 							</div>
 
                             <div class="operation flex flex-justify-content-end mt-24">

@@ -30,39 +30,45 @@
                   <!-- <img class="coinIcon coinIcon_" src="../../static/images/mint/samecoin.png"/>-->
                   <div class="stackDesc color6">{{item.stack }}</div>
                 </div>
-                <div class="width-148 pl-20 text-left fontWeight-b font-family-bold">{{ item.apy }}%</div>
-                <div class="width-198 pl-20 text-left">{{ item.yidld }} SAME/DAY</div>
+                <div  class="width-148 pl-20 text-left fontWeight-b font-family-bold">
+                    <span v-if="item.apy">{{ item.apy }}%</span>
+                    <img v-else class="loadingIcon" src="../../static/images/loading.gif" /></div>
+
+                <div class="width-198 pl-20 text-left">
+                    <span v-if="item.yidld">{{ item.yidld }} SAME/DAY</span>
+                    <img v-else class="loadingIcon" src="../../static/images/loading.gif" /></div>
+
                 <div class="width-176 pr-20 text-right">
-                  <div class="color2 fontWeight-b font-family-bold">${{ stateFormat_(item.liquidity,4) }}</div>
+
+                  <div class="color2 fontWeight-b font-family-bold">
+                      <span v-if="item.liquidity">${{ stateFormat_(item.liquidity,4) }}</span>
+                      <img v-else class="loadingIcon" src="../../static/images/loading.gif" /></div>
                   <div class="color3 mt-2">{{ stateFormat_(item.liquidity,6) }} SameUSD</div>
                   <!--<div class="color3 mt-2">{{ stateFormat_(item.liquidity_) }} SAME</div>-->
                 </div>
                 <div class="width-168 pl-20 text-left">
-                  <div class="color2">{{ stateFormat_(item.stacked,6) }}</div>
-                  <div class="color3 mt-2"><!--{{ stateFormat_(item.stacked_) }}--> SameUSD</div>
+                  <div class="color2">
+                      <span v-if="item.stacked">{{ stateFormat_(item.stacked,6) }}</span>
+                      <img v-else class="loadingIcon" src="../../static/images/loading.gif" /></div>
+                  <div class="color3 mt-2">SameUSD</div>
                 </div>
                 <div class="flex-1 pl-20 text-left flex flex-justify-content-between">
                   <div class="">
                     <!-- <div class="color2">{{ stateFormat_(item.earning,6) }}</div> -->
-					<countTo v-if="!item.earning" class="color2" :startVal='0' :endVal='item.earning' :duration='300'></countTo>
-					<countTo v-else class="color2" :startVal='0' :endVal='item.earning'
-					  :decimals="6" :duration='300'></countTo>
-                    <div class="color3 mt-2">{{ item.earning_ }}</div>
+					<countTo v-if="item.earning" class="color2" :startVal='0' :endVal='item.earning' :duration='300' :decimals="6"></countTo>
+                      <img v-else class="loadingIcon" src="../../static/images/loading.gif" />
+                    <div class="color3 mt-2">
+                        <span v-if="item.earning_">{{ item.earning_ }}</span>
+                        <img v-else class="loadingIcon" src="../../static/images/loading.gif" />
+                    </div>
                   </div>
                   <div class="flex flex-align-items-center font-12 font-family-regular font-weight-4">
 					  <div class="approveBtn earningBtn border-radius-8 color6" style="padding: 0 8px!important;"  @click.stop="handlerStakeDetails(item,0)">Save</div>
 					  <div class="stakeBtn earningBtn border-radius-8 ml-20 color7 mr-12" style="padding: 0 8px!important;" @click.stop="handlerStakeDetails(item,1)">Withdraw</div>
-                    <!-- <img class="earningIcon mr-20" src="../../static/images/stake/more.png" @click.stop="handlerStakeDetails(item)"/> -->
-                    <!-- <img class="earningIcon mr-30" :class="{'select-caret': showDetail,'select-reverse': !showDetail}"
-                              src="../../static/images/mint/down.png" @click="handlerStakeDetails(item)"/> -->
+
                   </div>
                 </div>
               </div>
-              <!--<el-collapse-transition>
-                <div v-show="item.isShow">
-                  <div class="detail-box">detail</div>
-                </div>
-              </el-collapse-transition>-->
             </div>
           </div>
         </div>
@@ -219,13 +225,13 @@
 				stackList: [
 					{
 						stack: 'SameUSD',
-						apy: NaN,
-						yidld: NaN,
-						liquidity: NaN,
-						liquidity_: NaN,
-						stacked: NaN,
-						stacked_: NaN,
-						earning: NaN,
+						apy: null,
+						yidld: null,
+						liquidity: null,
+						liquidity_: null,
+						stacked: null,
+						stacked_: null,
+						earning: null,
 						earning_: 'SAME',
 						isShow: true
 					},
@@ -235,7 +241,7 @@
 				fromInfo: {
 					fromNum: '',
 					showSelect: false,
-					balance: 19921849.12387
+					balance: null
 				},
 				currCoin: {
 					url: require('../../static/images/mint/sameusd.png'),
@@ -243,7 +249,7 @@
 					fromNum: '',
 					approve: false,
 					showSelect: false,
-					balance: NaN
+					balance: null
 				},
 				selectCoinList: [
 					{
@@ -336,11 +342,11 @@
 				//一天几个块
                 var dayBockds = 60*60*24/4;
 
-				this.stackList[0].yidld = (await yieldPer(1000000000000000000000)).toFixed(4);
+				this.stackList[0].yidld = (await yieldPer(1000)).toFixed(4);
 				return this.stackList[0].yidld;
 			},
 			async Annualized() {
-				this.stackList[0].apy = (await Annualized(1000000000000000000000)).toFixed(2);
+				this.stackList[0].apy = (await Annualized(1000)).toFixed(2);
 				return this.stackList[0].apy;
 			},
 			async totalSaveLiquidity() {

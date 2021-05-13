@@ -31,7 +31,11 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="balance font-family-regular font-weight-4 text-left">Balance：{{ stateFormat_(sameusdBalance,6) }}</div>
+                                <!--<div class="balance font-family-regular font-weight-4 text-left">Balance：{{ stateFormat_(sameusdBalance,6) }}</div>-->
+                                <div class="balance flex flex-align-items-center font-family-regular font-weight-4 text-left border-r border-l border-b">Balance：
+                                    <div v-if="sameusdBalance" >Balance：{{ stateFormat_(sameusdBalance,6) }}</div>
+                                    <img v-else class="loadingIcon" src="../../static/images/loading.gif" />
+                                </div>
                             </div>
                             <h5 class="text-left" style="color: crimson" v-if="(sameusdBalance<currCoin.fromNum)">Current balance {{ stateFormat_(sameusdBalance,6) }} ,Insufficient amount</h5>
                             <img class="toIcon mt-10 mb-10" src="../../static/images/mint/to.png"/>
@@ -63,7 +67,11 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="balance font-family-regular font-weight-4 text-left">Balance：{{ stateFormat_(sameusdBalance,6) }}</div>
+                                <!--<div class="balance font-family-regular font-weight-4 text-left">Balance：{{ stateFormat_(sameusdBalance,6) }}</div>-->
+                                <div class="balance flex flex-align-items-center font-family-regular font-weight-4 text-left border-r border-l border-b">Balance：
+                                    <div v-if="sameusdBalance" >Balance：{{ stateFormat_(sameusdBalance,6) }}</div>
+                                    <img v-else class="loadingIcon" src="../../static/images/loading.gif" />
+                                </div>
                             </div>
                             <h5 class="text-left" style="color: crimson" v-if="(sameusdBalance<currCoin.fromNum)">Current balance {{ stateFormat_(sameusdBalance,6) }} ,Insufficient amount</h5>
                             <img class="toIcon mt-10 mb-10" src="../../static/images/mint/to.png"/>

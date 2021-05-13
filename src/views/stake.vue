@@ -28,26 +28,46 @@
                 <div class="stackItem_ width-294 pl-24 text-left flex flex-align-items-center">
                   <img class="coinIcon" src="../../static/images/mint/sameusd.png"/>
                    <img class="coinIcon coinIcon_" src="../../static/images/mint/samecoin.png"/>
-                  <div class="stackDesc color6">{{ item.stack }}</div>
+                  <div class="stackDesc color6">
+                    <sapn v-if="item.stack">{{ item.stack }}</sapn>
+                    <img v-else class="loadingIcon" src="../../static/images/loading.gif" /></div>
                 </div>
-                <div class="width-148 pl-20 text-left fontWeight-b font-family-bold">{{ item.apy }}%</div>
-                <div class="width-198 pl-20 text-left">{{ item.yidld }} SAME/DAY</div>
+                <div class="width-148 pl-20 text-left fontWeight-b font-family-bold">
+                  <span v-if="item.apy && item.apy!='NaN'">{{ item.apy }}%</span>
+                  <img v-else class="loadingIcon" src="../../static/images/loading.gif" />
+                </div>
+                <div class="width-198 pl-20 text-left">
+                  <span v-if="item.yidld && item.yidld!='NaN'">{{ item.yidld }} SAME/DAY</span>
+                  <img v-else class="loadingIcon" src="../../static/images/loading.gif" />
+                </div>
                 <div class="width-176 pr-20 text-right">
-                  <div class="color2 fontWeight-b font-family-bold">${{ stateFormat_(item.liquidity,4) }}</div>
-                  <div class="color3 mt-2">{{ stateFormat_(item.liquidity,4) }} LP</div>
+                  <div class="color2 fontWeight-b font-family-bold">
+                    <span v-if="item.liquidity">${{ stateFormat_(item.liquidity,4) }}</span>
+                    <img v-else class="loadingIcon" src="../../static/images/loading.gif" />
+                  </div>
+                  <div class="color3 mt-2">
+                    <span v-if="item.liquidity">{{ stateFormat_(item.liquidity,4) }} LP</span>
+                    <img v-else class="loadingIcon" src="../../static/images/loading.gif" /></div>
+
                   <!--<div class="color3 mt-2">{{ stateFormat_(item.liquidity_) }} SAME</div>-->
                 </div>
                 <div class="width-168 pl-20 text-left">
-                  <div class="color2">{{ stateFormat_(item.stacked,6) }}</div>
+                  <div class="color2">
+                    <span v-if="item.stacked">{{ stateFormat_(item.stacked,6) }}</span>
+                    <img v-else class="loadingIcon" src="../../static/images/loading.gif" />
+                  </div>
                   <div class="color3 mt-2"><!--{{ stateFormat_(item.stacked_) }}--> LP</div>
                 </div>
                 <div class="flex-1 pl-20 text-left flex flex-justify-content-between">
                   <div class="">
                     <!-- <div class="color2">{{ stateFormat_(item.earning,6) }}</div> -->
-					<countTo v-if="!item.earning" class="color2" :startVal='0' :endVal='item.earning' :duration='3000'></countTo>
-					<countTo v-else class="color2" :startVal='0' :endVal='item.earning'
-					  :decimals="6" :duration='300'></countTo>
-                    <div class="color3 mt-2">{{ item.earning_ }}</div>
+					<countTo v-if="item.earning" class="color2" :startVal='0' :endVal='item.earning' :duration='3000' :decimals="6"></countTo>
+                    <img v-else class="loadingIcon" src="../../static/images/loading.gif" />
+					<!--<countTo v-else class="color2" :startVal='0' :endVal='item.earning'
+					  :decimals="6" :duration='300'></countTo>-->
+                    <div class="color3 mt-2">
+                      <span v-if="item.earning_">{{ item.earning_ }}</span>
+                      <img v-else class="loadingIcon" src="../../static/images/loading.gif" /></div>
                   </div>
                   <div class="flex flex-align-items-center font-12 font-family-regular font-weight-4">
                     <div class="approveBtn earningBtn border-radius-8 color6" style="padding: 0 8px!important;"  @click.stop="handlerStakeDetails(item,0)">Stake</div>
@@ -220,13 +240,13 @@
         stackList: [
           {
             stack: 'Samecoin-SameUSD',
-            apy: NaN,
-            yidld: NaN,
-            liquidity: NaN,
-            liquidity_: NaN,
-            stacked: NaN,
-            stacked_: NaN,
-            earning: NaN,
+            apy: null,
+            yidld: null,
+            liquidity: null,
+            liquidity_: null,
+            stacked: null,
+            stacked_: null,
+            earning: null,
             earning_: 'SAME',
             isShow: true
           },
@@ -244,7 +264,7 @@
           fromNum: '',
           approve: false,
           showSelect: false,
-          balance: NaN
+          balance: null
         },
         selectCoinList: [
           {
@@ -253,7 +273,7 @@
             fromNum: '',
             approve: false,
             showSelect: false,
-            balance: NaN
+            balance: null
           },
         ],
         detailTab: ["Save", "Claim/Withdraw"],

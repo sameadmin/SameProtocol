@@ -33,7 +33,11 @@
                 </div>
             </div>
         </div>
-        <div class="balance font-family-regular font-weight-4 text-left border-r border-l border-b">Balance：{{ stateFormat_(currCoin.balance,6) }}
+       <!-- <div class="balance font-family-regular font-weight-4 text-left border-r border-l border-b">Balance：{{ stateFormat_(currCoin.balance,6) }}
+        </div>-->
+        <div class="balance flex flex-align-items-center font-family-regular font-weight-4 text-left border-r border-l border-b">Balance：
+            <div v-if="currCoin.balance" >Balance：{{ stateFormat_(currCoin.balance,6) }}</div>
+            <img v-else class="loadingIcon" src="../../static/images/loading.gif" />
         </div>
         <h5 class="text-left" style="color: crimson" v-if="(currCoin.balance<currCoin.fromNum) && showerr">Current balance {{ stateFormat_(currCoin.balance,6) }} ,Insufficient amount</h5>
 		<Tips :showTips="approveSuccessfullyTips"></Tips>
