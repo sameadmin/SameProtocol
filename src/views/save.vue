@@ -107,8 +107,9 @@
                                 <img class="currCoinIcon" src="../../static/images/mint/sameusd.png"/>
                                 <div class="ml-10 font-16 font-family-regular fontWeight-4">SameUSD</div>
                             </div>
-                            <div class="mt-20 font-24 font-family-bold fontWeight-b text-left">{{
-                                stateFormat_(stackList[0].stacked,6) }}
+                            <div class="mt-20 font-24 font-family-bold fontWeight-b text-left">
+                                <span v-if="stackList[0].stacked">{{stateFormat_(stackList[0].stacked,6) }}</span>
+                                <img v-else class="loadingIcon" src="../../static/images/loading.gif" />
                             </div>
                         </div>
                         <div class="flex-1 border-l color1 pl-20">
@@ -116,8 +117,9 @@
                                 <img class="currCoinIcon" src="../../static/images/mint/samecoin.png"/>
                                 <div class="ml-10 font-16 font-family-regular fontWeight-4">SameCoin</div>
                             </div>
-                            <div class="mt-20 font-24 font-family-bold fontWeight-b text-left">{{
-                                stateFormat_(stackList[0].earning,6) }}
+                            <div class="mt-20 font-24 font-family-bold fontWeight-b text-left">
+                                <span v-if="stackList[0].earning">{{stateFormat_(stackList[0].earning,6) }}</span>
+                                <img v-else class="loadingIcon" src="../../static/images/loading.gif" />
                             </div>
                         </div>
                     </div>
