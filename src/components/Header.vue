@@ -34,6 +34,7 @@
 	import Tips from './Tips.vue'
 	//import Web3 from 'web3';
 	import {toAccount,shorten,balanceOf,CheckMetaMask,checkSignin_} from '../../src/assets/js/components'
+	//import {get} from '../../src/assets/js/net'
 	//import solidityConfig from '../../src/assets/solidityConfig'
     //$cookies.get('token')
     //$cookies.set("userName",this.userName);
@@ -140,6 +141,7 @@
 			}
 		},
 		async mounted() {
+			//console.log(await get('https://api.dex.guru/v1/tradingview/history?symbol=0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c_USD&resolution=60&from=1620887259&to=1620973659'));
 			var this_ = this;
 			// this.showChangeDialog = true
 
@@ -264,5 +266,5 @@
 			height: 27px;
 		}
 	}
-	
+
 </style>

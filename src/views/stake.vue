@@ -297,19 +297,19 @@
     },
 
     async created() {
-      await this.updataYieldPer();
-      await this.Annualized();
-      await this.totalSaveLiquidity();
-      await this.saveStaked();
-      await this.saveEarnings();
-      await this.updataCurrCoin();
+       this.updataYieldPer();
+       this.Annualized();
+       this.totalSaveLiquidity();
+       this.saveStaked();
+       this.saveEarnings();
+       this.updataCurrCoin();
     },
     mounted() {
       this.intervalId = setInterval(async () => {
-        await this.totalSaveLiquidity();
-        await this.saveStaked();
-        await this.saveEarnings();
-        await this.updataCurrCoin();
+         this.totalSaveLiquidity();
+         this.saveStaked();
+         this.saveEarnings();
+         this.updataCurrCoin();
       }, 1000)
     },
     beforeDestroy() {
